@@ -1,3 +1,4 @@
-import Buttons from './Buttons/Buttons';
+import {Buttons, Button} from './Buttons/Buttons';
 
 export {Buttons};
+export {Button};

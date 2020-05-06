@@ -1,44 +1,38 @@
-import React, {useState, useEffect, useCallback} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
-import {styles} from '../../Styles';
+import React from 'react';
+import {View, Text, TouchableOpacity} from 'react-native';
+import {styles} from './styles';
 
-const Buttons = ({
-  onPress,
+export const Button = ({text, onPress, onPressDelete, disabled, styling}) => {
+  return (
+    <View style={styles.buttonContainer}>
+      <TouchableOpacity onPress={onPress} disabled={disabled}>
+        <Text style={[styling, disabled ? [styles.disabled] : {}]}>{text}</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+export const Buttons = ({
+  onPressAdd,
   onPressDelete,
   addingDisabled,
   deletingDisabled,
 }) => {
   return (
-    <View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={onPress} disabled={addingDisabled}>
-          <Text
-            style={[styles.button, addingDisabled ? [styles.disabled] : {}]}>
-            add to list
-          </Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={onPressDelete} disabled={deletingDisabled}>
-          <Text
-            style={[
-              styles.buttonDelete,
-              deletingDisabled ? styles.disabled : {},
-            ]}>
-            delete from to list
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    <>
+      <Button
+        text={'add to list'}
+        onPress={onPressAdd}
+        disabled={addingDisabled}
+        styling={styles.button}
+      />
+      <View style={styles.spacing} />
+      <Button
+        text={'delete from to list'}
+        onPress={onPressDelete}
+        disabled={deletingDisabled}
+        styling={styles.buttonDelete}
+      />
+    </>
   );
 };
-
-export default Buttons;

@@ -1,60 +1,42 @@
 import {StyleSheet} from 'react-native';
+import {defaultBorder} from './Components/commonSyles';
+
+const darkTheme = '#272727';
+const gray = '#5A5A5A';
+const greenBlue = '#008577';
 
 export const styles = StyleSheet.create({
-  disabled: {
-    opacity: 0.3,
-  },
   input: {
-    marginTop: 20,
-    padding: 20,
+    textDecorationLine: 'underline',
+    color: 'white',
+    opacity: 0.7,
+    marginHorizontal: 30,
+    marginVertical: 10,
+    padding: 5,
     textAlign: 'center',
     fontSize: 30,
+    backgroundColor: gray,
+    ...defaultBorder,
   },
   text: {
     paddingVertical: 5,
     fontSize: 30,
     textAlign: 'center',
+    backgroundColor: gray,
+    opacity: 0.9,
   },
-  border: {
+  textBorder: {
     marginVertical: 3,
-    borderColor: 'red',
-    borderWidth: 2,
-    borderRadius: 5,
-    marginHorizontal: 50,
+    borderColor: greenBlue,
+    ...defaultBorder,
   },
   scrollView: {
-    margin: 20,
-    height: 200,
-  },
-  body: {
-    paddingTop: 20,
-    backgroundColor: '#aaa',
-  },
-  button: {
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    fontSize: 20,
-    color: 'white',
-    height: 60,
-    backgroundColor: 'green',
-  },
-  buttonDelete: {
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    fontSize: 20,
-    color: 'white',
-    height: 60,
-    backgroundColor: '#C25B01',
-  },
-  buttonContainer: {
-    fontSize: 50,
-    borderColor: '#000',
-    borderRadius: 10,
-    borderWidth: 5,
-    marginHorizontal: 50,
+    marginVertical: 5,
+    marginHorizontal: 30,
+    height: '100%',
   },
   root: {
-    backgroundColor: '#5b6069',
+    backgroundColor: darkTheme,
     height: '100%',
     flex: 1,
   },

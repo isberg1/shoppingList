@@ -25,7 +25,7 @@ const App = () => {
   const [add, setAdd] = useState('');
   const [list, addToList, deleteList] = useDB({});
 
-  const onPress = () => {
+  const onPressAdd = () => {
     if (add) {
       addToList(add);
       setAdd('');
@@ -43,21 +43,21 @@ const App = () => {
         <View />
         <TextInput
           placeholder={'Enter Text'}
-          style={{...styles.input}}
+          style={styles.input}
           onChangeText={setAdd}
           value={add}
         />
         <Buttons
           addingDisabled={!add}
           deletingDisabled={list.length === 0}
-          onPress={onPress}
+          onPressAdd={onPressAdd}
           onPressDelete={onPressDelete}
         />
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
           {list.map((val, index) => (
-            <View key={index} style={styles.border}>
+            <View key={index} style={styles.textBorder}>
               <Text style={styles.text}>{val}</Text>
             </View>
           ))}

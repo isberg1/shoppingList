@@ -1,15 +1,15 @@
 import React, {useState, useEffect, useCallback, useMemo} from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 
-const listKey = 'LIST';
+const LIST_KEY = 'LIST';
 
-export const useDB = ({saveDataCallback, deleteDataCallback}) => {
+export const useDB = () => {
   const [list, setList] = useState([]);
 
   useEffect(() => {
     const _retrieveData = async () => {
       try {
-        const value = await AsyncStorage.getItem(listKey);
+        const value = await AsyncStorage.getItem(LIST_KEY);
         if (value !== null) {
           // We have data!!
           const val = JSON.parse(value);
@@ -27,8 +27,7 @@ export const useDB = ({saveDataCallback, deleteDataCallback}) => {
     if (list && list.length > 0) {
       const _storeData = async () => {
         try {
-          await AsyncStorage.setItem(listKey, JSON.stringify(list));
-          if (saveDataCallback) saveDataCallback();
+          await AsyncStorage.setItem(LIST_KEY, JSON.stringify(list));
           console.log('storeData');
         } catch (error) {
           console.log('store data error', error);
@@ -36,12 +35,11 @@ export const useDB = ({saveDataCallback, deleteDataCallback}) => {
       };
       _storeData();
     }
-  }, [list, saveDataCallback]);
+  }, [list]);
 
   const _deleteData = async () => {
     try {
-      await AsyncStorage.removeItem(listKey);
-      if (deleteDataCallback) deleteDataCallback();
+      await AsyncStorage.removeItem(LIST_KEY);
       console.log('deleteData');
     } catch (error) {
       console.log('delete data error', error);
