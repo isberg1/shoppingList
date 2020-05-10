@@ -1,24 +1,8 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+import React, {useState} from 'react';
+import {SafeAreaView, View, StatusBar} from 'react-native';
 
-import React, {useState, useEffect, useCallback} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
-
-import {styles} from './Styles';
-import {Buttons} from './Components/index';
+import {styles} from './AppStyles';
+import {Buttons, ScrollList, Input} from './Components/index';
 import {useDB} from './UseDB';
 
 const App = () => {
@@ -40,28 +24,14 @@ const App = () => {
     <View style={styles.root}>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView style={styles.safeAreaView}>
-        <View />
-        <TextInput
-          placeholder={'Enter Text'}
-          style={styles.input}
-          onChangeText={setAdd}
-          value={add}
-        />
+        <Input value={add} onChangeText={setAdd} />
         <Buttons
           addingDisabled={!add}
           deletingDisabled={list.length === 0}
           onPressAdd={onPressAdd}
           onPressDelete={onPressDelete}
         />
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          {list.map((val, index) => (
-            <View key={index} style={styles.textBorder}>
-              <Text style={styles.text}>{val}</Text>
-            </View>
-          ))}
-        </ScrollView>
+        <ScrollList list={list} />
       </SafeAreaView>
     </View>
   );

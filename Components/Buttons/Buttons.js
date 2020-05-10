@@ -18,21 +18,36 @@ export const Buttons = ({
   addingDisabled,
   deletingDisabled,
 }) => {
-  return (
-    <>
+  const resolveButton = () => {
+    const addButton = (
       <Button
         text={'add to list'}
         onPress={onPressAdd}
         disabled={addingDisabled}
-        styling={styles.button}
+        styling={styles.buttonAdd}
       />
-      <View style={styles.spacing} />
+    );
+
+    const deleteButton = (
       <Button
         text={'delete from to list'}
         onPress={onPressDelete}
         disabled={deletingDisabled}
         styling={styles.buttonDelete}
       />
-    </>
-  );
+    );
+
+    switch (true) {
+      case !addingDisabled: {
+        return addButton;
+      }
+      case !deletingDisabled: {
+        return deleteButton;
+      }
+      default:
+        return addButton;
+    }
+  };
+
+  return <>{resolveButton()}</>;
 };

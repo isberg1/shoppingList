@@ -1,16 +1,16 @@
 import {StyleSheet} from 'react-native';
-import {defaultBorder} from '../commonSyles';
+import {defaultBorder, orange, green} from '../commonStyles';
 
 const greenBlue = '#008577';
 
 export const styles = StyleSheet.create({
-  button: {
+  buttonAdd: {
     textAlign: 'center',
     textAlignVertical: 'center',
     fontSize: 20,
     color: 'white',
     height: 60,
-    backgroundColor: 'green',
+    backgroundColor: green,
   },
   buttonDelete: {
     textAlign: 'center',
@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     color: 'white',
     height: 60,
-    backgroundColor: '#C25B01',
+    backgroundColor: orange,
   },
   buttonContainer: {
     fontSize: 50,
@@ -28,8 +28,5 @@ export const styles = StyleSheet.create({
   },
   disabled: {
     opacity: 0.3,
-  },
-  spacing: {
-    marginBottom: 10,
   },
 });
