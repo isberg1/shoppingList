@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import {SafeAreaView, View, StatusBar} from 'react-native';
 
-import {styles} from './AppStyles';
-import {Buttons, ScrollList, Input} from './Components/index';
+import {styles} from './styles';
+import {Buttons, ScrollList, Input} from '../Components/index';
 import {useDB} from './UseDB';
 
 const App = () => {
