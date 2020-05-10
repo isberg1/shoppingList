@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState} from 'react';
 import {SafeAreaView, View, StatusBar} from 'react-native';
 
 import {styles} from './styles';

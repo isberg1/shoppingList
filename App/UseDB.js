@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback, useMemo} from 'react';
+import {useState, useEffect} from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 
 const LIST_KEY = 'LIST';
