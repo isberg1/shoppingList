@@ -55,5 +55,19 @@ export const useDB = () => {
     _deleteData();
   };
 
-  return [list, addToList, deleteList];
+  const removeItem = keys => {
+    const dummyValue = 'dummyValue';
+    const deleteCount = 1;
+
+    let replaceDeleteIndexWithDummy = [...list];
+    keys.forEach(indexKey => {
+      replaceDeleteIndexWithDummy.splice(indexKey, deleteCount, dummyValue);
+    });
+
+    const newList = [
+      ...replaceDeleteIndexWithDummy.filter(val => val !== dummyValue),
+    ];
+    newList.length > 1 ? setList(newList) : deleteList();
+  };
+  return [list, addToList, deleteList, removeItem];
 };
