@@ -1,40 +1,21 @@
-import React, {useState, useContext, useEffect} from 'react';
-import {ScrollView, View, Text, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {ScrollView} from 'react-native';
 import {styles} from './styles';
-import {MyContext} from '../../App/App';
+import {Item} from '../Item/Item';
 
-export const Item = ({value, index, del}) => {
-  const [marked, setIsMarked] = useState(false);
-  const {num} = useContext(MyContext);
-
-  useEffect(() => {
-    console.log('flag changed', num);
-    setIsMarked(false);
-  }, [num]);
-
-  const onPress = () => {
-    del(index, !marked);
-    setIsMarked(!marked);
-  };
-
-  return (
-    <TouchableOpacity onPress={onPress}>
-      <View style={styles.textBorder}>
-        <Text style={[styles.text, marked ? styles.markedView : '']}>
-          {value}
-        </Text>
-      </View>
-    </TouchableOpacity>
-  );
-};
-
-export const ScrollList = ({list, del}) => {
+export const ScrollList = ({list, touchedStatus, editItem}) => {
   return (
     <ScrollView
       contentInsetAdjustmentBehavior="automatic"
       style={styles.scrollView}>
       {list.map((val, index) => (
-        <Item key={index} value={val} index={index} del={del} />
+        <Item
+          key={index}
+          value={val}
+          index={index}
+          touchedStatus={touchedStatus}
+          onLongPress={editItem}
+        />
       ))}
     </ScrollView>
   );

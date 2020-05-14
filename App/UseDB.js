@@ -67,7 +67,14 @@ export const useDB = () => {
     const newList = [
       ...replaceDeleteIndexWithDummy.filter(val => val !== dummyValue),
     ];
-    newList.length > 1 ? setList(newList) : deleteList();
+    newList.length !== 0 ? setList(newList) : deleteList();
   };
-  return [list, addToList, deleteList, removeItem];
+
+  const editList = (index, newValue) => {
+    setList(arr =>
+      [...arr].map((val, idx) => (index === idx ? newValue : val)),
+    );
+  };
+
+  return {list, addToList, deleteList, removeItem, editList};
 };

@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {styles} from './styles';
 
-export const Button = ({text, onPress, onPressDelete, disabled, styling}) => {
+export const Button = ({text, onPress, disabled, styling}) => {
   return (
     <View style={styles.buttonContainer}>
       <TouchableOpacity onPress={onPress} disabled={disabled}>
@@ -15,39 +15,57 @@ export const Button = ({text, onPress, onPressDelete, disabled, styling}) => {
 export const Buttons = ({
   onPressAdd,
   onPressDelete,
-  addingDisabled,
-  deletingDisabled,
+  onPressEdit,
+  disabled,
+  mode,
 }) => {
-  const resolveButton = () => {
-    const addButton = (
-      <Button
-        text={'add to list'}
-        onPress={onPressAdd}
-        disabled={addingDisabled}
-        styling={styles.buttonAdd}
-      />
-    );
-
-    const deleteButton = (
-      <Button
-        text={'delete from to list'}
-        onPress={onPressDelete}
-        disabled={deletingDisabled}
-        styling={styles.buttonDelete}
-      />
-    );
-
-    switch (true) {
-      case !addingDisabled: {
-        return addButton;
-      }
-      case !deletingDisabled: {
-        return deleteButton;
-      }
+  const onPressFunc = useMemo(() => {
+    switch (mode) {
+      case 'edit':
+        return onPressEdit;
+      case 'add':
+        return onPressAdd;
+      case 'delete':
+        return onPressDelete;
       default:
-        return addButton;
+        return onPressAdd;
     }
-  };
+  }, [mode, onPressAdd, onPressDelete, onPressEdit]);
 
-  return <>{resolveButton()}</>;
+  const style = useMemo(() => {
+    switch (mode) {
+      case 'edit':
+        return styles.buttonEdit;
+      case 'add':
+        return styles.buttonAdd;
+      case 'delete':
+        return styles.buttonDelete;
+      default:
+        return styles.buttonAdd;
+    }
+  }, [mode]);
+
+  const text = useMemo(() => {
+    switch (mode) {
+      case 'edit':
+        return 'Edit Item';
+      case 'add':
+        return 'Add Item';
+      case 'delete':
+        return 'Delete Item';
+      default:
+        return 'add';
+    }
+  }, [mode]);
+
+  return (
+    <>
+      <Button
+        text={text}
+        onPress={onPressFunc}
+        disabled={disabled}
+        styling={style}
+      />
+    </>
+  );
 };

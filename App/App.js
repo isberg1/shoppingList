@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useContext} from 'react';
-import {SafeAreaView, View, StatusBar, Button} from 'react-native';
+import React, {useState, useCallback, useContext, useMemo} from 'react';
+import {SafeAreaView, View, StatusBar} from 'react-native';
 
 import {styles} from './styles';
 import {Buttons, ScrollList, Input} from '../Components/index';
@@ -9,53 +9,105 @@ export const MyContext = React.createContext({
   num: 0,
 });
 
+export const modes = {
+  add: 'add',
+  edit: 'edit',
+  delete: 'delete',
+};
+
+let storeLastEditedIndex;
+
 const App = () => {
-  const [add, setAdd] = useState('');
-  const [list, addToList, deleteList, removeItem] = useDB({});
-  const [a, b] = useState({});
+  const [inputValue, setInputValue] = useState('');
+  const {list, addToList, deleteList, removeItem, editList} = useDB({});
+  const [itemIsTouched, setItemIsTouched] = useState({});
+  const [mode, setMode] = useState(modes.add);
   const contextObject = useContext(MyContext);
+
+  const itemIsTouchedLength = useCallback(
+    () => Object.keys(itemIsTouched).length,
+    [itemIsTouched],
+  );
   const onPressAdd = () => {
-    if (add) {
-      addToList(add);
-      setAdd('');
+    if (inputValue) {
+      addToList(inputValue);
+      setInputValue('');
+    }
+  };
+
+  const onPressEdit = () => {
+    if (inputValue && mode === modes.edit) {
+      editList(storeLastEditedIndex, inputValue);
+      setInputValue('');
+      setMode(modes.add);
     }
   };
 
   const onPressDelete = () => {
-    if (!a) return;
+    if (!Object.keys(itemIsTouched).length) return;
 
-    const toDel = Object.keys(a)
+    const toDel = Object.keys(itemIsTouched)
       .filter((val, indexKey) => {
-        return a[val] === true;
+        return itemIsTouched[val] === true;
       })
       .map(val => parseInt(val, 10));
 
+    console.log('itemIsTouched', itemIsTouched);
+
     removeItem(toDel);
-    b({});
-    contextObject.num = contextObject.num + 'a';
+    setItemIsTouched({});
+    setMode(modes.add);
+    contextObject.num = contextObject.num + 'g';
     //deleteList();
   };
 
-  const del = (index, value) => {
-    const newB = a;
+  const _touchedStatus = (index, value) => {
+    const newB = itemIsTouched;
     newB[index] = value;
-    console.log('newB', newB);
-    b(newB);
+    setItemIsTouched(newB);
+
+    if (itemIsTouchedLength() > 0 && value) {
+      setMode(modes.delete);
+    } else if (!value) {
+      setMode(modes.add);
+    }
   };
+
+  const _editItem = index => {
+    setInputValue(list[index]);
+    setMode(modes.edit);
+    storeLastEditedIndex = index;
+  };
+
+  const buttonDisabled = useMemo(() => {
+    switch (mode) {
+      case modes.add:
+        return !!inputValue;
+      case modes.delete:
+        return !!itemIsTouchedLength();
+      case modes.edit:
+        return !!inputValue;
+    }
+  }, [inputValue, itemIsTouchedLength, mode]);
 
   return (
     <MyContext.Provider value={contextObject}>
       <View style={styles.root}>
         <StatusBar barStyle="dark-content" />
         <SafeAreaView style={styles.safeAreaView}>
-          <Input value={add} onChangeText={setAdd} />
+          <Input value={inputValue} onChangeText={setInputValue} />
           <Buttons
-            addingDisabled={!add}
-            deletingDisabled={list.length === 0}
+            disabled={!buttonDisabled}
             onPressAdd={onPressAdd}
             onPressDelete={onPressDelete}
+            onPressEdit={onPressEdit}
+            mode={mode}
           />
-          <ScrollList list={list} del={del} />
+          <ScrollList
+            list={list}
+            touchedStatus={_touchedStatus}
+            editItem={_editItem}
+          />
         </SafeAreaView>
       </View>
     </MyContext.Provider>
@@ -63,3 +115,5 @@ const App = () => {
 };
 
 export default App;
+
+// TODO fix mode when an item is marked, but input gets focus
