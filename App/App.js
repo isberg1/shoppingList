@@ -2,7 +2,7 @@ import React, {useState, useCallback, useContext, useMemo} from 'react';
 import {SafeAreaView, View, StatusBar} from 'react-native';
 
 import {styles} from './styles';
-import {Buttons, ScrollList, Input} from '../Components/index';
+import {Buttons, List, Input} from '../Components/index';
 import {useDB} from './UseDB';
 
 export const MyContext = React.createContext({
@@ -32,6 +32,7 @@ const App = () => {
     if (inputValue) {
       addToList(inputValue);
       setInputValue('');
+      if (itemIsTouchedLength()) setMode(modes.delete);
     }
   };
 
@@ -47,33 +48,33 @@ const App = () => {
     if (!Object.keys(itemIsTouched).length) return;
 
     const toDel = Object.keys(itemIsTouched)
-      .filter((val, indexKey) => {
-        return itemIsTouched[val] === true;
-      })
+      .filter(val => itemIsTouched[val] === true)
       .map(val => parseInt(val, 10));
-
-    console.log('itemIsTouched', itemIsTouched);
 
     removeItem(toDel);
     setItemIsTouched({});
     setMode(modes.add);
     contextObject.num = contextObject.num + 'g';
-    //deleteList();
   };
 
-  const _touchedStatus = (index, value) => {
-    const newB = itemIsTouched;
-    newB[index] = value;
-    setItemIsTouched(newB);
+  const _onPressList = (index, value) => {
+    const newItemIsTouched = itemIsTouched;
+    newItemIsTouched[index] = value;
+    if (value) {
+      setItemIsTouched(newItemIsTouched);
+    } else {
+      delete newItemIsTouched[index];
+      setItemIsTouched(newItemIsTouched);
+    }
 
-    if (itemIsTouchedLength() > 0 && value) {
+    if (itemIsTouchedLength() > 0 && value && !inputValue) {
       setMode(modes.delete);
-    } else if (!value) {
+    } else if (itemIsTouchedLength() === 0 && !value) {
       setMode(modes.add);
     }
   };
 
-  const _editItem = index => {
+  const _onLongPressList = index => {
     setInputValue(list[index]);
     setMode(modes.edit);
     storeLastEditedIndex = index;
@@ -90,12 +91,17 @@ const App = () => {
     }
   }, [inputValue, itemIsTouchedLength, mode]);
 
+  const inputHandler = text => {
+    if (mode === modes.delete) setMode(modes.add);
+    setInputValue(text);
+  };
+
   return (
     <MyContext.Provider value={contextObject}>
       <View style={styles.root}>
         <StatusBar barStyle="dark-content" />
         <SafeAreaView style={styles.safeAreaView}>
-          <Input value={inputValue} onChangeText={setInputValue} />
+          <Input value={inputValue} onChangeText={inputHandler} />
           <Buttons
             disabled={!buttonDisabled}
             onPressAdd={onPressAdd}
@@ -103,10 +109,10 @@ const App = () => {
             onPressEdit={onPressEdit}
             mode={mode}
           />
-          <ScrollList
+          <List
             list={list}
-            touchedStatus={_touchedStatus}
-            editItem={_editItem}
+            onPress={_onPressList}
+            onLongPress={_onLongPressList}
           />
         </SafeAreaView>
       </View>
@@ -115,5 +121,3 @@ const App = () => {
 };
 
 export default App;
-
-// TODO fix mode when an item is marked, but input gets focus

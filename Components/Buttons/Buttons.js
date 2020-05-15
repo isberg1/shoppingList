@@ -59,13 +59,11 @@ export const Buttons = ({
   }, [mode]);
 
   return (
-    <>
-      <Button
-        text={text}
-        onPress={onPressFunc}
-        disabled={disabled}
-        styling={style}
-      />
-    </>
+    <Button
+      text={text}
+      onPress={onPressFunc}
+      disabled={disabled}
+      styling={style}
+    />
   );
 };

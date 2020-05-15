@@ -3,7 +3,7 @@ import {ScrollView} from 'react-native';
 import {styles} from './styles';
 import {Item} from '../Item/Item';
 
-export const ScrollList = ({list, touchedStatus, editItem}) => {
+export const List = ({list, onPress, onLongPress}) => {
   return (
     <ScrollView
       contentInsetAdjustmentBehavior="automatic"
@@ -13,8 +13,8 @@ export const ScrollList = ({list, touchedStatus, editItem}) => {
           key={index}
           value={val}
           index={index}
-          touchedStatus={touchedStatus}
-          onLongPress={editItem}
+          onPress={onPress}
+          onLongPress={onLongPress}
         />
       ))}
     </ScrollView>
