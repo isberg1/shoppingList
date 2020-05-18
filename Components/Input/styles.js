@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {defaultBorder, gray} from '../commonStyles';
+import {defaultBorder, gray, lightGray, white} from '../commonStyles';
 
 export const styles = StyleSheet.create({
   inputContainer: {
@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
   input: {
     flex: 8,
     textDecorationLine: 'underline',
-    color: 'white',
+    color: white,
     opacity: 0.7,
     padding: 5,
     textAlign: 'center',
@@ -25,5 +25,9 @@ export const styles = StyleSheet.create({
   },
   deleteText: {
     fontSize: 25,
+  },
+  onFocus: {
+    opacity: 1,
+    backgroundColor: lightGray,
   },
 });

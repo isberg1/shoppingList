@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {darkTheme} from '../Components/commonStyles';
+import {darkTheme} from './Components/commonStyles';
 
 export const styles = StyleSheet.create({
   root: {

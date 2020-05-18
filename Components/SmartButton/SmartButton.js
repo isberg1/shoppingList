@@ -1,6 +1,7 @@
 import React, {useMemo} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {styles} from './styles';
+import {modes} from '../config';
 
 export const Button = ({text, onPress, disabled, styling}) => {
   return (
@@ -12,7 +13,7 @@ export const Button = ({text, onPress, disabled, styling}) => {
   );
 };
 
-export const Buttons = ({
+export const SmartButton = ({
   onPressAdd,
   onPressDelete,
   onPressEdit,
@@ -21,11 +22,11 @@ export const Buttons = ({
 }) => {
   const onPressFunc = useMemo(() => {
     switch (mode) {
-      case 'edit':
+      case modes.edit:
         return onPressEdit;
-      case 'add':
+      case modes.add:
         return onPressAdd;
-      case 'delete':
+      case modes.delete:
         return onPressDelete;
       default:
         return onPressAdd;
@@ -34,11 +35,11 @@ export const Buttons = ({
 
   const style = useMemo(() => {
     switch (mode) {
-      case 'edit':
+      case modes.edit:
         return styles.buttonEdit;
-      case 'add':
+      case modes.add:
         return styles.buttonAdd;
-      case 'delete':
+      case modes.delete:
         return styles.buttonDelete;
       default:
         return styles.buttonAdd;
@@ -47,14 +48,14 @@ export const Buttons = ({
 
   const text = useMemo(() => {
     switch (mode) {
-      case 'edit':
+      case modes.edit:
         return 'Edit Item';
-      case 'add':
+      case modes.add:
         return 'Add Item';
-      case 'delete':
+      case modes.delete:
         return 'Delete Item';
       default:
-        return 'add';
+        return modes.add;
     }
   }, [mode]);
 

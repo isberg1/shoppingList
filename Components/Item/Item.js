@@ -1,7 +1,7 @@
 import React, {useState, useContext, useEffect} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {styles} from './styles';
-import {MyContext} from '../../App/App';
+import {MyContext} from '../config';
 
 export const Item = ({value, index, onPress, onLongPress}) => {
   const [marked, setIsMarked] = useState(false);

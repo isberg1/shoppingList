@@ -1,8 +1,8 @@
-import {Buttons, Button} from './Buttons/Buttons';
+import {SmartButton, Button} from './SmartButton/SmartButton';
 import {List, Item} from './List/List';
 import {Input} from './Input/Input';
 
-export {Buttons};
+export {SmartButton};
 export {Button};
 export {List};
 export {Item};
