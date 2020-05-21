@@ -3,7 +3,7 @@ import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 
 import {styles} from './styles';
 
-export const Input = ({value, onChangeText, inputRef}) => {
+export const Input = ({value, onChangeText, onSubmit, inputRef}) => {
   const [hasFocus, setHasFocus] = useState(false);
 
   return (
@@ -14,6 +14,7 @@ export const Input = ({value, onChangeText, inputRef}) => {
         onChangeText={text => onChangeText(text)}
         onFocus={() => setHasFocus(true)}
         onBlur={() => setHasFocus(false)}
+        onSubmitEditing={({nativeEvent: {text}}) => onSubmit(text)}
         value={value}
         clearButtonMode={'always'}
         ref={inputRef}

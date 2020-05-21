@@ -1,9 +1,9 @@
 import React, {useState, useCallback, useContext, useMemo, useRef} from 'react';
 import {SmartButton, List, Input} from '../Components/index';
 import {useDB} from './UseDB';
-import {MyContext, modes} from '../Components/config';
+import {modes} from '../Components/config';
 
-const isEmptyObject = object =>
+const isObjectEmpty = object =>
   Object.keys(object).length === 0 && object.constructor === Object;
 
 let storeLastEditedIndex;
@@ -13,13 +13,13 @@ export const ShoppingList = () => {
   const {list, addToList, deleteList, removeItem, editList} = useDB({});
   const [itemIsTouched, setItemIsTouched] = useState({});
   const [mode, setMode] = useState(modes.add);
-  const contextObject = useContext(MyContext);
   const inputRef = useRef(null);
 
   const itemIsTouchedLength = useCallback(
     () => Object.keys(itemIsTouched).length,
     [itemIsTouched],
   );
+
   const onPressAdd = () => {
     if (inputValue) {
       addToList(inputValue);
@@ -32,7 +32,7 @@ export const ShoppingList = () => {
     if (inputValue && mode === modes.edit) {
       editList(storeLastEditedIndex, inputValue);
       setInputValue('');
-      isEmptyObject({...itemIsTouched})
+      isObjectEmpty({...itemIsTouched})
         ? setMode(modes.add)
         : setMode(modes.delete);
     }
@@ -48,22 +48,20 @@ export const ShoppingList = () => {
     removeItem(toDel);
     setItemIsTouched({});
     setMode(modes.add);
-    contextObject.num = contextObject.num + 'g';
   };
 
   const _onPressList = (index, value) => {
-    const newItemIsTouched = itemIsTouched;
+    const newItemIsTouched = {...itemIsTouched};
     newItemIsTouched[index] = value;
-    if (value) {
-      setItemIsTouched(newItemIsTouched);
-    } else {
-      delete newItemIsTouched[index];
-      setItemIsTouched(newItemIsTouched);
-    }
 
-    if (itemIsTouchedLength() > 0 && value && !inputValue) {
+    if (!value) {
+      delete newItemIsTouched[index];
+    }
+    setItemIsTouched(newItemIsTouched);
+
+    if (!isObjectEmpty(newItemIsTouched) && value && !inputValue) {
       setMode(modes.delete);
-    } else if (itemIsTouchedLength() === 0 && !value) {
+    } else if (isObjectEmpty(newItemIsTouched) && !value) {
       setMode(modes.add);
     }
   };
@@ -73,10 +71,10 @@ export const ShoppingList = () => {
     setMode(modes.edit);
     inputRef.current.focus();
     storeLastEditedIndex = index;
-    console.log('empty', isEmptyObject({...itemIsTouched}));
+    console.log('empty', isObjectEmpty({...itemIsTouched}));
   };
 
-  const buttonDisabled = useMemo(() => {
+  const enableButton = useMemo(() => {
     switch (mode) {
       case modes.add:
         return !!inputValue;
@@ -92,21 +90,37 @@ export const ShoppingList = () => {
     setInputValue(text);
   };
 
+  const onSubmitHandler = () => {
+    let submit = () => {};
+    if (mode === modes.add) {
+      submit = onPressAdd;
+    } else if (mode === modes.edit) {
+      submit = onPressEdit;
+    }
+    submit();
+  };
+
   return (
     <>
       <Input
         value={inputValue}
         onChangeText={inputHandler}
+        onSubmit={onSubmitHandler}
         inputRef={inputRef}
       />
       <SmartButton
-        disabled={!buttonDisabled}
+        disabled={!enableButton}
         onPressAdd={onPressAdd}
         onPressDelete={onPressDelete}
         onPressEdit={onPressEdit}
         mode={mode}
       />
-      <List list={list} onPress={_onPressList} onLongPress={_onLongPressList} />
+      <List
+        list={list}
+        onPress={_onPressList}
+        onLongPress={_onLongPressList}
+        isTouched={itemIsTouched}
+      />
     </>
   );
 };
