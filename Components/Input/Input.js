@@ -7,10 +7,10 @@ export const Input = ({value, onChangeText, inputRef}) => {
   const [hasFocus, setHasFocus] = useState(false);
 
   return (
-    <View style={styles.inputContainer}>
+    <View style={[styles.inputContainer, hasFocus ? styles.onFocus : '']}>
       <TextInput
         placeholder={hasFocus ? '' : 'Enter Text'}
-        style={[styles.input, hasFocus ? styles.onFocus : '']}
+        style={styles.input}
         onChangeText={text => onChangeText(text)}
         onFocus={() => setHasFocus(true)}
         onBlur={() => setHasFocus(false)}

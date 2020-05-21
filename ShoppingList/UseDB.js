@@ -6,6 +6,7 @@ const LIST_KEY = 'LIST';
 export const useDB = () => {
   const [list, setList] = useState([]);
 
+  // get DB data at startup
   useEffect(() => {
     const _retrieveData = async () => {
       try {
@@ -46,6 +47,9 @@ export const useDB = () => {
     }
   };
 
+  /*
+   -------- public API ---------
+  */
   const addToList = item => {
     setList(val => [...val, item]);
   };
