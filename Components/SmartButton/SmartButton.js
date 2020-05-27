@@ -1,14 +1,42 @@
-import React, {useMemo} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import React, {useMemo, useRef, useState} from 'react';
+import {View, Text, TouchableOpacity, Animated} from 'react-native';
 import {styles} from './styles';
 import {modes} from '../config';
 
-export const Button = ({text, onPress, disabled, styling}) => {
+export const Button = ({
+  text,
+  onPress,
+  onLongPress,
+  disabled,
+  styling,
+  useAnimation,
+}) => {
+  const [a, b] = useState(1);
+  const fadeAnim = useRef(new Animated.Value(a)).current;
+
+  const _onPress = () => {
+    !!onPress && onPress();
+  };
+
+  const _onLongPress = () => {
+    !!onLongPress && onLongPress();
+  };
   return (
     <View style={styles.buttonContainer}>
-      <TouchableOpacity onPress={onPress} disabled={disabled}>
-        <Text style={[styling, disabled ? [styles.disabled] : {}]}>{text}</Text>
-      </TouchableOpacity>
+      <Animated.View
+        style={{
+          opacity: fadeAnim, // Bind opacity to animated value
+        }}>
+        <TouchableOpacity
+          onPress={_onPress}
+          disabled={disabled}
+          delayLongPress={500}
+          onLongPress={_onLongPress}>
+          <Text style={[styling, disabled ? [styles.disabled] : {}]}>
+            {text}
+          </Text>
+        </TouchableOpacity>
+      </Animated.View>
     </View>
   );
 };
@@ -20,18 +48,23 @@ export const SmartButton = ({
   disabled,
   mode,
 }) => {
-  const onPressFunc = useMemo(() => {
+  const _onPress = useMemo(() => {
     switch (mode) {
       case modes.edit:
         return onPressEdit;
       case modes.add:
         return onPressAdd;
       case modes.delete:
-        return onPressDelete;
+        return null;
       default:
         return onPressAdd;
     }
-  }, [mode, onPressAdd, onPressDelete, onPressEdit]);
+  }, [mode, onPressAdd, onPressEdit]);
+
+  const _onLongPress = useMemo(
+    () => (mode === modes.delete ? onPressDelete : null),
+    [mode, onPressDelete],
+  );
 
   const style = useMemo(() => {
     switch (mode) {
@@ -62,9 +95,11 @@ export const SmartButton = ({
   return (
     <Button
       text={text}
-      onPress={onPressFunc}
+      onPress={_onPress}
+      onLongPress={_onLongPress}
       disabled={disabled}
       styling={style}
+      useAnimation={mode === modes.delete}
     />
   );
 };

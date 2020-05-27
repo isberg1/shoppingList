@@ -2,6 +2,8 @@ import React, {useState, useCallback, useContext, useMemo, useRef} from 'react';
 import {SmartButton, List, Input} from '../Components/index';
 import {useDB} from './UseDB';
 import {modes} from '../Components/config';
+import {View} from 'react-native';
+import {styles} from './styles';
 
 const isObjectEmpty = object =>
   Object.keys(object).length === 0 && object.constructor === Object;
@@ -10,9 +12,9 @@ let storeLastEditedIndex;
 
 export const ShoppingList = () => {
   const [inputValue, setInputValue] = useState('');
-  const {list, addToList, deleteList, removeItem, editList} = useDB({});
   const [itemIsTouched, setItemIsTouched] = useState({});
   const [mode, setMode] = useState(modes.add);
+  const {list, addToList, deleteList, removeItem, editList} = useDB({});
   const inputRef = useRef(null);
 
   const itemIsTouchedLength = useCallback(
@@ -24,7 +26,7 @@ export const ShoppingList = () => {
     if (inputValue) {
       addToList(inputValue);
       setInputValue('');
-      if (itemIsTouchedLength()) setMode(modes.delete);
+      itemIsTouchedLength() && setMode(modes.delete);
     }
   };
 
@@ -32,9 +34,7 @@ export const ShoppingList = () => {
     if (inputValue && mode === modes.edit) {
       editList(storeLastEditedIndex, inputValue);
       setInputValue('');
-      isObjectEmpty({...itemIsTouched})
-        ? setMode(modes.add)
-        : setMode(modes.delete);
+      isObjectEmpty(itemIsTouched) ? setMode(modes.add) : setMode(modes.delete);
     }
   };
 
@@ -71,7 +71,6 @@ export const ShoppingList = () => {
     setMode(modes.edit);
     inputRef.current.focus();
     storeLastEditedIndex = index;
-    console.log('empty', isObjectEmpty({...itemIsTouched}));
   };
 
   const enableButton = useMemo(() => {
@@ -86,7 +85,7 @@ export const ShoppingList = () => {
   }, [inputValue, itemIsTouchedLength, mode]);
 
   const inputHandler = text => {
-    mode === modes.delete ? setMode(modes.add) : '';
+    mode === modes.delete && setMode(modes.add);
     setInputValue(text);
   };
 
@@ -100,13 +99,19 @@ export const ShoppingList = () => {
     submit();
   };
 
+  const onClearText = () =>
+    isObjectEmpty({...itemIsTouched})
+      ? setMode(modes.add)
+      : setMode(modes.delete);
+
   return (
-    <>
+    <View style={styles.shoppingList}>
       <Input
         value={inputValue}
         onChangeText={inputHandler}
         onSubmit={onSubmitHandler}
         inputRef={inputRef}
+        onClearText={onClearText}
       />
       <SmartButton
         disabled={!enableButton}
@@ -121,6 +126,8 @@ export const ShoppingList = () => {
         onLongPress={_onLongPressList}
         isTouched={itemIsTouched}
       />
-    </>
+    </View>
   );
 };
+
+// TODO unify use of 'itemIsTouchedLength' and 'isObjectEmpty'

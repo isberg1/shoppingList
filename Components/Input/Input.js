@@ -3,8 +3,19 @@ import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 
 import {styles} from './styles';
 
-export const Input = ({value, onChangeText, onSubmit, inputRef}) => {
+export const Input = ({
+  value,
+  onChangeText,
+  onSubmit,
+  inputRef,
+  onClearText,
+}) => {
   const [hasFocus, setHasFocus] = useState(false);
+
+  const _onClearText = () => {
+    onChangeText('');
+    !!onClearText && onClearText();
+  };
 
   return (
     <View style={[styles.inputContainer, hasFocus ? styles.onFocus : '']}>
@@ -19,7 +30,7 @@ export const Input = ({value, onChangeText, onSubmit, inputRef}) => {
         clearButtonMode={'always'}
         ref={inputRef}
       />
-      <TouchableOpacity onPress={() => onChangeText('')}>
+      <TouchableOpacity onPress={_onClearText}>
         <View style={styles.resetText}>
           <Text style={styles.deleteText}>X</Text>
         </View>
