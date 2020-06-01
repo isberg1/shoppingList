@@ -12,21 +12,20 @@ let storeLastEditedIndex;
 
 export const ShoppingList = () => {
   const [inputValue, setInputValue] = useState('');
-  const [itemIsTouched, setItemIsTouched] = useState({});
+  const [markedItems, setMarkedItems] = useState({});
   const [mode, setMode] = useState(modes.add);
   const {list, addToList, deleteList, removeItem, editList} = useDB({});
   const inputRef = useRef(null);
 
-  const itemIsTouchedLength = useCallback(
-    () => Object.keys(itemIsTouched).length,
-    [itemIsTouched],
-  );
+  const nrOfMarkedItems = useCallback(() => Object.keys(markedItems).length, [
+    markedItems,
+  ]);
 
   const onPressAdd = () => {
     if (inputValue) {
       addToList(inputValue);
       setInputValue('');
-      itemIsTouchedLength() && setMode(modes.delete);
+      nrOfMarkedItems() && setMode(modes.delete);
     }
   };
 
@@ -34,34 +33,34 @@ export const ShoppingList = () => {
     if (inputValue && mode === modes.edit) {
       editList(storeLastEditedIndex, inputValue);
       setInputValue('');
-      isObjectEmpty(itemIsTouched) ? setMode(modes.add) : setMode(modes.delete);
+      isObjectEmpty(markedItems) ? setMode(modes.add) : setMode(modes.delete);
     }
   };
 
   const onPressDelete = () => {
-    if (!Object.keys(itemIsTouched).length) return;
+    if (!Object.keys(markedItems).length) return;
 
-    const toDel = Object.keys(itemIsTouched)
-      .filter(val => itemIsTouched[val] === true)
+    const toDel = Object.keys(markedItems)
+      .filter(val => markedItems[val] === true)
       .map(val => parseInt(val, 10));
 
     removeItem(toDel);
-    setItemIsTouched({});
+    setMarkedItems({});
     setMode(modes.add);
   };
 
   const _onPressList = (index, value) => {
-    const newItemIsTouched = {...itemIsTouched};
-    newItemIsTouched[index] = value;
+    const newMarkedItems = {...markedItems};
+    newMarkedItems[index] = value;
 
     if (!value) {
-      delete newItemIsTouched[index];
+      delete newMarkedItems[index];
     }
-    setItemIsTouched(newItemIsTouched);
+    setMarkedItems(newMarkedItems);
 
-    if (!isObjectEmpty(newItemIsTouched) && value && !inputValue) {
+    if (!isObjectEmpty(newMarkedItems) && value && !inputValue) {
       setMode(modes.delete);
-    } else if (isObjectEmpty(newItemIsTouched) && !value) {
+    } else if (isObjectEmpty(newMarkedItems) && !value) {
       setMode(modes.add);
     }
   };
@@ -78,11 +77,11 @@ export const ShoppingList = () => {
       case modes.add:
         return !!inputValue;
       case modes.delete:
-        return !!itemIsTouchedLength();
+        return !!nrOfMarkedItems();
       case modes.edit:
         return !!inputValue;
     }
-  }, [inputValue, itemIsTouchedLength, mode]);
+  }, [inputValue, nrOfMarkedItems, mode]);
 
   const inputHandler = text => {
     mode === modes.delete && setMode(modes.add);
@@ -100,9 +99,7 @@ export const ShoppingList = () => {
   };
 
   const onClearText = () =>
-    isObjectEmpty({...itemIsTouched})
-      ? setMode(modes.add)
-      : setMode(modes.delete);
+    isObjectEmpty(markedItems) ? setMode(modes.add) : setMode(modes.delete);
 
   return (
     <View style={styles.shoppingList}>
@@ -124,7 +121,7 @@ export const ShoppingList = () => {
         list={list}
         onPress={_onPressList}
         onLongPress={_onLongPressList}
-        isTouched={itemIsTouched}
+        isTouched={markedItems}
       />
     </View>
   );
