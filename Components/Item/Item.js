@@ -1,12 +1,18 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {styles} from './styles';
 
 export const Item = ({value, index, onPress, onLongPress, isTouched}) => {
   const ref = useRef(null);
+  const [counter, setCounter] = useState(1);
 
-  const _onPress = () => onPress(index, !isTouched);
+  const _onPress = () => {
+    if (counter === 0 && isTouched) {
+      setCounter(val => val + 1);
+    }
+    onPress(index, !isTouched);
+  };
   const _onLongPress = () => onLongPress(index);
 
   const text = add => {
@@ -23,19 +29,36 @@ export const Item = ({value, index, onPress, onLongPress, isTouched}) => {
     );
   };
 
+  const _swipeSubtract = () => {
+    !isTouched && counter === 1 && _onPress();
+    setCounter(val => val + (val > 0 ? -1 : 0));
+  };
+  const _swipeAdd = () => {
+    if (isTouched && counter === 0) {
+      _onPress();
+    } else {
+      setCounter(val => val + 1);
+    }
+  };
+
   return (
     <Swipeable
       ref={ref}
       renderLeftActions={() => text(true)}
       renderRightActions={() => text(false)}
-      onSwipeableWillOpen={() => {
-        ref.current.close();
-      }}>
+      onSwipeableRightWillOpen={_swipeSubtract}
+      onSwipeableLeftWillOpen={_swipeAdd}
+      onSwipeableWillOpen={() => ref?.current?.close()}>
       <TouchableOpacity onPress={_onPress} onLongPress={_onLongPress}>
-        <View style={styles.textBorder}>
-          <Text style={[styles.text, isTouched ? styles.markedView : '']}>
-            {value}
-          </Text>
+        <View style={[styles.column]}>
+          <View style={[styles.textBorder, styles.row]}>
+            <Text style={[styles.text, isTouched && styles.markedView]}>
+              {value}
+            </Text>
+            <Text style={[styles.counter, isTouched && styles.markedView]}>
+              {counter}
+            </Text>
+          </View>
         </View>
       </TouchableOpacity>
     </Swipeable>

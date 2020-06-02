@@ -1,12 +1,9 @@
-import React, {useState, useCallback, useContext, useMemo, useRef} from 'react';
+import React, {useState, useCallback, useMemo, useRef} from 'react';
 import {SmartButton, List, Input} from '../Components/index';
 import {useDB} from './UseDB';
 import {modes} from '../Components/config';
 import {View} from 'react-native';
 import {styles} from './styles';
-
-const isObjectEmpty = object =>
-  Object.keys(object).length === 0 && object.constructor === Object;
 
 let storeLastEditedIndex;
 
@@ -25,7 +22,7 @@ export const ShoppingList = () => {
     if (inputValue) {
       addToList(inputValue);
       setInputValue('');
-      nrOfMarkedItems() && setMode(modes.delete);
+      nrOfMarkedItems() > 0 && setMode(modes.delete);
     }
   };
 
@@ -33,25 +30,28 @@ export const ShoppingList = () => {
     if (inputValue && mode === modes.edit) {
       editList(storeLastEditedIndex, inputValue);
       setInputValue('');
-      isObjectEmpty(markedItems) ? setMode(modes.add) : setMode(modes.delete);
+      nrOfMarkedItems() === 0 ? setMode(modes.add) : setMode(modes.delete);
     }
   };
 
   const onPressDelete = () => {
-    if (!Object.keys(markedItems).length) return;
+    if (nrOfMarkedItems() > 0) {
+      const itemsToDelete = Object.keys(markedItems)
+        .filter(val => markedItems[val] === true)
+        .map(val => parseInt(val, 10));
 
-    const toDel = Object.keys(markedItems)
-      .filter(val => markedItems[val] === true)
-      .map(val => parseInt(val, 10));
-
-    removeItem(toDel);
-    setMarkedItems({});
-    setMode(modes.add);
+      removeItem(itemsToDelete);
+      setMarkedItems({});
+      setMode(modes.add);
+    }
   };
 
   const _onPressList = (index, value) => {
     const newMarkedItems = {...markedItems};
     newMarkedItems[index] = value;
+
+    const isObjectEmpty = object =>
+      Object.keys(object).length === 0 && object.constructor === Object;
 
     if (!value) {
       delete newMarkedItems[index];
@@ -77,7 +77,7 @@ export const ShoppingList = () => {
       case modes.add:
         return !!inputValue;
       case modes.delete:
-        return !!nrOfMarkedItems();
+        return nrOfMarkedItems() > 0;
       case modes.edit:
         return !!inputValue;
     }
@@ -99,7 +99,7 @@ export const ShoppingList = () => {
   };
 
   const onClearText = () =>
-    isObjectEmpty(markedItems) ? setMode(modes.add) : setMode(modes.delete);
+    nrOfMarkedItems() === 0 ? setMode(modes.add) : setMode(modes.delete);
 
   return (
     <View style={styles.shoppingList}>
@@ -126,5 +126,3 @@ export const ShoppingList = () => {
     </View>
   );
 };
-
-// TODO unify use of 'itemIsTouchedLength' and 'isObjectEmpty'

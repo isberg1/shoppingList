@@ -7,6 +7,7 @@ export const styles = StyleSheet.create({
     fontSize: 30,
     textAlign: 'center',
     backgroundColor: lightGray,
+    flex: 9,
   },
   markedView: {
     backgroundColor: pink,
@@ -15,6 +16,20 @@ export const styles = StyleSheet.create({
     marginVertical: 3,
     borderColor: greenBlue,
     ...defaultBorder,
+  },
+  row: {
+    flexDirection: 'row',
+  },
+  column: {
+    flexDirection: 'column',
+    margin: 2,
+  },
+  counter: {
+    paddingVertical: 5,
+    fontSize: 30,
+    textAlign: 'center',
+    backgroundColor: lightGray,
+    flex: 1,
   },
   swipeText: {
     padding: 5,
