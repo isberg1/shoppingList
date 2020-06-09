@@ -42,25 +42,21 @@ export const Item = ({value, index, onPress, onLongPress, isTouched}) => {
   };
 
   return (
-    <Swipeable
-      ref={ref}
-      renderLeftActions={() => text(true)}
-      renderRightActions={() => text(false)}
-      onSwipeableRightWillOpen={_swipeSubtract}
-      onSwipeableLeftWillOpen={_swipeAdd}
-      onSwipeableWillOpen={() => ref?.current?.close()}>
-      <TouchableOpacity onPress={_onPress} onLongPress={_onLongPress}>
-        <View style={[styles.column]}>
-          <View style={[styles.textBorder, styles.row]}>
-            <Text style={[styles.text, isTouched && styles.markedView]}>
-              {value}
-            </Text>
-            <Text style={[styles.counter, isTouched && styles.markedView]}>
-              {counter}
-            </Text>
-          </View>
+    <TouchableOpacity onPress={_onPress} onLongPress={_onLongPress}>
+      <View style={[styles.itemRow, isTouched && styles.touchedItem]}>
+        <View style={styles.swipeContainer}>
+          <Swipeable
+            ref={ref}
+            renderLeftActions={() => text(true)}
+            renderRightActions={() => text(false)}
+            onSwipeableRightWillOpen={_swipeSubtract}
+            onSwipeableLeftWillOpen={_swipeAdd}
+            onSwipeableWillOpen={() => ref?.current?.close()}>
+            <Text style={[styles.text]}>{value}</Text>
+          </Swipeable>
         </View>
-      </TouchableOpacity>
-    </Swipeable>
+        <Text style={[styles.counter]}>{counter > 1 ? counter : ''}</Text>
+      </View>
+    </TouchableOpacity>
   );
 };

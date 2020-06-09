@@ -1,36 +1,45 @@
 import {StyleSheet} from 'react-native';
-import {defaultBorder, gray, greenBlue, pink, lightGray} from '../commonStyles';
+import {
+  defaultBorder,
+  orange,
+  greenBlue,
+  pink,
+  lightGray,
+  green,
+} from '../commonStyles';
 
 export const styles = StyleSheet.create({
   text: {
+    textAlign: 'left',
     paddingVertical: 5,
+    paddingHorizontal: 5,
     fontSize: 30,
-    textAlign: 'center',
-    backgroundColor: lightGray,
-    flex: 9,
   },
-  markedView: {
+  touchedItem: {
     backgroundColor: pink,
   },
-  textBorder: {
-    marginVertical: 3,
+
+  itemRow: {
+    flex: 1,
+    flexDirection: 'row',
+    marginVertical: 4,
+    backgroundColor: lightGray,
+
     borderColor: greenBlue,
     ...defaultBorder,
   },
-  row: {
-    flexDirection: 'row',
-  },
-  column: {
-    flexDirection: 'column',
-    margin: 2,
-  },
   counter: {
+    flex: 1,
     paddingVertical: 5,
     fontSize: 30,
     textAlign: 'center',
-    backgroundColor: lightGray,
-    flex: 1,
+    alignSelf: 'center',
   },
+
+  swipeContainer: {
+    flex: 5,
+  },
+
   swipeText: {
     padding: 5,
     fontSize: 30,
@@ -40,17 +49,19 @@ export const styles = StyleSheet.create({
     backgroundColor: lightGray,
     opacity: 0.8,
     margin: 10,
-    width: '90%',
+    width: '20%',
+    borderBottomLeftRadius: 30,
+    borderTopLeftRadius: 30,
+    borderBottomRightRadius: 30,
+    borderTopRightRadius: 30,
     ...defaultBorder,
   },
   swipeViewRight: {
     alignItems: 'flex-end',
-    borderBottomRightRadius: 30,
-    borderTopRightRadius: 30,
+    backgroundColor: orange,
   },
   swipeViewLeft: {
     alignItems: 'flex-start',
-    borderBottomLeftRadius: 30,
-    borderTopLeftRadius: 30,
+    backgroundColor: green,
   },
 });
