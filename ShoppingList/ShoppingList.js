@@ -18,23 +18,23 @@ export const ShoppingList = () => {
     markedItems,
   ]);
 
-  const onPressAdd = () => {
+  const onPressAdd = useCallback(() => {
     if (inputValue) {
       addToList(inputValue);
       setInputValue('');
       nrOfMarkedItems() > 0 && setMode(modes.delete);
     }
-  };
+  }, [addToList, inputValue, nrOfMarkedItems]);
 
-  const onPressEdit = () => {
+  const onPressEdit = useCallback(() => {
     if (inputValue && mode === modes.edit) {
       editList(storeLastEditedIndex, inputValue);
       setInputValue('');
       nrOfMarkedItems() === 0 ? setMode(modes.add) : setMode(modes.delete);
     }
-  };
+  }, [editList, inputValue, mode, nrOfMarkedItems]);
 
-  const onPressDelete = () => {
+  const onPressDelete = useCallback(() => {
     if (nrOfMarkedItems() > 0) {
       const itemsToDelete = Object.keys(markedItems)
         .filter(val => markedItems[val] === true)
@@ -44,26 +44,29 @@ export const ShoppingList = () => {
       setMarkedItems({});
       setMode(modes.add);
     }
-  };
+  }, [markedItems, nrOfMarkedItems, removeItem]);
 
-  const _onPressList = (index, value) => {
-    const newMarkedItems = {...markedItems};
-    newMarkedItems[index] = value;
+  const _onPressList = useCallback(
+    (index, value) => {
+      const newMarkedItems = {...markedItems};
+      newMarkedItems[index] = value;
 
-    const isObjectEmpty = object =>
-      Object.keys(object).length === 0 && object.constructor === Object;
+      const isObjectEmpty = object =>
+        Object.keys(object).length === 0 && object.constructor === Object;
 
-    if (!value) {
-      delete newMarkedItems[index];
-    }
-    setMarkedItems(newMarkedItems);
+      if (!value) {
+        delete newMarkedItems[index];
+      }
+      setMarkedItems(newMarkedItems);
 
-    if (!isObjectEmpty(newMarkedItems) && value && !inputValue) {
-      setMode(modes.delete);
-    } else if (isObjectEmpty(newMarkedItems) && !value) {
-      setMode(modes.add);
-    }
-  };
+      if (!isObjectEmpty(newMarkedItems) && value && !inputValue) {
+        setMode(modes.delete);
+      } else if (isObjectEmpty(newMarkedItems) && !value) {
+        setMode(modes.add);
+      }
+    },
+    [inputValue, markedItems],
+  );
 
   const _onLongPressList = index => {
     setInputValue(list[index]);
@@ -83,12 +86,15 @@ export const ShoppingList = () => {
     }
   }, [inputValue, nrOfMarkedItems, mode]);
 
-  const inputHandler = text => {
-    mode === modes.delete && setMode(modes.add);
-    setInputValue(text);
-  };
+  const inputHandler = useCallback(
+    text => {
+      mode === modes.delete && setMode(modes.add);
+      setInputValue(text);
+    },
+    [mode],
+  );
 
-  const onSubmitHandler = () => {
+  const onSubmitHandler = useCallback(() => {
     let submit = () => {};
     if (mode === modes.add) {
       submit = onPressAdd;
@@ -96,10 +102,12 @@ export const ShoppingList = () => {
       submit = onPressEdit;
     }
     submit();
-  };
+  }, [mode, onPressAdd, onPressEdit]);
 
-  const onClearText = () =>
-    nrOfMarkedItems() === 0 ? setMode(modes.add) : setMode(modes.delete);
+  const onClearText = useCallback(
+    () => setMode(nrOfMarkedItems() === 0 ? modes.add : modes.delete),
+    [nrOfMarkedItems],
+  );
 
   return (
     <View style={styles.shoppingList}>

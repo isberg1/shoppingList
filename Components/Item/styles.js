@@ -1,12 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {
-  defaultBorder,
-  orange,
-  greenBlue,
-  pink,
-  lightGray,
-  green,
-} from '../commonStyles';
+import {defaultBorder, greenBlue, pink, lightGray} from '../commonStyles';
 
 export const styles = StyleSheet.create({
   text: {
@@ -34,34 +27,5 @@ export const styles = StyleSheet.create({
     fontSize: 30,
     textAlign: 'center',
     alignSelf: 'center',
-  },
-
-  swipeContainer: {
-    flex: 5,
-  },
-
-  swipeText: {
-    padding: 5,
-    fontSize: 30,
-  },
-  swipeView: {
-    justifyContent: 'center',
-    backgroundColor: lightGray,
-    opacity: 0.8,
-    margin: 10,
-    width: '20%',
-    borderBottomLeftRadius: 30,
-    borderTopLeftRadius: 30,
-    borderBottomRightRadius: 30,
-    borderTopRightRadius: 30,
-    ...defaultBorder,
-  },
-  swipeViewRight: {
-    alignItems: 'flex-end',
-    backgroundColor: orange,
-  },
-  swipeViewLeft: {
-    alignItems: 'flex-start',
-    backgroundColor: green,
   },
 });

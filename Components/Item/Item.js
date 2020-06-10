@@ -1,60 +1,44 @@
-import React, {useRef, useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
+import {ItemAmountSetter} from './ItemAmountSetter/ItemAmountSetter';
 import {styles} from './styles';
 
 export const Item = ({value, index, onPress, onLongPress, isTouched}) => {
-  const ref = useRef(null);
   const [counter, setCounter] = useState(1);
 
-  const _onPress = () => {
+  const _onPress = useCallback(() => {
     if (counter === 0 && isTouched) {
       setCounter(val => val + 1);
     }
     onPress(index, !isTouched);
-  };
-  const _onLongPress = () => onLongPress(index);
+  }, [counter, index, isTouched, onPress]);
 
-  const text = add => {
-    return (
-      <>
-        <View
-          style={[
-            styles.swipeView,
-            add ? styles.swipeViewLeft : styles.swipeViewRight,
-          ]}>
-          <Text style={styles.swipeText}>{add ? '+1' : '-1'} </Text>
-        </View>
-      </>
-    );
-  };
+  const _onLongPress = useCallback(() => onLongPress && onLongPress(index), [
+    onLongPress,
+    index,
+  ]);
 
-  const _swipeSubtract = () => {
+  const _swipeSubtract = useCallback(() => {
     !isTouched && counter === 1 && _onPress();
-    setCounter(val => val + (val > 0 ? -1 : 0));
-  };
-  const _swipeAdd = () => {
+    setCounter(val => val - (val > 0 ? 1 : 0));
+  }, [_onPress, counter, isTouched]);
+
+  const _swipeAdd = useCallback(() => {
     if (isTouched && counter === 0) {
       _onPress();
     } else {
       setCounter(val => val + 1);
     }
-  };
+  }, [_onPress, counter, isTouched]);
 
   return (
     <TouchableOpacity onPress={_onPress} onLongPress={_onLongPress}>
       <View style={[styles.itemRow, isTouched && styles.touchedItem]}>
-        <View style={styles.swipeContainer}>
-          <Swipeable
-            ref={ref}
-            renderLeftActions={() => text(true)}
-            renderRightActions={() => text(false)}
-            onSwipeableRightWillOpen={_swipeSubtract}
-            onSwipeableLeftWillOpen={_swipeAdd}
-            onSwipeableWillOpen={() => ref?.current?.close()}>
-            <Text style={[styles.text]}>{value}</Text>
-          </Swipeable>
-        </View>
+        <ItemAmountSetter
+          value={value}
+          swipeRight={_swipeAdd}
+          swipeLeft={_swipeSubtract}
+        />
         <Text style={[styles.counter]}>{counter > 1 ? counter : ''}</Text>
       </View>
     </TouchableOpacity>
