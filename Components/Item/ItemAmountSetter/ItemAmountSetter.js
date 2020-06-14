@@ -15,7 +15,7 @@ const swipingText = add => (
   </>
 );
 
-export const ItemAmountSetter = ({value, swipeRight, swipeLeft}) => {
+export const ItemAmountSetter = ({value, swipeRight, swipeLeft, children}) => {
   const ref = useRef(null);
 
   return (
@@ -27,7 +27,7 @@ export const ItemAmountSetter = ({value, swipeRight, swipeLeft}) => {
         onSwipeableRightWillOpen={swipeLeft}
         onSwipeableLeftWillOpen={swipeRight}
         onSwipeableWillOpen={() => ref?.current?.close()}>
-        <Text style={[styles.text]}>{value}</Text>
+        {children}
       </Swipeable>
     </View>
   );

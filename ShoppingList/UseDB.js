@@ -74,9 +74,11 @@ export const useDB = () => {
     newList.length !== 0 ? setList(newList) : deleteList();
   };
 
-  const editList = (index, newValue) => {
-    setList(arr =>
-      [...arr].map((val, idx) => (index === idx ? newValue : val)),
+  const editList = (indexToEdit, newValue) => {
+    setList(currentList =>
+      currentList.map((oldValue, index) =>
+        indexToEdit === index ? newValue : oldValue,
+      ),
     );
   };
 

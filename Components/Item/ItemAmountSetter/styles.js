@@ -2,13 +2,6 @@ import {StyleSheet} from 'react-native';
 import {defaultBorder, orange, lightGray, green} from '../../commonStyles';
 
 export const styles = StyleSheet.create({
-  text: {
-    textAlign: 'left',
-    paddingVertical: 5,
-    paddingHorizontal: 5,
-    fontSize: 30,
-  },
-
   swipeContainer: {
     flex: 5,
   },

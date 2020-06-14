@@ -3,9 +3,13 @@ import {SmartButton, List, Input} from '../Components/index';
 import {useDB} from './UseDB';
 import {modes} from '../Components/config';
 import {View} from 'react-native';
+import {Item} from './Item';
 import {styles} from './styles';
 
-let storeLastEditedIndex;
+let itemToBeEdited = {
+  index: null,
+  count: 1,
+};
 
 export const ShoppingList = () => {
   const [inputValue, setInputValue] = useState('');
@@ -20,7 +24,7 @@ export const ShoppingList = () => {
 
   const onPressAdd = useCallback(() => {
     if (inputValue) {
-      addToList(inputValue);
+      addToList(new Item(inputValue));
       setInputValue('');
       nrOfMarkedItems() > 0 && setMode(modes.delete);
     }
@@ -28,9 +32,13 @@ export const ShoppingList = () => {
 
   const onPressEdit = useCallback(() => {
     if (inputValue && mode === modes.edit) {
-      editList(storeLastEditedIndex, inputValue);
+      editList(
+        itemToBeEdited.index,
+        new Item(inputValue, itemToBeEdited.count),
+      );
       setInputValue('');
       nrOfMarkedItems() === 0 ? setMode(modes.add) : setMode(modes.delete);
+      inputRef.current.blur();
     }
   }, [editList, inputValue, mode, nrOfMarkedItems]);
 
@@ -68,12 +76,20 @@ export const ShoppingList = () => {
     [inputValue, markedItems],
   );
 
-  const _onLongPressList = index => {
-    setInputValue(list[index]);
+  const _onLongPressList = (index, count = 1) => {
+    setInputValue(list[index].ItemName);
     setMode(modes.edit);
     inputRef.current.focus();
-    storeLastEditedIndex = index;
+    itemToBeEdited.index = index;
+    itemToBeEdited.count = count;
   };
+
+  const _onEditItemCounter = useCallback(
+    (index, itemName, ItemCount = 1) => {
+      editList(index, new Item(itemName, ItemCount));
+    },
+    [editList],
+  );
 
   const enableButton = useMemo(() => {
     switch (mode) {
@@ -130,6 +146,7 @@ export const ShoppingList = () => {
         onPress={_onPressList}
         onLongPress={_onLongPressList}
         isTouched={markedItems}
+        editItemCounter={_onEditItemCounter}
       />
     </View>
   );

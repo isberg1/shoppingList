@@ -22,7 +22,7 @@ export const Input = ({
       <TextInput
         placeholder={hasFocus ? '' : 'Enter Text'}
         style={styles.input}
-        onChangeText={text => onChangeText(text)}
+        onChangeText={onChangeText}
         onFocus={() => setHasFocus(true)}
         onBlur={() => setHasFocus(false)}
         onSubmitEditing={({nativeEvent: {text}}) => onSubmit(text)}
