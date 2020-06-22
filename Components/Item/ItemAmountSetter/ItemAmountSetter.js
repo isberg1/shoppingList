@@ -3,6 +3,8 @@ import {View, Text} from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {styles} from './styles';
 
+const swipeThreshold = 150;
+
 const swipingText = add => (
   <>
     <View
@@ -15,6 +17,7 @@ const swipingText = add => (
   </>
 );
 
+// DOCUMENTATION: https://docs.swmansion.com/react-native-gesture-handler/docs/component-swipeable.html
 export const ItemAmountSetter = ({value, swipeRight, swipeLeft, children}) => {
   const ref = useRef(null);
 
@@ -22,6 +25,8 @@ export const ItemAmountSetter = ({value, swipeRight, swipeLeft, children}) => {
     <View style={styles.swipeContainer}>
       <Swipeable
         ref={ref}
+        rightThreshold={swipeThreshold}
+        leftThreshold={swipeThreshold}
         renderLeftActions={() => swipingText(true)}
         renderRightActions={() => swipingText(false)}
         onSwipeableRightWillOpen={swipeLeft}
@@ -32,3 +37,6 @@ export const ItemAmountSetter = ({value, swipeRight, swipeLeft, children}) => {
     </View>
   );
 };
+
+// TODO fix bug where count value is
+// moved to line under when item is deleted

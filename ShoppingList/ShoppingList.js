@@ -111,13 +111,11 @@ export const ShoppingList = () => {
   );
 
   const onSubmitHandler = useCallback(() => {
-    let submit = () => {};
     if (mode === modes.add) {
-      submit = onPressAdd;
+      onPressAdd();
     } else if (mode === modes.edit) {
-      submit = onPressEdit;
+      onPressEdit();
     }
-    submit();
   }, [mode, onPressAdd, onPressEdit]);
 
   const onClearText = useCallback(
@@ -127,27 +125,31 @@ export const ShoppingList = () => {
 
   return (
     <View style={styles.shoppingList}>
-      <Input
-        value={inputValue}
-        onChangeText={inputHandler}
-        onSubmit={onSubmitHandler}
-        inputRef={inputRef}
-        onClearText={onClearText}
-      />
-      <SmartButton
-        disabled={!enableButton}
-        onPressAdd={onPressAdd}
-        onPressDelete={onPressDelete}
-        onPressEdit={onPressEdit}
-        mode={mode}
-      />
-      <List
-        list={list}
-        onPress={_onPressList}
-        onLongPress={_onLongPressList}
-        isTouched={markedItems}
-        editItemCounter={_onEditItemCounter}
-      />
+      <View style={styles.inputAndButton}>
+        <Input
+          value={inputValue}
+          onChangeText={inputHandler}
+          onSubmit={onSubmitHandler}
+          inputRef={inputRef}
+          onClearText={onClearText}
+        />
+        <SmartButton
+          disabled={!enableButton}
+          onPressAdd={onPressAdd}
+          onPressDelete={onPressDelete}
+          onPressEdit={onPressEdit}
+          mode={mode}
+        />
+      </View>
+      <View style={styles.list}>
+        <List
+          list={list}
+          onPress={_onPressList}
+          onLongPress={_onLongPressList}
+          isTouched={markedItems}
+          editItemCounter={_onEditItemCounter}
+        />
+      </View>
     </View>
   );
 };

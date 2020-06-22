@@ -29,7 +29,6 @@ export const useDB = () => {
       const _storeData = async () => {
         try {
           await AsyncStorage.setItem(LIST_KEY, JSON.stringify(list));
-          console.log('storeData');
         } catch (error) {
           console.log('store data error', error);
         }
@@ -41,7 +40,6 @@ export const useDB = () => {
   const _deleteData = async () => {
     try {
       await AsyncStorage.removeItem(LIST_KEY);
-      console.log('deleteData');
     } catch (error) {
       console.log('delete data error', error);
     }

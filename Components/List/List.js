@@ -11,20 +11,22 @@ export const List = ({
   editItemCounter,
 }) => {
   return (
-    <ScrollView
-      contentInsetAdjustmentBehavior="automatic"
-      style={styles.scrollView}>
-      {list.map((item, index) => (
-        <Item
-          key={index}
-          value={item}
-          index={index}
-          isTouched={isTouched[index]}
-          onPress={onPress}
-          onLongPress={onLongPress}
-          editItemCounter={editItemCounter}
-        />
-      ))}
-    </ScrollView>
+    <>
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        style={styles.scrollView}>
+        {list.map((item, index) => (
+          <Item
+            key={index}
+            value={item}
+            index={index}
+            isTouched={isTouched[index]}
+            onPress={onPress}
+            onLongPress={onLongPress}
+            editItemCounter={editItemCounter}
+          />
+        ))}
+      </ScrollView>
+    </>
   );
 };
