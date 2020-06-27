@@ -41,7 +41,13 @@ export const Item = ({item, index, onPress, onLongPress, editItemCounter}) => {
         </View>
         <View style={styles.ItemAmountSetterContainer}>
           <ItemAmountSetter swipeRight={_swipeAdd} swipeLeft={_swipeSubtract}>
-            <Text style={[styles.counter]}>{counter > 1 ? counter : ''}</Text>
+            <View style={styles.outerContainer}>
+              <View style={styles.innerContainer}>
+                <Text style={[styles.counter]}>
+                  {counter > 1 ? counter : ''}
+                </Text>
+              </View>
+            </View>
           </ItemAmountSetter>
         </View>
       </View>

@@ -7,23 +7,16 @@ export const styles = StyleSheet.create({
     fontSize: 30,
   },
   swipeView: {
-    justifyContent: 'center',
+    width: '100%',
     backgroundColor: lightGray,
-    opacity: 0.8,
-    margin: 10,
-    width: '20%',
-    borderBottomLeftRadius: 30,
-    borderTopLeftRadius: 30,
-    borderBottomRightRadius: 30,
-    borderTopRightRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
     ...defaultBorder,
   },
   swipeViewRight: {
-    alignItems: 'flex-end',
     backgroundColor: orange,
   },
   swipeViewLeft: {
-    alignItems: 'flex-start',
     backgroundColor: green,
   },
 });

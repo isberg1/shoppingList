@@ -21,9 +21,6 @@ export const styles = StyleSheet.create({
   touchableTextContainer: {
     flex: 7,
   },
-  ItemAmountSetterContainer: {
-    flex: 2,
-  },
   itemRow: {
     flex: 1,
     flexDirection: 'row',
@@ -34,12 +31,21 @@ export const styles = StyleSheet.create({
     borderColor: greenBlue,
     ...defaultBorder,
   },
-  counter: {
+  ItemAmountSetterContainer: {
+    flex: 2,
+  },
+  outerContainer: {
+    height: '100%',
+    borderColor: greenBlue,
+    ...defaultBorder,
+  },
+  innerContainer: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  counter: {
     paddingVertical: 5,
     fontSize: 30,
-    textAlign: 'center',
-    borderWidth: 2,
-    borderRadius: 20,
   },
 });
