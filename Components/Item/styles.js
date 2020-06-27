@@ -36,9 +36,10 @@ export const styles = StyleSheet.create({
   },
   outerContainer: {
     height: '100%',
-    borderColor: greenBlue,
+    borderColor: 'transparent',
     ...defaultBorder,
   },
+  borders: {borderColor: greenBlue},
   innerContainer: {
     flex: 1,
     justifyContent: 'center',
