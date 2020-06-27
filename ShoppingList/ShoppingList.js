@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useMemo, useRef} from 'react';
+import React, {useState, useCallback, useMemo, useRef, useEffect} from 'react';
 import {SmartButton, List, Input} from '../Components/index';
 import {useDB} from './UseDB';
 import {modes} from '../Components/config';
@@ -12,15 +12,15 @@ let itemToBeEdited = {
 };
 
 export const ShoppingList = () => {
-  const [inputValue, setInputValue] = useState('');
-  const [markedItems, setMarkedItems] = useState({});
-  const [mode, setMode] = useState(modes.add);
   const {list, addToList, deleteList, removeItem, editList} = useDB({});
+  const [inputValue, setInputValue] = useState('');
+  const [mode, setMode] = useState(modes.add);
   const inputRef = useRef(null);
 
-  const nrOfMarkedItems = useCallback(() => Object.keys(markedItems).length, [
-    markedItems,
-  ]);
+  const nrOfMarkedItems = useCallback(
+    () => list.filter(item => item.isMarked).length,
+    [list],
+  );
 
   const onPressAdd = useCallback(() => {
     if (inputValue) {
@@ -28,6 +28,7 @@ export const ShoppingList = () => {
       setInputValue('');
       nrOfMarkedItems() > 0 && setMode(modes.delete);
     }
+    //deleteList();
   }, [addToList, inputValue, nrOfMarkedItems]);
 
   const onPressEdit = useCallback(() => {
@@ -44,37 +45,40 @@ export const ShoppingList = () => {
 
   const onPressDelete = useCallback(() => {
     if (nrOfMarkedItems() > 0) {
-      const itemsToDelete = Object.keys(markedItems)
-        .filter(val => markedItems[val] === true)
-        .map(val => parseInt(val, 10));
+      const itemsToDelete = list
+        .filter(item => item.isMarked)
+        .map(markedItem => parseInt(markedItem.isMarkedIndex, 10));
 
       removeItem(itemsToDelete);
-      setMarkedItems({});
+      // setMarkedItems({});
       setMode(modes.add);
     }
-  }, [markedItems, nrOfMarkedItems, removeItem]);
+  }, [list, nrOfMarkedItems, removeItem]);
 
   const _onPressList = useCallback(
-    (index, value) => {
-      const newMarkedItems = {...markedItems};
-      newMarkedItems[index] = value;
+    // todo replace 'value' system with something easier to understand
+    (index, item) => {
+      const newValue = new Item(
+        item.ItemName,
+        item.ItemCount,
+        !item.isMarked,
+        !item.isMarked ? index : null,
+      );
+      editList(index, newValue);
 
-      const isObjectEmpty = object =>
-        Object.keys(object).length === 0 && object.constructor === Object;
-
-      if (!value) {
-        delete newMarkedItems[index];
-      }
-      setMarkedItems(newMarkedItems);
-
-      if (!isObjectEmpty(newMarkedItems) && value && !inputValue) {
+      if (nrOfMarkedItems > 0 || (!item.isMarked && !inputValue)) {
         setMode(modes.delete);
-      } else if (isObjectEmpty(newMarkedItems) && !value) {
+      } else if (nrOfMarkedItems === 0 || item.isMarked) {
         setMode(modes.add);
       }
     },
-    [inputValue, markedItems],
+    [editList, inputValue, nrOfMarkedItems],
   );
+
+  useEffect(() => {
+    console.log('new list:', list);
+    console.log('nr:', nrOfMarkedItems());
+  }, [list, nrOfMarkedItems]);
 
   const _onLongPressList = (index, count = 1) => {
     setInputValue(list[index].ItemName);
@@ -85,8 +89,8 @@ export const ShoppingList = () => {
   };
 
   const _onEditItemCounter = useCallback(
-    (index, itemName, ItemCount = 1) => {
-      editList(index, new Item(itemName, ItemCount));
+    (index, item, ItemCount = 1) => {
+      editList(index, new Item(item.ItemName, ItemCount, item.isMarked));
     },
     [editList],
   );
@@ -146,7 +150,6 @@ export const ShoppingList = () => {
           list={list}
           onPress={_onPressList}
           onLongPress={_onLongPressList}
-          isTouched={markedItems}
           editItemCounter={_onEditItemCounter}
         />
       </View>

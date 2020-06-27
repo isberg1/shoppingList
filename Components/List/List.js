@@ -3,13 +3,7 @@ import {ScrollView} from 'react-native';
 import {styles} from './styles';
 import {Item} from '../Item/Item';
 
-export const List = ({
-  list,
-  onPress,
-  onLongPress,
-  isTouched,
-  editItemCounter,
-}) => {
+export const List = ({list, onPress, onLongPress, editItemCounter}) => {
   return (
     <>
       <ScrollView
@@ -19,8 +13,9 @@ export const List = ({
           <Item
             key={index}
             value={item}
+            item={item}
+            isTouched={item.isMarked}
             index={index}
-            isTouched={isTouched[index]}
             onPress={onPress}
             onLongPress={onLongPress}
             editItemCounter={editItemCounter}

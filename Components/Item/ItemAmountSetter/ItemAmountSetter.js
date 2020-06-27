@@ -18,7 +18,7 @@ const swipingText = add => (
 );
 
 // DOCUMENTATION: https://docs.swmansion.com/react-native-gesture-handler/docs/component-swipeable.html
-export const ItemAmountSetter = ({value, swipeRight, swipeLeft, children}) => {
+export const ItemAmountSetter = ({swipeRight, swipeLeft, children}) => {
   const ref = useRef(null);
 
   return (

@@ -14,7 +14,6 @@ export const useDB = () => {
         if (value !== null) {
           // We have data!!
           const val = JSON.parse(value);
-          console.log('retrieveData', val);
           setList(val);
         }
       } catch (error) {
