@@ -28,7 +28,6 @@ export const ShoppingList = () => {
       setInputValue('');
       nrOfMarkedItems() > 0 && setMode(modes.delete);
     }
-    //deleteList();
   }, [addToList, inputValue, nrOfMarkedItems]);
 
   const onPressEdit = useCallback(() => {
@@ -50,7 +49,6 @@ export const ShoppingList = () => {
         .map(markedItem => parseInt(markedItem.isMarkedIndex, 10));
 
       removeItem(itemsToDelete);
-      // setMarkedItems({});
       setMode(modes.add);
     }
   }, [list, nrOfMarkedItems, removeItem]);

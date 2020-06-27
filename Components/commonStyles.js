@@ -11,4 +11,5 @@ export const pink = '#bd315e';
 export const orange = '#C25B01';
 export const green = 'green';
 export const blue = 'blue';
+export const SteamBlue = '#1b2838';
 export const white = 'white';

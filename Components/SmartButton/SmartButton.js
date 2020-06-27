@@ -32,9 +32,7 @@ export const Button = ({
           disabled={disabled}
           delayLongPress={500}
           onLongPress={_onLongPress}>
-          <Text style={[styling, disabled ? [styles.disabled] : {}]}>
-            {text}
-          </Text>
+          <Text style={[styling, disabled && styles.disabled]}>{text}</Text>
         </TouchableOpacity>
       </Animated.View>
     </View>

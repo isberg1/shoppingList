@@ -1,9 +1,9 @@
 import {StyleSheet} from 'react-native';
-import {darkTheme} from './Components/commonStyles';
+import {SteamBlue} from './Components/commonStyles';
 
 export const styles = StyleSheet.create({
   root: {
-    backgroundColor: darkTheme,
+    backgroundColor: SteamBlue,
     height: '100%',
     flex: 1,
   },

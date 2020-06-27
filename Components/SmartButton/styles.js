@@ -35,6 +35,6 @@ export const styles = StyleSheet.create({
     marginHorizontal: 30,
   },
   disabled: {
-    opacity: 0.3,
+    opacity: 0.6,
   },
 });

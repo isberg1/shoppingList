@@ -1,5 +1,11 @@
 import {StyleSheet} from 'react-native';
-import {defaultBorder, greenBlue, pink, lightGray} from '../commonStyles';
+import {
+  defaultBorder,
+  greenBlue,
+  pink,
+  lightGray,
+  white,
+} from '../commonStyles';
 
 export const styles = StyleSheet.create({
   text: {
@@ -7,6 +13,7 @@ export const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 5,
     fontSize: 30,
+    color: white,
   },
   touchedItem: {
     backgroundColor: pink,
