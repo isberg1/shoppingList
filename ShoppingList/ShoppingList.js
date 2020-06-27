@@ -34,7 +34,12 @@ export const ShoppingList = () => {
     if (inputValue && mode === modes.edit) {
       editList(
         itemToBeEdited.index,
-        new Item(inputValue, itemToBeEdited.count),
+        new Item(
+          inputValue,
+          itemToBeEdited.ItemCount,
+          itemToBeEdited.isMarked,
+          itemToBeEdited.isMarkedIndex,
+        ),
       );
       setInputValue('');
       nrOfMarkedItems() === 0 ? setMode(modes.add) : setMode(modes.delete);
@@ -54,7 +59,6 @@ export const ShoppingList = () => {
   }, [list, nrOfMarkedItems, removeItem]);
 
   const _onPressList = useCallback(
-    // todo replace 'value' system with something easier to understand
     (index, item) => {
       const newValue = new Item(
         item.ItemName,
@@ -73,17 +77,12 @@ export const ShoppingList = () => {
     [editList, inputValue, nrOfMarkedItems],
   );
 
-  useEffect(() => {
-    console.log('new list:', list);
-    console.log('nr:', nrOfMarkedItems());
-  }, [list, nrOfMarkedItems]);
-
-  const _onLongPressList = (index, count = 1) => {
-    setInputValue(list[index].ItemName);
+  const _onLongPressList = (index, item) => {
+    setInputValue(item.ItemName);
     setMode(modes.edit);
     inputRef.current.focus();
+    itemToBeEdited = {...item};
     itemToBeEdited.index = index;
-    itemToBeEdited.count = count;
   };
 
   const _onEditItemCounter = useCallback(

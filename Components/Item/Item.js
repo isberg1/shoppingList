@@ -4,7 +4,7 @@ import {ItemAmountSetter} from './ItemAmountSetter/ItemAmountSetter';
 import {styles} from './styles';
 
 export const Item = ({item, index, onPress, onLongPress, editItemCounter}) => {
-  const [counter, setCounter] = useState(item.ItemCount ?? 1);
+  const [counter, setCounter] = useState(item.ItemCount);
   const showCounter = useMemo(() => counter > 1 && !item.isMarked, [
     counter,
     item.isMarked,
@@ -15,8 +15,8 @@ export const Item = ({item, index, onPress, onLongPress, editItemCounter}) => {
   }, [index, item, onPress]);
 
   const _onLongPress = useCallback(
-    () => onLongPress && onLongPress(index, counter),
-    [onLongPress, index, counter],
+    () => onLongPress && onLongPress(index, item),
+    [onLongPress, index, item],
   );
 
   const _swipeSubtract = useCallback(() => {
