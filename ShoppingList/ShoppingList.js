@@ -8,7 +8,6 @@ import {styles} from './styles';
 
 let itemToBeEdited = {
   index: null,
-  count: 1,
 };
 
 export const ShoppingList = () => {

@@ -1,12 +1,11 @@
-import React, {useState, useCallback, useMemo} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {ItemAmountSetter} from './ItemAmountSetter/ItemAmountSetter';
 import {styles} from './styles';
 
 export const Item = ({item, index, onPress, onLongPress, editItemCounter}) => {
-  const [counter, setCounter] = useState(item.ItemCount);
-  const showCounter = useMemo(() => counter > 1 && !item.isMarked, [
-    counter,
+  const showCounter = useMemo(() => item.ItemCount > 1 && !item.isMarked, [
+    item.ItemCount,
     item.isMarked,
   ]);
 
@@ -20,16 +19,14 @@ export const Item = ({item, index, onPress, onLongPress, editItemCounter}) => {
   );
 
   const _swipeSubtract = useCallback(() => {
-    const newCounterValue = counter - (counter > 0 ? 1 : 0);
-    setCounter(newCounterValue);
-    counter && editItemCounter(index, item, newCounterValue);
-  }, [item, counter, editItemCounter, index]);
+    const newCounterValue = item.ItemCount - (item.ItemCount > 0 ? 1 : 0);
+    item.ItemCount && editItemCounter(index, item, newCounterValue);
+  }, [item, editItemCounter, index]);
 
   const _swipeAdd = useCallback(() => {
-    const newCounterValue = counter + 1;
-    setCounter(newCounterValue);
+    const newCounterValue = item.ItemCount + 1;
     editItemCounter(index, item, newCounterValue);
-  }, [counter, item, editItemCounter, index]);
+  }, [item, editItemCounter, index]);
 
   return (
     <>
@@ -48,7 +45,7 @@ export const Item = ({item, index, onPress, onLongPress, editItemCounter}) => {
               style={[styles.outerContainer, showCounter && styles.borders]}>
               <View style={styles.innerContainer}>
                 <Text style={[styles.counter]}>
-                  {showCounter ? counter : ''}
+                  {showCounter ? item.ItemCount : ''}
                 </Text>
               </View>
             </View>

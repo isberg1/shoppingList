@@ -37,6 +37,3 @@ export const ItemAmountSetter = ({
     </Swipeable>
   );
 };
-
-// TODO fix bug where count value is
-// moved to line under when item is deleted
