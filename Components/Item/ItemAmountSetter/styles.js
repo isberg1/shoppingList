@@ -2,10 +2,6 @@ import {StyleSheet} from 'react-native';
 import {defaultBorder, orange, lightGray, green} from '../../commonStyles';
 
 export const styles = StyleSheet.create({
-  swipeContainer: {
-    flex: 5,
-  },
-
   swipeText: {
     padding: 5,
     fontSize: 30,

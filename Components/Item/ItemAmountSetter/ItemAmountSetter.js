@@ -3,8 +3,6 @@ import {View, Text} from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {styles} from './styles';
 
-const swipeThreshold = 150;
-
 const swipingText = add => (
   <>
     <View
@@ -22,19 +20,15 @@ export const ItemAmountSetter = ({swipeRight, swipeLeft, children}) => {
   const ref = useRef(null);
 
   return (
-    <View style={styles.swipeContainer}>
-      <Swipeable
-        ref={ref}
-        rightThreshold={swipeThreshold}
-        leftThreshold={swipeThreshold}
-        renderLeftActions={() => swipingText(true)}
-        renderRightActions={() => swipingText(false)}
-        onSwipeableRightWillOpen={swipeLeft}
-        onSwipeableLeftWillOpen={swipeRight}
-        onSwipeableWillOpen={() => ref?.current?.close()}>
-        {children}
-      </Swipeable>
-    </View>
+    <Swipeable
+      ref={ref}
+      renderLeftActions={() => swipingText(true)}
+      renderRightActions={() => swipingText(false)}
+      onSwipeableRightWillOpen={swipeLeft}
+      onSwipeableLeftWillOpen={swipeRight}
+      onSwipeableWillOpen={() => ref?.current?.close()}>
+      {children}
+    </Swipeable>
   );
 };
 

@@ -18,10 +18,16 @@ export const styles = StyleSheet.create({
   touchedItem: {
     backgroundColor: pink,
   },
-
+  touchableTextContainer: {
+    flex: 7,
+  },
+  ItemAmountSetterContainer: {
+    flex: 2,
+  },
   itemRow: {
     flex: 1,
     flexDirection: 'row',
+    alignItems: 'center',
     marginVertical: 4,
     backgroundColor: lightGray,
 
@@ -33,6 +39,7 @@ export const styles = StyleSheet.create({
     paddingVertical: 5,
     fontSize: 30,
     textAlign: 'center',
-    alignSelf: 'center',
+    borderWidth: 2,
+    borderRadius: 20,
   },
 });

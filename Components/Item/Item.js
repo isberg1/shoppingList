@@ -32,13 +32,19 @@ export const Item = ({item, index, onPress, onLongPress, editItemCounter}) => {
   }, [counter, item, _onPress, editItemCounter, index]);
 
   return (
-    <TouchableOpacity onPress={_onPress} onLongPress={_onLongPress}>
+    <>
       <View style={[styles.itemRow, item.isMarked && styles.touchedItem]}>
-        <ItemAmountSetter swipeRight={_swipeAdd} swipeLeft={_swipeSubtract}>
-          <Text style={[styles.text]}>{item.ItemName}</Text>
-        </ItemAmountSetter>
-        <Text style={[styles.counter]}>{counter > 1 ? counter : ''}</Text>
+        <View style={styles.touchableTextContainer}>
+          <TouchableOpacity onPress={_onPress} onLongPress={_onLongPress}>
+            <Text style={[styles.text]}>{item.ItemName}</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.ItemAmountSetterContainer}>
+          <ItemAmountSetter swipeRight={_swipeAdd} swipeLeft={_swipeSubtract}>
+            <Text style={[styles.counter]}>{counter > 1 ? counter : ''}</Text>
+          </ItemAmountSetter>
+        </View>
       </View>
-    </TouchableOpacity>
+    </>
   );
 };
