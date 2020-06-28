@@ -34,13 +34,13 @@ export const styles = StyleSheet.create({
   ItemAmountSetterContainer: {
     flex: 2,
   },
-  outerContainer: {
+  outerCounterContainer: {
     height: '100%',
     borderColor: 'transparent',
     ...defaultBorder,
   },
   borders: {borderColor: greenBlue},
-  innerContainer: {
+  innerCounterContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',

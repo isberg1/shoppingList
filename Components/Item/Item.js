@@ -42,8 +42,11 @@ export const Item = ({item, index, onPress, onLongPress, editItemCounter}) => {
             swipeLeft={_swipeSubtract}
             disabled={item.isMarked}>
             <View
-              style={[styles.outerContainer, showCounter && styles.borders]}>
-              <View style={styles.innerContainer}>
+              style={[
+                styles.outerCounterContainer,
+                showCounter && styles.borders,
+              ]}>
+              <View style={styles.innerCounterContainer}>
                 <Text style={[styles.counter]}>
                   {showCounter ? item.ItemCount : ''}
                 </Text>
