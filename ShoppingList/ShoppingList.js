@@ -1,6 +1,6 @@
 import React, {useState, useCallback, useMemo, useRef, useEffect} from 'react';
 import {SmartButton, List, Input} from '../Components/index';
-import {useDB} from './UseDB';
+import {usePersistentStorage} from './UsePersistentStorage';
 import {modes} from '../Components/config';
 import {View} from 'react-native';
 import {Item} from './Item';
@@ -11,7 +11,13 @@ let itemToBeEdited = {
 };
 
 export const ShoppingList = () => {
-  const {list, addToList, deleteList, removeItem, editList} = useDB({});
+  const {
+    list,
+    addToList,
+    deleteList,
+    removeItem,
+    editList,
+  } = usePersistentStorage({});
   const [inputValue, setInputValue] = useState('');
   const [mode, setMode] = useState(modes.add);
   const inputRef = useRef(null);

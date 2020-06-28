@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 const LIST_KEY = 'LIST';
 
-export const useDB = () => {
+export const usePersistentStorage = () => {
   const [list, setList] = useState([]);
 
   // get DB data at startup
