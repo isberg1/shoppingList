@@ -11,14 +11,8 @@ export const useDB = () => {
     const _retrieveData = async () => {
       try {
         const value = await AsyncStorage.getItem(LIST_KEY);
-        if (value !== null) {
-          // We have data!!
-          const val = JSON.parse(value);
-          setList(val);
-        }
-      } catch (error) {
-        // Error retrieving data
-      }
+        value !== null && setList(JSON.parse(value));
+      } catch (error) {}
     };
     _retrieveData();
   }, []);
