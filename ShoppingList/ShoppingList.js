@@ -16,16 +16,20 @@ export const ShoppingList = () => {
   const [mode, setMode] = useState(modes.add);
   const inputRef = useRef(null);
 
-  const nrOfMarkedItems = useCallback(
-    () => list.filter(item => item.isMarked).length,
+  const nrOfMarkedItems = useMemo(
+    () => (list || []).filter(item => item.isMarked).length,
     [list],
   );
+
+  useEffect(() => console.log('nrOfMarkedItems', nrOfMarkedItems), [
+    nrOfMarkedItems,
+  ]);
 
   const onPressAdd = useCallback(() => {
     if (inputValue) {
       addToList(new Item(inputValue));
       setInputValue('');
-      nrOfMarkedItems() > 0 && setMode(modes.delete);
+      nrOfMarkedItems > 0 && setMode(modes.delete);
     }
   }, [addToList, inputValue, nrOfMarkedItems]);
 
@@ -41,13 +45,13 @@ export const ShoppingList = () => {
         ),
       );
       setInputValue('');
-      nrOfMarkedItems() === 0 ? setMode(modes.add) : setMode(modes.delete);
+      nrOfMarkedItems === 0 ? setMode(modes.add) : setMode(modes.delete);
       inputRef.current.blur();
     }
   }, [editList, inputValue, mode, nrOfMarkedItems]);
 
   const onPressDelete = useCallback(() => {
-    if (nrOfMarkedItems() > 0) {
+    if (nrOfMarkedItems > 0) {
       const itemsToDelete = list
         .filter(item => item.isMarked)
         .map(markedItem => parseInt(markedItem.isMarkedIndex, 10));
@@ -67,11 +71,11 @@ export const ShoppingList = () => {
       );
 
       if (
-        nrOfMarkedItems() > 1 || // > 1 because editList() is happens after this func call
+        nrOfMarkedItems > 1 || // > 1 because editList() is happens after this func call
         (!item.isMarked && !inputValue)
       ) {
         setMode(modes.delete);
-      } else if (nrOfMarkedItems() === 0 || item.isMarked) {
+      } else if (nrOfMarkedItems === 0 || item.isMarked) {
         setMode(modes.add);
       }
       editList(index, newValue);
@@ -99,7 +103,7 @@ export const ShoppingList = () => {
       case modes.add:
         return !!inputValue;
       case modes.delete:
-        return nrOfMarkedItems() > 0;
+        return nrOfMarkedItems > 0;
       case modes.edit:
         return !!inputValue;
     }
@@ -122,7 +126,7 @@ export const ShoppingList = () => {
   }, [mode, onPressAdd, onPressEdit]);
 
   const onClearText = useCallback(
-    () => setMode(nrOfMarkedItems() === 0 ? modes.add : modes.delete),
+    () => setMode(nrOfMarkedItems === 0 ? modes.add : modes.delete),
     [nrOfMarkedItems],
   );
 
