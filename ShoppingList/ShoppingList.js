@@ -65,13 +65,16 @@ export const ShoppingList = () => {
         !item.isMarked,
         !item.isMarked ? index : null,
       );
-      editList(index, newValue);
 
-      if (nrOfMarkedItems > 0 || (!item.isMarked && !inputValue)) {
+      if (
+        nrOfMarkedItems() > 1 || // > 1 because editList() is happens after this func call
+        (!item.isMarked && !inputValue)
+      ) {
         setMode(modes.delete);
-      } else if (nrOfMarkedItems === 0 || item.isMarked) {
+      } else if (nrOfMarkedItems() === 0 || item.isMarked) {
         setMode(modes.add);
       }
+      editList(index, newValue);
     },
     [editList, inputValue, nrOfMarkedItems],
   );
