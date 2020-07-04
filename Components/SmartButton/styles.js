@@ -1,21 +1,7 @@
 import {StyleSheet} from 'react-native';
-import {
-  defaultBorder,
-  orange,
-  green,
-  blue,
-  greenBlue,
-  hexToRgb,
-} from '../commonStyles';
+import {orange, green, blue} from '../commonStyles';
 
 export const styles = StyleSheet.create({
-  text: {
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    fontSize: 20,
-    color: 'white',
-    height: 60,
-  },
   buttonAdd: {
     backgroundColor: green,
   },
@@ -24,14 +10,5 @@ export const styles = StyleSheet.create({
   },
   buttonEdit: {
     backgroundColor: blue,
-  },
-  buttonContainer: {
-    fontSize: 50,
-    borderColor: greenBlue,
-    ...defaultBorder,
-    marginHorizontal: 30,
-  },
-  disabled: {
-    opacity: 0.6,
   },
 });
