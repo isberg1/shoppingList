@@ -3,7 +3,7 @@ import {SmartButton, List, Input} from '../Components/index';
 import {usePersistentStorage} from './UsePersistentStorage';
 import {modes} from '../Components/config';
 import {View} from 'react-native';
-import {Item} from './Item';
+import {Item} from './ItemClass';
 import {styles} from './styles';
 
 let itemToBeEdited = {
@@ -18,18 +18,15 @@ export const ShoppingList = () => {
     removeItem,
     editList,
   } = usePersistentStorage({});
+
   const [inputValue, setInputValue] = useState('');
   const [mode, setMode] = useState(modes.add);
   const inputRef = useRef(null);
 
   const nrOfMarkedItems = useMemo(
-    () => (list || []).filter(item => item.isMarked).length,
+    () => (list || []).filter(item => item?.isMarked).length,
     [list],
   );
-
-  useEffect(() => console.log('nrOfMarkedItems', nrOfMarkedItems), [
-    nrOfMarkedItems,
-  ]);
 
   const onPressAdd = useCallback(() => {
     if (inputValue) {
@@ -77,7 +74,7 @@ export const ShoppingList = () => {
       );
 
       if (
-        nrOfMarkedItems > 1 || // > 1 because editList() is happens after this func call
+        nrOfMarkedItems > 1 || // > 1 because editList() runs after this func call
         (!item.isMarked && !inputValue)
       ) {
         setMode(modes.delete);

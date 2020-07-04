@@ -1,5 +1,5 @@
-import React, {useMemo, useRef, useState} from 'react';
-import {View, Text, TouchableOpacity, Animated} from 'react-native';
+import React, {useMemo, useRef} from 'react';
+import {View, Text, TouchableOpacity, Animated, Easing} from 'react-native';
 import {styles} from './styles';
 import {modes} from '../config';
 
@@ -11,28 +11,72 @@ export const Button = ({
   styling,
   useAnimation,
 }) => {
-  const [a, b] = useState(1);
-  const fadeAnim = useRef(new Animated.Value(a)).current;
+  const colorAnim = useRef(new Animated.Value(0)).current;
+
+  const longPressAnimation = callback =>
+    Animated.sequence([
+      Animated.timing(colorAnim, {
+        toValue: 2,
+        duration: 100,
+        useNativeDriver: false,
+      }),
+      Animated.timing(colorAnim, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: false,
+      }),
+    ]).start(() => callback());
+
+  const pressInnAnimation = () =>
+    Animated.timing(colorAnim, {
+      toValue: 1,
+      duration: 200,
+      useNativeDriver: false,
+      easing: Easing.ease,
+    }).start();
+
+  const pressOutAnimation = () =>
+    Animated.timing(colorAnim, {
+      delay: 200,
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: false,
+      easing: Easing.ease,
+    }).start();
 
   const _onPress = () => {
     !!onPress && onPress();
   };
 
   const _onLongPress = () => {
-    !!onLongPress && onLongPress();
+    longPressAnimation(onLongPress ? onLongPress : () => {});
   };
+
   return (
-    <View style={styles.buttonContainer}>
+    <View
+      style={[styles.buttonContainer, disabled && styles.disabled, styling]}>
       <Animated.View
-        style={{
-          opacity: fadeAnim, // Bind opacity to animated value
-        }}>
+        style={[
+          {
+            backgroundColor: colorAnim.interpolate({
+              inputRange: [0, 1, 2],
+              outputRange: [
+                'rgba(0,0,0, 0)',
+                'rgba(0,0,0,.7)',
+                'rgba(255, 0, 0, 0.7)',
+              ],
+            }),
+          },
+        ]}>
         <TouchableOpacity
+          activeOpacity={1}
           onPress={_onPress}
           disabled={disabled}
           delayLongPress={500}
+          onPressIn={pressInnAnimation}
+          onPressOut={pressOutAnimation}
           onLongPress={_onLongPress}>
-          <Text style={[styling, disabled && styles.disabled]}>{text}</Text>
+          <Text style={[styles.text]}>{text}</Text>
         </TouchableOpacity>
       </Animated.View>
     </View>
@@ -53,14 +97,14 @@ export const SmartButton = ({
       case modes.add:
         return onPressAdd;
       case modes.delete:
-        return null;
+        return () => {};
       default:
         return onPressAdd;
     }
   }, [mode, onPressAdd, onPressEdit]);
 
   const _onLongPress = useMemo(
-    () => (mode === modes.delete ? onPressDelete : null),
+    () => (mode === modes.delete ? onPressDelete : () => {}),
     [mode, onPressDelete],
   );
 
