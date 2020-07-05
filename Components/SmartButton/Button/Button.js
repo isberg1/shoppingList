@@ -1,6 +1,6 @@
 import React, {useCallback} from 'react';
 import {View, Text, TouchableOpacity, Animated} from 'react-native';
-import {UseClickAnimation} from './useClickAnimations';
+import {useClickAnimation} from './useClickAnimations';
 import {styles} from './styles';
 
 export const Button = ({
@@ -15,7 +15,7 @@ export const Button = ({
     pressInAnimation,
     pressOutAnimation,
     longPressAnimation,
-  } = UseClickAnimation();
+  } = useClickAnimation();
 
   const _onPress = useCallback(() => onPress(), [onPress]);
   const _onLongPress = useCallback(() => longPressAnimation(onLongPress), [
@@ -29,11 +29,11 @@ export const Button = ({
       <Animated.View style={{backgroundColor: colorChangeStyling}}>
         <TouchableOpacity
           activeOpacity={1} // disable default clickAnimation
-          onPress={_onPress}
           disabled={disabled}
           delayLongPress={500}
           onPressIn={pressInAnimation}
           onPressOut={pressOutAnimation}
+          onPress={_onPress}
           onLongPress={_onLongPress}>
           <Text style={[styles.text]}>{text}</Text>
         </TouchableOpacity>

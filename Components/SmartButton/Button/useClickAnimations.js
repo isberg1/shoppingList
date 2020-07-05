@@ -1,7 +1,7 @@
 import {useRef, useCallback, useMemo} from 'react';
 import {Animated, Easing} from 'react-native';
 
-export const UseClickAnimation = () => {
+export const useClickAnimation = () => {
   const colorAnim = useRef(new Animated.Value(0)).current;
 
   const longPressAnimation = useCallback(

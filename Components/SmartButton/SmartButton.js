@@ -19,13 +19,6 @@ export const SmartButton = ({
           style: styles.buttonEdit,
           text: 'Edit Item',
         };
-      case modes.add:
-        return {
-          _onPress: onPressAdd,
-          _onLongPress: () => {},
-          style: styles.buttonAdd,
-          text: 'Add Item',
-        };
       case modes.delete:
         return {
           _onPress: () => {},
@@ -33,6 +26,7 @@ export const SmartButton = ({
           style: styles.buttonDelete,
           text: 'Delete Item',
         };
+      case modes.add:
       default:
         return {
           _onPress: onPressAdd,
