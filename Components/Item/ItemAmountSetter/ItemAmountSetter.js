@@ -19,7 +19,8 @@ export const ItemAmountSetter = ({
           style={[
             styles.swipeView,
             add ? styles.swipeViewLeft : styles.swipeViewRight,
-          ]}>
+          ]}
+        >
           <Text style={styles.swipeText}>{add ? '+1' : '-1'} </Text>
         </View>
       </>
@@ -44,7 +45,8 @@ export const ItemAmountSetter = ({
       renderRightActions={_renderRightActions}
       onSwipeableRightWillOpen={swipeLeft}
       onSwipeableLeftWillOpen={swipeRight}
-      onSwipeableWillOpen={_onSwipeableWillOpen}>
+      onSwipeableWillOpen={_onSwipeableWillOpen}
+    >
       {children}
     </Swipeable>
   );
