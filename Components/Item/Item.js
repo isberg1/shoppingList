@@ -9,9 +9,11 @@ export const Item = ({item, index, onPress, onLongPress, editItemCounter}) => {
     item.isMarked,
   ]);
 
-  const _onPress = useCallback(() => {
-    onPress(index, item);
-  }, [index, item, onPress]);
+  const _onPress = useCallback(() => onPress(index, item), [
+    index,
+    item,
+    onPress,
+  ]);
 
   const _onLongPress = useCallback(
     () => onLongPress && onLongPress(index, item),
@@ -19,14 +21,14 @@ export const Item = ({item, index, onPress, onLongPress, editItemCounter}) => {
   );
 
   const _swipeSubtract = useCallback(() => {
-    const newCounterValue = item.ItemCount - (item.ItemCount > 0 ? 1 : 0);
+    const newCounterValue = item.ItemCount - (item.ItemCount > 1 ? 1 : 0);
     item.ItemCount && editItemCounter(index, item, newCounterValue);
   }, [item, editItemCounter, index]);
 
-  const _swipeAdd = useCallback(() => {
-    const newCounterValue = item.ItemCount + 1;
-    editItemCounter(index, item, newCounterValue);
-  }, [item, editItemCounter, index]);
+  const _swipeAdd = useCallback(
+    () => editItemCounter(index, item, item.ItemCount + 1),
+    [item, editItemCounter, index],
+  );
 
   return (
     <>
@@ -40,12 +42,14 @@ export const Item = ({item, index, onPress, onLongPress, editItemCounter}) => {
           <ItemAmountSetter
             swipeRight={_swipeAdd}
             swipeLeft={_swipeSubtract}
-            disabled={item.isMarked}>
+            disabled={item.isMarked}
+          >
             <View
               style={[
                 styles.outerCounterContainer,
                 showCounter && styles.borders,
-              ]}>
+              ]}
+            >
               <View style={styles.innerCounterContainer}>
                 <Text style={[styles.counter]}>
                   {showCounter ? item.ItemCount : ''}
