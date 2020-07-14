@@ -25,7 +25,8 @@ export const Button = ({
 
   return (
     <View
-      style={[styles.buttonContainer, disabled && styles.disabled, styling]}>
+      style={[styles.buttonContainer, disabled && styles.disabled, styling]}
+    >
       <Animated.View style={{backgroundColor: colorChangeStyling}}>
         <TouchableOpacity
           activeOpacity={1} // disable default clickAnimation
@@ -34,7 +35,8 @@ export const Button = ({
           onPressIn={pressInAnimation}
           onPressOut={pressOutAnimation}
           onPress={_onPress}
-          onLongPress={_onLongPress}>
+          onLongPress={_onLongPress}
+        >
           <Text style={[styles.text]}>{text}</Text>
         </TouchableOpacity>
       </Animated.View>

@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useMemo, useRef, useEffect} from 'react';
+import React, {useState, useCallback, useMemo, useRef} from 'react';
 import {SmartButton, List, Input} from '../Components/index';
 import {usePersistentStorage} from './UsePersistentStorage';
 import {modes} from '../Components/config';

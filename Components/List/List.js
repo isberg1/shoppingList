@@ -8,7 +8,8 @@ export const List = ({list, onPress, onLongPress, editItemCounter}) => {
     <>
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
-        style={styles.scrollView}>
+        style={styles.scrollView}
+      >
         {list.map((item, index) => (
           <Item
             key={index}
