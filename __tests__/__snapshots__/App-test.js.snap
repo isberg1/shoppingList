@@ -46,7 +46,7 @@ exports[`matches Snapshot 1`] = `
               "marginVertical": 10,
               "opacity": 0.7,
             },
-            "",
+            false,
           ]
         }
       >

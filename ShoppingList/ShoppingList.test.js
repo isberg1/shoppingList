@@ -5,6 +5,8 @@ import {ShoppingList} from './ShoppingList';
 import {Input, SmartButton, List, Button, Item} from '../Components/index';
 import {TouchableOpacity} from 'react-native';
 
+//https://github.com/react-native-community/async-storage/blob/master/jest/async-storage-mock.js
+
 jest.mock('@react-native-community/async-storage', () => ({
   setItem: jest.fn(),
   removeItem: jest.fn(),
@@ -26,9 +28,9 @@ describe('adding, editing and deleting items in list', () => {
   };
 
   const testNewItem = (view, itemName) => {
-    expect(view.findAllByType(Item)[0].props.value.ItemName).toBe(itemName);
+    expect(view.findAllByType(Item)[0].props.item.ItemName).toBe(itemName);
     expect(view.findAllByType(Item).length).toBe(1);
-    expect(view.findAllByType(Item)[0].props.value.ItemCount).toBe(1);
+    expect(view.findAllByType(Item)[0].props.item.ItemCount).toBe(1);
   };
 
   test('a new item is added to list', () => {
@@ -84,8 +86,8 @@ describe('adding, editing and deleting items in list', () => {
     addItemToList(root, 'salt');
 
     expect(root.findAllByType(Item).length).toBe(4);
-    expect(root.findAllByType(Item)[1].props.value.ItemName).toBe('milk');
-    expect(root.findAllByType(Item)[3].props.value.ItemName).toBe('salt');
+    expect(root.findAllByType(Item)[1].props.item.ItemName).toBe('milk');
+    expect(root.findAllByType(Item)[3].props.item.ItemName).toBe('salt');
 
     // mark items in list
     fireEvent(
@@ -100,7 +102,7 @@ describe('adding, editing and deleting items in list', () => {
 
     expect(root.findAllByType(Item).length).toBe(2); // right number of items remaining
     // milk and salt moved to front of list, and milk still before salt
-    expect(root.findAllByType(Item)[0].props.value.ItemName).toBe('milk');
-    expect(root.findAllByType(Item)[1].props.value.ItemName).toBe('salt');
+    expect(root.findAllByType(Item)[0].props.item.ItemName).toBe('milk');
+    expect(root.findAllByType(Item)[1].props.item.ItemName).toBe('salt');
   });
 });

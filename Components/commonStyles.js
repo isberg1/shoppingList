@@ -1,21 +1,22 @@
-export const defaultBorder = {
+'use strict';
+exports.__esModule = true;
+exports.hexToRgb = exports.white = exports.SteamBlue = exports.blue = exports.green = exports.orange = exports.pink = exports.greenBlue = exports.lightGray = exports.gray = exports.darkTheme = exports.defaultBorder = void 0;
+exports.defaultBorder = {
   borderWidth: 2,
   borderRadius: 5,
 };
-
-export const darkTheme = '#272727';
-export const gray = '#5A5A5A';
-export const lightGray = '#747474';
-export const greenBlue = '#008577';
-export const pink = '#bd315e';
-export const orange = '#C25B01';
-export const green = 'green';
-export const blue = 'blue';
-export const SteamBlue = '#1b2838';
-export const white = 'white';
-
+exports.darkTheme = '#272727';
+exports.gray = '#5A5A5A';
+exports.lightGray = '#747474';
+exports.greenBlue = '#008577';
+exports.pink = '#bd315e';
+exports.orange = '#C25B01';
+exports.green = 'green';
+exports.blue = 'blue';
+exports.SteamBlue = '#1b2838';
+exports.white = 'white';
 // https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
-export const hexToRgb = hex => {
+exports.hexToRgb = function (hex) {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result
     ? {
