@@ -5,13 +5,6 @@ import {ShoppingList} from './ShoppingList';
 import {Input, SmartButton, List, Button, Item} from './Components/index';
 import {TouchableOpacity} from 'react-native';
 
-//https://github.com/react-native-community/async-storage/blob/master/jest/async-storage-mock.js
-
-jest.mock('@react-native-community/async-storage', () => ({
-  setItem: jest.fn(),
-  removeItem: jest.fn(),
-}));
-
 test('all elements render', () => {
   const {root} = TestRenderer.create(<ShoppingList />);
 

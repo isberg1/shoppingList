@@ -45,7 +45,8 @@
       "node"
     ],
     "setupFiles": [
-      "./node_modules/react-native-gesture-handler/jestSetup.js"
+      "./node_modules/react-native-gesture-handler/jestSetup.js",
+      "./jest.mock.ts"
     ]
   }
 }

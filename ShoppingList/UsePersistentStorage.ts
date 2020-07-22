@@ -3,19 +3,29 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {Item as ItemClass} from './Model/ItemClass';
 
 const LIST_KEY = 'LIST';
-
 const initialItemList: ItemClass[] = [];
 
 export const usePersistentStorage = () => {
   const [list, setList] = useState(initialItemList);
 
-  // get DB data at startup
+  // get data at startup
   useEffect(() => {
+    const parseDataToItemList = (data: string) => {
+      return JSON.parse(data).map(
+        (item: any) =>
+          new ItemClass(item?.ItemName, item?.ItemCount, item?.isMarkedIndex),
+      );
+    };
     const _retrieveData = async () => {
       try {
         const value = await AsyncStorage.getItem(LIST_KEY);
-        value !== null && setList(JSON.parse(value));
-      } catch (error) {}
+        if (value) {
+          const newItemList = parseDataToItemList(value);
+          newItemList && setList(newItemList);
+        }
+      } catch (error) {
+        console.log('_retrieveData failed:', error);
+      }
     };
     _retrieveData();
   }, []);
@@ -52,21 +62,22 @@ export const usePersistentStorage = () => {
   };
 
   const removeItem = (keys: number[]) => {
+    if (keys.length === list.length) {
+      return deleteList();
+    }
+
     const toBeDeleted = 'toBeDeleted';
     const deleteItem = new ItemClass(toBeDeleted);
-    const deleteCount = 1;
 
-    let replaceDeleteIndexWithDummy = [...list];
+    let markItemsForDeletion = [...list];
     keys.forEach((indexKey) => {
-      replaceDeleteIndexWithDummy.splice(indexKey, deleteCount, deleteItem);
+      markItemsForDeletion.splice(indexKey, 1, deleteItem);
     });
 
     const newList = [
-      ...replaceDeleteIndexWithDummy.filter(
-        (item) => item.ItemName !== toBeDeleted,
-      ),
+      ...markItemsForDeletion.filter((item) => item.ItemName !== toBeDeleted),
     ];
-    newList.length !== 0 ? setList(newList) : deleteList();
+    setList(newList);
   };
 
   const editList = (indexToEdit: number, newValue: ItemClass) => {

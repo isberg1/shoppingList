@@ -10,8 +10,7 @@ import {styles} from './styles';
 type itemToBeDeletedMeta = {
   index: number;
   ItemCount: number;
-  isMarked: boolean;
-  isMarkedIndex: number;
+  isMarkedIndex: number | null;
 } | null;
 
 let itemToBeEdited: itemToBeDeletedMeta = null;
@@ -30,7 +29,7 @@ export const ShoppingList = () => {
   const inputRef = useRef<TextInput>(null);
 
   const nrOfMarkedItems = useMemo(
-    () => (list || []).filter((item) => item?.isMarked).length,
+    () => (list || []).filter((item) => item.isMarked).length,
     [list],
   );
 
@@ -49,7 +48,6 @@ export const ShoppingList = () => {
         new ItemClass(
           inputValue,
           itemToBeEdited.ItemCount,
-          itemToBeEdited.isMarked,
           itemToBeEdited.isMarkedIndex,
         ),
       );
@@ -78,11 +76,8 @@ export const ShoppingList = () => {
       const newValue = new ItemClass(
         item.ItemName,
         item.ItemCount,
-        !item.isMarked,
         !item.isMarked ? index : null,
       );
-
-      console.log('_onPressList', index, item);
 
       if (
         nrOfMarkedItems > 1 || // > 1 because editList() runs after this func call
@@ -104,14 +99,16 @@ export const ShoppingList = () => {
     itemToBeEdited = {
       index: index,
       ItemCount: item.ItemCount,
-      isMarked: item.isMarked,
-      isMarkedIndex: item.isMarkedIndex ? item.isMarkedIndex : -1, // Todo combine isMarked and isMarkedIndex into 1
+      isMarkedIndex: item.isMarkedIndex,
     };
   };
 
   const _onEditItemCounter = useCallback(
     (index: number, item: ItemClass, ItemCount = 1) => {
-      editList(index, new ItemClass(item.ItemName, ItemCount, item.isMarked));
+      editList(
+        index,
+        new ItemClass(item.ItemName, ItemCount, item.isMarkedIndex),
+      );
     },
     [editList],
   );

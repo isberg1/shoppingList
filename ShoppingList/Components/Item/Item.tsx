@@ -1,7 +1,7 @@
 import React, {useCallback, useMemo} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {ItemAmountSetter} from './ItemAmountSetter/ItemAmountSetter';
-import {Item as ItemClass} from '../../ShoppingList/ItemClass';
+import {Item as ItemClass} from '../../Model/ItemClass';
 import {styles} from './styles';
 
 interface props {
