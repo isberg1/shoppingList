@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {SteamBlue} from './Components/commonStyles';
+import {SteamBlue} from './ShoppingList/Components/commonStyles';
 
 export const styles = StyleSheet.create({
   root: {

@@ -2,7 +2,7 @@ import React from 'react';
 import TestRenderer from 'react-test-renderer';
 import {fireEvent} from 'react-native-testing-library';
 import {ShoppingList} from './ShoppingList';
-import {Input, SmartButton, List, Button, Item} from '../Components/index';
+import {Input, SmartButton, List, Button, Item} from './Components/index';
 import {TouchableOpacity} from 'react-native';
 
 //https://github.com/react-native-community/async-storage/blob/master/jest/async-storage-mock.js

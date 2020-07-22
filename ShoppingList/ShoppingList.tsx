@@ -1,9 +1,9 @@
 import React, {useState, useCallback, useMemo, useRef} from 'react';
-import {SmartButton, List, Input} from '../Components/index';
+import {SmartButton, List, Input} from './Components/index';
 import {usePersistentStorage} from './UsePersistentStorage';
-import {modes} from '../Components/config';
+import {modes} from './config';
 import {View, TextInput} from 'react-native';
-import {Item as ItemClass} from './ItemClass';
+import {Item as ItemClass} from './Model/ItemClass';
 import {styles} from './styles';
 
 // Todo maybe extend ItemClass

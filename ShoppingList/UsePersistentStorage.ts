@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
-import {Item as ItemClass} from './ItemClass';
+import {Item as ItemClass} from './Model/ItemClass';
 
 const LIST_KEY = 'LIST';
 

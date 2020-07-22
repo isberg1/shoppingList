@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import {styles} from './styles';
-import {modes} from '../config';
+import {modes} from '../../config';
 import {Button} from './Button/Button';
 
 interface props {
