@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {defaultBorder, greenBlue} from '../../commonStyles';
+import {defaultBorder} from '../../commonStyles';
 
 export const styles = StyleSheet.create({
   text: {
@@ -11,7 +11,6 @@ export const styles = StyleSheet.create({
   },
   buttonContainer: {
     fontSize: 50,
-    borderColor: greenBlue,
     ...defaultBorder,
     marginHorizontal: 30,
   },

@@ -27,8 +27,6 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 4,
     backgroundColor: lightGray,
-
-    borderColor: greenBlue,
     ...defaultBorder,
   },
   ItemAmountSetterContainer: {
@@ -39,7 +37,6 @@ export const styles = StyleSheet.create({
     borderColor: 'transparent',
     ...defaultBorder,
   },
-  borders: {borderColor: greenBlue},
   innerCounterContainer: {
     flex: 1,
     justifyContent: 'center',

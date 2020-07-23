@@ -23,10 +23,7 @@ export const Item = ({
   onLongPress,
   editItemCounter,
 }: props) => {
-  const showCounter = useMemo(() => item.ItemCount > 1 && !item.isMarked, [
-    item.ItemCount,
-    item.isMarked,
-  ]);
+  const showCounter = useMemo(() => !item.isMarked, [item.isMarked]);
 
   const _onPress = useCallback(() => onPress(index, item), [
     index,
@@ -63,12 +60,7 @@ export const Item = ({
             swipeLeft={_swipeSubtract}
             disabled={item.isMarked}
           >
-            <View
-              style={[
-                styles.outerCounterContainer,
-                showCounter && styles.borders,
-              ]}
-            >
+            <View style={[styles.outerCounterContainer]}>
               <View style={styles.innerCounterContainer}>
                 <Text style={[styles.counter]}>
                   {showCounter ? item.ItemCount : ''}
