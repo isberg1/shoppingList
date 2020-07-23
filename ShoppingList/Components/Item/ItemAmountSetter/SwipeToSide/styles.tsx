@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {defaultBorder, orange, lightGray, green} from '../../commonStyles';
+import {defaultBorder, orange, lightGray, green} from '../../../commonStyles';
 
 export const styles = StyleSheet.create({
   text: {

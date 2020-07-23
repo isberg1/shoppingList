@@ -1,58 +1,60 @@
 import React, {useRef, useCallback} from 'react';
-import {View, Text} from 'react-native';
 // @ts-ignore: Unreachable code error
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+import {SwipeToSide} from './SwipeToSide/SwipeToSide';
+import {Item as ItemClass} from '../../../Model/ItemClass';
 import {styles} from './styles';
 
 interface props {
-  swipeRight: () => void;
-  swipeLeft: () => void;
-  disabled: boolean;
-  children?: JSX.Element | React.ReactNode | React.ReactNodeArray; // maybe wrong type
+  item: ItemClass;
+  index: number;
+  editItemCounter: (
+    index: number,
+    item: ItemClass,
+    newCounterValue: number,
+  ) => void;
+  children: JSX.Element | React.ReactNode | React.ReactNodeArray; // maybe wrong type
 }
 
-// DOCUMENTATION: https://docs.swmansion.com/react-native-gesture-handler/docs/component-swipeable.html
+// DOCUMENTATION: https://docs.swmansion.com/react-native-gesture-handler/docs
 export const ItemAmountSetter = ({
-  swipeRight,
-  swipeLeft,
-  disabled,
+  item,
+  index,
+  editItemCounter,
   children,
 }: props) => {
   const ref = useRef<Swipeable>(null);
 
-  const swipingText = useCallback(
-    (add) => (
-      <>
-        <View
-          style={[
-            styles.swipeView,
-            add ? styles.swipeViewLeft : styles.swipeViewRight,
-          ]}
-        >
-          <Text style={styles.swipeText}>{add ? '+1' : '-1'} </Text>
-        </View>
-      </>
-    ),
+  const _onSwipeableWillOpen = useCallback(() => ref?.current?.close(), []);
+
+  const _renderRightActions = useCallback(
+    () => <SwipeToSide text="-1" style={styles.swipeViewRight} />,
+    [],
+  );
+  const _renderLeftActions = useCallback(
+    () => <SwipeToSide text="+1" style={styles.swipeViewLeft} />,
     [],
   );
 
-  const _onSwipeableWillOpen = useCallback(() => ref?.current?.close(), []);
-  const _renderLeftActions = useCallback(() => !disabled && swipingText(true), [
-    disabled,
-    swipingText,
-  ]);
-  const _renderRightActions = useCallback(
-    () => !disabled && swipingText(false),
-    [disabled, swipingText],
+  const _swipeLeft = useCallback(() => {
+    if (item.ItemCount > 1) {
+      editItemCounter(index, item, item.ItemCount - 1);
+    }
+  }, [editItemCounter, index, item]);
+
+  const _swipeRight = useCallback(
+    () => editItemCounter(index, item, item.ItemCount + 1),
+    [editItemCounter, index, item],
   );
 
   return (
     <Swipeable
       ref={ref}
+      enable={!item.isMarked}
       renderLeftActions={_renderLeftActions}
       renderRightActions={_renderRightActions}
-      onSwipeableRightWillOpen={swipeLeft}
-      onSwipeableLeftWillOpen={swipeRight}
+      onSwipeableRightWillOpen={_swipeLeft}
+      onSwipeableLeftWillOpen={_swipeRight}
       onSwipeableWillOpen={_onSwipeableWillOpen}
     >
       {children}
