@@ -5,7 +5,7 @@ export const useClickAnimation = () => {
   const colorAnim = useRef(new Animated.Value(0)).current;
 
   const longPressAnimation = useCallback(
-    (callback) =>
+    (callback: () => void) =>
       Animated.sequence([
         Animated.timing(colorAnim, {
           toValue: 2,

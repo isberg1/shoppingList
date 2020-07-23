@@ -5,16 +5,16 @@ import {styles} from './styles';
 
 interface props {
   text: string;
-  onPress: () => void;
-  onLongPress: () => void;
+  onPress?: () => void;
+  onLongPress?: () => void;
   disabled: boolean;
   styling: ViewStyle;
 }
 
 export const Button = ({
   text,
-  onPress = () => {},
-  onLongPress = () => {},
+  onPress,
+  onLongPress,
   disabled,
   styling,
 }: props) => {
@@ -25,11 +25,11 @@ export const Button = ({
     longPressAnimation,
   } = useClickAnimation();
 
-  const _onPress = useCallback(() => onPress(), [onPress]);
-  const _onLongPress = useCallback(() => longPressAnimation(onLongPress), [
-    longPressAnimation,
-    onLongPress,
-  ]);
+  const _onPress = useCallback(() => onPress && onPress(), [onPress]);
+  const _onLongPress = useCallback(
+    () => onLongPress && longPressAnimation(onLongPress),
+    [longPressAnimation, onLongPress],
+  );
 
   return (
     <View

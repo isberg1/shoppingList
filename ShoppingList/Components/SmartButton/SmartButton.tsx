@@ -1,7 +1,9 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import {styles} from './styles';
 import {modes} from '../../config';
-import {Button} from './Button/Button';
+import {Button as EditItemButton} from './Button/Button';
+import {Button as AddItemButton} from './Button/Button';
+import {Button as DeleteItemButton} from './Button/Button';
 
 interface props {
   onPressAdd: () => void;
@@ -18,40 +20,32 @@ export const SmartButton = ({
   disabled,
   mode,
 }: props) => {
-  const {_onPress, _onLongPress, style, text} = useMemo(() => {
-    switch (mode) {
-      case modes.edit:
-        return {
-          _onPress: onPressEdit,
-          _onLongPress: () => {},
-          style: styles.buttonEdit,
-          text: 'Edit Item',
-        };
-      case modes.delete:
-        return {
-          _onPress: () => {},
-          _onLongPress: onPressDelete,
-          style: styles.buttonDelete,
-          text: 'Delete Item',
-        };
-      case modes.add:
-      default:
-        return {
-          _onPress: onPressAdd,
-          _onLongPress: () => {},
-          style: styles.buttonAdd,
-          text: 'Add Item',
-        };
-    }
-  }, [mode, onPressAdd, onPressDelete, onPressEdit]);
-
   return (
-    <Button
-      text={text}
-      onPress={_onPress}
-      onLongPress={_onLongPress}
-      disabled={disabled}
-      styling={style}
-    />
+    <>
+      {mode === modes.add && (
+        <AddItemButton
+          text={'Add Item'}
+          onPress={onPressAdd}
+          disabled={disabled}
+          styling={styles.buttonAdd}
+        />
+      )}
+      {mode === modes.edit && (
+        <EditItemButton
+          text={'Edit Item'}
+          onPress={onPressEdit}
+          disabled={disabled}
+          styling={styles.buttonEdit}
+        />
+      )}
+      {mode === modes.delete && (
+        <DeleteItemButton
+          text={'Delete Item'}
+          onLongPress={onPressDelete}
+          disabled={disabled}
+          styling={styles.buttonDelete}
+        />
+      )}
+    </>
   );
 };
