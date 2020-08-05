@@ -8,11 +8,4 @@ export class Item {
   get isMarked() {
     return typeof this.isMarkedIndex === 'number';
   }
-
-  set itemName(name: string) {
-    this.ItemName = name;
-  }
-  set itemCounter(count: number) {
-    this.ItemCount = count;
-  }
 }

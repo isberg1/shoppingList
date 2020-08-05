@@ -48,8 +48,12 @@ export const ShoppingList = () => {
 
   const onPressEdit = useCallback(() => {
     if (inputValue && mode === modes.edit && itemToBeEdited) {
-      itemToBeEdited.item.itemName = inputValue;
-      editList(itemToBeEdited.index, itemToBeEdited.item);
+      const newValue = new ItemClass(
+        inputValue,
+        itemToBeEdited.item.ItemCount,
+        itemToBeEdited.item.isMarkedIndex,
+      );
+      editList(itemToBeEdited.index, newValue);
       cleanupAfterEdit();
     }
   }, [cleanupAfterEdit, editList, inputValue, mode]);
@@ -107,8 +111,13 @@ export const ShoppingList = () => {
 
   const _onEditItemCounter = useCallback(
     (index: number, item: ItemClass, ItemCount = 1) => {
-      item.itemCounter = ItemCount;
-      editList(index, item);
+      const newValue = new ItemClass(
+        item.ItemName,
+        ItemCount,
+        item.isMarkedIndex,
+      );
+
+      editList(index, newValue);
     },
     [editList],
   );
