@@ -6,14 +6,12 @@ import {View, TextInput} from 'react-native';
 import {Item as ItemClass} from './Model/ItemClass';
 import {styles} from './styles';
 
-// Todo maybe extend ItemClass
-type itemToBeDeletedMeta = {
+interface itemToBeEditedType {
   index: number;
-  ItemCount: number;
-  isMarkedIndex: number | null;
-} | null;
+  item: ItemClass;
+}
 
-let itemToBeEdited: itemToBeDeletedMeta = null;
+let itemToBeEdited: itemToBeEditedType | null = null;
 
 export const ShoppingList = () => {
   const {
@@ -41,28 +39,27 @@ export const ShoppingList = () => {
     }
   }, [addToList, inputValue, nrOfMarkedItems]);
 
+  const cleanupAfterEdit = useCallback(() => {
+    setInputValue('');
+    setMode(nrOfMarkedItems === 0 ? modes.add : modes.delete);
+    inputRef?.current?.blur();
+    itemToBeEdited = null;
+  }, [nrOfMarkedItems]);
+
   const onPressEdit = useCallback(() => {
     if (inputValue && mode === modes.edit && itemToBeEdited) {
-      editList(
-        itemToBeEdited.index,
-        new ItemClass(
-          inputValue,
-          itemToBeEdited.ItemCount,
-          itemToBeEdited.isMarkedIndex,
-        ),
-      );
-      setInputValue('');
-      setMode(nrOfMarkedItems === 0 ? modes.add : modes.delete);
-      inputRef?.current?.blur();
+      itemToBeEdited.item.itemName = inputValue;
+      editList(itemToBeEdited.index, itemToBeEdited.item);
+      cleanupAfterEdit();
     }
-  }, [editList, inputValue, mode, nrOfMarkedItems]);
+  }, [cleanupAfterEdit, editList, inputValue, mode]);
 
   const onPressDelete = useCallback(() => {
     if (nrOfMarkedItems > 0) {
       const itemsToDelete = list
         .filter((item) => item.isMarked)
         .map((markedItem) =>
-          typeof markedItem.isMarkedIndex === 'number'
+          typeof markedItem.isMarkedIndex === 'number' // this is already checked in filter, TS does not recognized it
             ? markedItem.isMarkedIndex
             : -1,
         );
@@ -104,17 +101,14 @@ export const ShoppingList = () => {
     inputRef?.current?.focus();
     itemToBeEdited = {
       index: index,
-      ItemCount: item.ItemCount,
-      isMarkedIndex: item.isMarkedIndex,
+      item,
     };
   };
 
   const _onEditItemCounter = useCallback(
     (index: number, item: ItemClass, ItemCount = 1) => {
-      editList(
-        index,
-        new ItemClass(item.ItemName, ItemCount, item.isMarkedIndex),
-      );
+      item.itemCounter = ItemCount;
+      editList(index, item);
     },
     [editList],
   );
@@ -132,24 +126,20 @@ export const ShoppingList = () => {
 
   const inputHandler = useCallback(
     (text) => {
-      mode === modes.delete && setMode(modes.add);
       setInputValue(text);
+      if (mode === modes.delete) {
+        setMode(modes.add);
+      }
     },
     [mode],
   );
 
   const onSubmitHandler = useCallback(() => {
-    if (mode === modes.add) {
-      onPressAdd();
-    } else if (mode === modes.edit) {
-      onPressEdit();
-    }
+    const submit = mode === modes.add ? onPressAdd : onPressEdit;
+    submit();
   }, [mode, onPressAdd, onPressEdit]);
 
-  const onClearText = useCallback(
-    () => setMode(nrOfMarkedItems === 0 ? modes.add : modes.delete),
-    [nrOfMarkedItems],
-  );
+  const onClearText = useCallback(() => inputHandler(''), [inputHandler]);
 
   return (
     <View style={styles.shoppingList}>

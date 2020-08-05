@@ -19,11 +19,6 @@ export const Input = ({
 }: inputProps) => {
   const [hasFocus, setHasFocus] = useState(false);
 
-  const _onClearText = () => {
-    onChangeText('');
-    !!onClearText && onClearText();
-  };
-
   return (
     <View style={[styles.inputContainer, hasFocus && styles.onFocus]}>
       <TextInput
@@ -37,7 +32,7 @@ export const Input = ({
         clearButtonMode={'always'}
         ref={inputRef}
       />
-      <TouchableOpacity onPress={_onClearText}>
+      <TouchableOpacity onPress={onClearText}>
         <View style={styles.resetText}>
           <Text style={styles.deleteText}>X</Text>
         </View>
