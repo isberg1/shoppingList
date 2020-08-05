@@ -135,8 +135,8 @@ export const ShoppingList = () => {
   );
 
   const onSubmitHandler = useCallback(() => {
-    const submit = mode === modes.add ? onPressAdd : onPressEdit;
-    submit();
+    const addOrEdit = mode === modes.add ? onPressAdd : onPressEdit;
+    addOrEdit();
   }, [mode, onPressAdd, onPressEdit]);
 
   const onClearText = useCallback(() => inputHandler(''), [inputHandler]);
