@@ -13,7 +13,7 @@ interface props {
   mode: string;
 }
 
-export const SmartButton = ({
+export const ModifyListButton = ({
   onPressAdd,
   onPressDelete,
   onPressEdit,

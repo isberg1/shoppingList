@@ -113,7 +113,6 @@ exports[`matches Snapshot 1`] = `
         style={
           Array [
             Object {
-              "borderColor": "#008577",
               "borderRadius": 5,
               "borderWidth": 2,
               "fontSize": 50,

@@ -1,5 +1,5 @@
 import React, {useState, useCallback, useMemo, useRef} from 'react';
-import {SmartButton, List, Input} from './Components/index';
+import {ModifyListButton, List, Input} from './Components/index';
 import {usePersistentStorage} from './UsePersistentStorage';
 import {modes} from './config';
 import {View, TextInput} from 'react-native';
@@ -52,7 +52,7 @@ export const ShoppingList = () => {
         ),
       );
       setInputValue('');
-      nrOfMarkedItems === 0 ? setMode(modes.add) : setMode(modes.delete);
+      setMode(nrOfMarkedItems === 0 ? modes.add : modes.delete);
       inputRef?.current?.blur();
     }
   }, [editList, inputValue, mode, nrOfMarkedItems]);
@@ -71,14 +71,8 @@ export const ShoppingList = () => {
     }
   }, [list, nrOfMarkedItems, removeItem]);
 
-  const _onPressList = useCallback(
-    (index: number, item: ItemClass) => {
-      const newValue = new ItemClass(
-        item.ItemName,
-        item.ItemCount,
-        !item.isMarked ? index : null,
-      );
-
+  const _changeModeAfterPressList = useCallback(
+    (item: ItemClass) => {
       if (
         nrOfMarkedItems > 1 || // > 1 because editList() runs after this func call
         (!item.isMarked && !inputValue)
@@ -87,9 +81,21 @@ export const ShoppingList = () => {
       } else if (nrOfMarkedItems === 0 || item.isMarked) {
         setMode(modes.add);
       }
-      editList(index, newValue);
     },
-    [editList, inputValue, nrOfMarkedItems],
+    [inputValue, nrOfMarkedItems],
+  );
+
+  const _onPressList = useCallback(
+    (index: number, item: ItemClass) => {
+      const newValue = new ItemClass(
+        item.ItemName,
+        item.ItemCount,
+        !item.isMarked ? index : null,
+      );
+      editList(index, newValue);
+      _changeModeAfterPressList(item);
+    },
+    [_changeModeAfterPressList, editList],
   );
 
   const _onLongPressList = (index: number, item: ItemClass) => {
@@ -155,7 +161,7 @@ export const ShoppingList = () => {
           inputRef={inputRef}
           onClearText={onClearText}
         />
-        <SmartButton
+        <ModifyListButton
           disabled={!enableButton}
           onPressAdd={onPressAdd}
           onPressDelete={onPressDelete}
