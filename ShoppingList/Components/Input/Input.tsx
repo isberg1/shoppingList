@@ -29,7 +29,7 @@ export const Input = ({
         onBlur={() => setHasFocus(false)}
         onSubmitEditing={({nativeEvent: {text}}) => onSubmit(text)}
         value={value}
-        clearButtonMode={'always'}
+        clearButtonMode={'never'} // IOS has integrated clear button
         ref={inputRef}
       />
       <TouchableOpacity onPress={onClearText}>

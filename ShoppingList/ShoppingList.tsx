@@ -31,13 +31,17 @@ export const ShoppingList = () => {
     [list],
   );
 
+  const areSomeItemsMarked = useMemo(() => nrOfMarkedItems > 0, [
+    nrOfMarkedItems,
+  ]);
+
   const onPressAdd = useCallback(() => {
     if (inputValue) {
       addToList(new ItemClass(inputValue));
       setInputValue('');
-      nrOfMarkedItems > 0 && setMode(modes.delete);
+      areSomeItemsMarked && setMode(modes.delete);
     }
-  }, [addToList, inputValue, nrOfMarkedItems]);
+  }, [addToList, inputValue, areSomeItemsMarked]);
 
   const cleanupAfterEdit = useCallback(() => {
     setInputValue('');
@@ -59,7 +63,7 @@ export const ShoppingList = () => {
   }, [cleanupAfterEdit, editList, inputValue, mode]);
 
   const onPressDelete = useCallback(() => {
-    if (nrOfMarkedItems > 0) {
+    if (areSomeItemsMarked) {
       const itemsToDelete = list
         .filter((item) => item.isMarked)
         .map((markedItem) =>
@@ -70,7 +74,7 @@ export const ShoppingList = () => {
       removeItem(itemsToDelete);
       setMode(modes.add);
     }
-  }, [list, nrOfMarkedItems, removeItem]);
+  }, [areSomeItemsMarked, list, removeItem]);
 
   const _changeModeAfterPressList = useCallback(
     (item: ItemClass) => {
@@ -127,11 +131,11 @@ export const ShoppingList = () => {
       case modes.add:
         return !!inputValue;
       case modes.delete:
-        return nrOfMarkedItems > 0;
+        return areSomeItemsMarked;
       case modes.edit:
         return !!inputValue;
     }
-  }, [inputValue, nrOfMarkedItems, mode]);
+  }, [mode, inputValue, areSomeItemsMarked]);
 
   const inputHandler = useCallback(
     (text) => {
