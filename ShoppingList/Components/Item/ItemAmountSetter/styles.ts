@@ -13,10 +13,10 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     ...defaultBorder,
   },
-  swipeViewRight: {
+  minus1: {
     backgroundColor: orange,
   },
-  swipeViewLeft: {
+  plus1: {
     backgroundColor: green,
   },
 });

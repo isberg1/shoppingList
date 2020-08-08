@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import {styles} from './styles';
 
-interface inputProps {
+interface props {
   value: string;
   onChangeText: (input: string) => void;
   onSubmit: (input: string) => void;
@@ -16,7 +16,7 @@ export const Input = ({
   onSubmit,
   inputRef,
   onClearText,
-}: inputProps) => {
+}: props) => {
   const [hasFocus, setHasFocus] = useState(false);
 
   return (

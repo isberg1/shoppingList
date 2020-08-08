@@ -52,7 +52,7 @@ exports[`matches Snapshot 1`] = `
       >
         <TextInput
           allowFontScaling={true}
-          clearButtonMode="always"
+          clearButtonMode="never"
           onBlur={[Function]}
           onChangeText={[Function]}
           onFocus={[Function]}

@@ -1,5 +1,5 @@
 import React, {useRef, useCallback} from 'react';
-// @ts-ignore: Unreachable code error
+// @ts-ignore
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {SwipeToSide} from './SwipeToSide/SwipeToSide';
 import {Item as ItemClass} from '../../../Model/ItemClass';
@@ -25,24 +25,24 @@ export const ItemAmountSetter = ({
 }: props) => {
   const ref = useRef<Swipeable>(null);
 
-  const _onSwipeableWillOpen = useCallback(() => ref?.current?.close(), []);
+  const _closeSwipeable = useCallback(() => ref?.current?.close(), []);
 
-  const _renderRightActions = useCallback(
-    () => <SwipeToSide text="-1" style={styles.swipeViewRight} />,
+  const _renderMinus1 = useCallback(
+    () => <SwipeToSide text="-1" style={styles.minus1} />,
     [],
   );
-  const _renderLeftActions = useCallback(
-    () => <SwipeToSide text="+1" style={styles.swipeViewLeft} />,
+  const _renderPlus1 = useCallback(
+    () => <SwipeToSide text="+1" style={styles.plus1} />,
     [],
   );
 
-  const _swipeLeft = useCallback(() => {
+  const _subtract1FromCounter = useCallback(() => {
     if (item.ItemCount > 1) {
       editItemCounter(index, item, item.ItemCount - 1);
     }
   }, [editItemCounter, index, item]);
 
-  const _swipeRight = useCallback(
+  const _add1ToCounter = useCallback(
     () => editItemCounter(index, item, item.ItemCount + 1),
     [editItemCounter, index, item],
   );
@@ -51,11 +51,11 @@ export const ItemAmountSetter = ({
     <Swipeable
       ref={ref}
       enable={!item.isMarked}
-      renderLeftActions={_renderLeftActions}
-      renderRightActions={_renderRightActions}
-      onSwipeableRightWillOpen={_swipeLeft}
-      onSwipeableLeftWillOpen={_swipeRight}
-      onSwipeableWillOpen={_onSwipeableWillOpen}
+      renderLeftActions={_renderPlus1}
+      renderRightActions={_renderMinus1}
+      onSwipeableRightWillOpen={_subtract1FromCounter}
+      onSwipeableLeftWillOpen={_add1ToCounter}
+      onSwipeableWillOpen={_closeSwipeable}
     >
       {children}
     </Swipeable>
