@@ -28,6 +28,7 @@ export const Input = ({
         onFocus={() => setHasFocus(true)}
         onBlur={() => setHasFocus(false)}
         onSubmitEditing={({nativeEvent: {text}}) => onSubmit(text)}
+        blurOnSubmit={false}
         value={value}
         clearButtonMode={'never'} // IOS has integrated clear button
         ref={inputRef}
