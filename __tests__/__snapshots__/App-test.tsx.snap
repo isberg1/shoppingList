@@ -39,8 +39,10 @@ exports[`matches Snapshot 1`] = `
           Array [
             Object {
               "backgroundColor": "#5A5A5A",
+              "borderColor": "transparent",
               "borderRadius": 5,
               "borderWidth": 2,
+              "elevation": 5,
               "flexDirection": "row",
               "marginHorizontal": 30,
               "marginVertical": 10,
@@ -113,8 +115,10 @@ exports[`matches Snapshot 1`] = `
         style={
           Array [
             Object {
+              "borderColor": "transparent",
               "borderRadius": 5,
               "borderWidth": 2,
+              "elevation": 5,
               "fontSize": 50,
               "marginHorizontal": 30,
             },
