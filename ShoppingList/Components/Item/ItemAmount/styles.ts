@@ -4,8 +4,9 @@ import {defaultBorder} from '../../commonStyles';
 export const styles = StyleSheet.create({
   outerCounterContainer: {
     height: '100%',
-    borderColor: 'transparent',
     ...defaultBorder,
+    borderColor: 'transparent',
+    elevation: 0,
   },
   innerCounterContainer: {
     flex: 1,

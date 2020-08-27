@@ -1,6 +1,8 @@
 export const defaultBorder = {
   borderWidth: 2,
   borderRadius: 5,
+  borderColor: 'transparent',
+  elevation: 5, // android box-shadow
 };
 
 export const darkTheme = '#272727';
