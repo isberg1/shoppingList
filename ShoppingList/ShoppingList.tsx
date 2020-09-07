@@ -107,10 +107,7 @@ export const ShoppingList = () => {
     setInputValue(item.ItemName);
     setMode(modes.edit);
     inputRef?.current?.focus();
-    itemToBeEdited = {
-      index: index,
-      item,
-    };
+    itemToBeEdited = {index: index, item};
   };
 
   const _onEditItemCounter = useCallback(
@@ -147,10 +144,10 @@ export const ShoppingList = () => {
     [mode],
   );
 
-  const onSubmitHandler = useCallback(() => {
-    const addOrEdit = mode === modes.add ? onPressAdd : onPressEdit;
-    addOrEdit();
-  }, [mode, onPressAdd, onPressEdit]);
+  const onSubmitHandler = useCallback(
+    () => (mode === modes.add ? onPressAdd() : onPressEdit()),
+    [mode, onPressAdd, onPressEdit],
+  );
 
   const onClearText = useCallback(() => inputHandler(''), [inputHandler]);
 
