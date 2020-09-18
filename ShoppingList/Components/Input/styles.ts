@@ -4,7 +4,6 @@ import {defaultBorder, gray, lightGray, white} from '../commonStyles';
 export const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
-    marginHorizontal: 30,
     marginVertical: 10,
     backgroundColor: gray,
     opacity: 0.7,

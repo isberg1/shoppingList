@@ -12,7 +12,6 @@ export const styles = StyleSheet.create({
   buttonContainer: {
     fontSize: 50,
     ...defaultBorder,
-    marginHorizontal: 30,
   },
   disabled: {
     opacity: 0.6,

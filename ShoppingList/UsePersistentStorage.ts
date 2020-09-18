@@ -82,9 +82,7 @@ export const usePersistentStorage = () => {
 
   const editList = (indexToEdit: number, newValue: ItemClass) => {
     setList((currentList) =>
-      currentList.map((oldValue, index) =>
-        indexToEdit === index ? newValue : oldValue,
-      ),
+      currentList.map((oldValue, index) => (indexToEdit === index ? newValue : oldValue)),
     );
   };
 

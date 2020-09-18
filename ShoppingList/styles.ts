@@ -4,6 +4,7 @@ export const styles = StyleSheet.create({
   shoppingList: {
     height: '100%',
     marginTop: 40,
+    marginHorizontal: 30,
   },
   inputAndButton: {
     flex: 1,
