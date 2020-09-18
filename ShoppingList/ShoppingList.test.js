@@ -59,10 +59,7 @@ describe('adding, editing and deleting items in list', () => {
     addItemToList(root, 'apple');
 
     // longPress item in list to change mode
-    fireEvent(
-      root.findAllByType(Item)[0].findAllByType(TouchableOpacity)[0],
-      'Press',
-    );
+    fireEvent(root.findAllByType(Item)[0].findAllByType(TouchableOpacity)[0], 'Press');
     expect(root.findAllByType(ModifyListButton)[0].props.mode).toBe('delete'); // mode has changed
     fireEvent(root.findAllByType(Button)[0], 'longPress');
     expect(root.findAllByType(Item).length).toBe(0);
@@ -83,14 +80,8 @@ describe('adding, editing and deleting items in list', () => {
     expect(root.findAllByType(Item)[3].props.item.ItemName).toBe('salt');
 
     // mark items in list
-    fireEvent(
-      root.findAllByType(Item)[0].findAllByType(TouchableOpacity)[0],
-      'Press',
-    );
-    fireEvent(
-      root.findAllByType(Item)[2].findAllByType(TouchableOpacity)[0],
-      'Press',
-    );
+    fireEvent(root.findAllByType(Item)[0].findAllByType(TouchableOpacity)[0], 'Press');
+    fireEvent(root.findAllByType(Item)[2].findAllByType(TouchableOpacity)[0], 'Press');
     fireEvent(root.findAllByType(Button)[0], 'longPress'); // delete items
 
     expect(root.findAllByType(Item).length).toBe(2); // right number of items remaining
