@@ -1,9 +1,7 @@
-import React, {useState, useCallback, useMemo, useRef} from 'react';
-import {ModifyListButton, List, Input, Settings} from './Components/index';
+import {useState, useCallback, useMemo, useRef} from 'react';
 import {modes} from './config';
-import {View, TextInput} from 'react-native';
+import {TextInput} from 'react-native';
 import {Item as ItemClass} from './Model/ItemClass';
-import {styles} from './styles';
 
 interface itemToBeEditedType {
   index: number;
@@ -17,6 +15,7 @@ interface Props {
   addToList: (item: ItemClass) => void;
   editList: (indexToEdit: number, newValue: ItemClass) => void;
   removeItem: (keys: number[]) => void;
+  deleteList: () => void;
 }
 
 export const UseInteractionManager = ({
@@ -24,33 +23,51 @@ export const UseInteractionManager = ({
   addToList,
   editList,
   removeItem,
-}: //deleteList,
-Props) => {
+  deleteList: _deleteList,
+}: Props) => {
   const [inputValue, setInputValue] = useState('');
   const [mode, setMode] = useState(modes.add);
   const inputRef = useRef<TextInput>(null);
 
-  const nrOfMarkedItems = useMemo(
+  const _nrOfMarkedItems = useMemo(
     () => (list || []).filter((item) => item.isMarked).length,
     [list],
   );
 
-  const areSomeItemsMarked = useMemo(() => nrOfMarkedItems > 0, [nrOfMarkedItems]);
+  const _areSomeItemsMarked = useMemo(() => _nrOfMarkedItems > 0, [_nrOfMarkedItems]);
+
+  const _cleanupAfterEdit = useCallback(() => {
+    setInputValue('');
+    setMode(_nrOfMarkedItems === 0 ? modes.add : modes.delete);
+    inputRef?.current?.blur();
+    itemToBeEdited = null;
+  }, [_nrOfMarkedItems]);
+
+  const _changeModeAfterPressList = useCallback(
+    (item: ItemClass) => {
+      if (
+        _nrOfMarkedItems > 1 || // > 1 because editList() runs after this func call
+        (!item.isMarked && !inputValue)
+      ) {
+        setMode(modes.delete);
+      } else if (_nrOfMarkedItems === 0 || item.isMarked) {
+        setMode(modes.add);
+      }
+    },
+    [inputValue, _nrOfMarkedItems],
+  );
+
+  /*
+ ///////////////  Public Functions ///////////////
+ */
 
   const onPressAdd = useCallback(() => {
     if (inputValue) {
       addToList(new ItemClass(inputValue));
       setInputValue('');
-      areSomeItemsMarked && setMode(modes.delete);
+      _areSomeItemsMarked && setMode(modes.delete);
     }
-  }, [addToList, inputValue, areSomeItemsMarked]);
-
-  const cleanupAfterEdit = useCallback(() => {
-    setInputValue('');
-    setMode(nrOfMarkedItems === 0 ? modes.add : modes.delete);
-    inputRef?.current?.blur();
-    itemToBeEdited = null;
-  }, [nrOfMarkedItems]);
+  }, [addToList, inputValue, _areSomeItemsMarked]);
 
   const onPressEdit = useCallback(() => {
     if (inputValue && mode === modes.edit && itemToBeEdited) {
@@ -60,12 +77,12 @@ Props) => {
         itemToBeEdited.item.isMarkedIndex,
       );
       editList(itemToBeEdited.index, newValue);
-      cleanupAfterEdit();
+      _cleanupAfterEdit();
     }
-  }, [cleanupAfterEdit, editList, inputValue, mode]);
+  }, [_cleanupAfterEdit, editList, inputValue, mode]);
 
   const onPressDelete = useCallback(() => {
-    if (areSomeItemsMarked) {
+    if (_areSomeItemsMarked) {
       const itemsToDelete = list
         .filter((item) => item.isMarked)
         .map((markedItem) =>
@@ -76,23 +93,9 @@ Props) => {
       removeItem(itemsToDelete);
       setMode(modes.add);
     }
-  }, [areSomeItemsMarked, list, removeItem]);
+  }, [_areSomeItemsMarked, list, removeItem]);
 
-  const _changeModeAfterPressList = useCallback(
-    (item: ItemClass) => {
-      if (
-        nrOfMarkedItems > 1 || // > 1 because editList() runs after this func call
-        (!item.isMarked && !inputValue)
-      ) {
-        setMode(modes.delete);
-      } else if (nrOfMarkedItems === 0 || item.isMarked) {
-        setMode(modes.add);
-      }
-    },
-    [inputValue, nrOfMarkedItems],
-  );
-
-  const _onPressList = useCallback(
+  const onPressList = useCallback(
     (index: number, item: ItemClass) => {
       const newValue = new ItemClass(
         item.ItemName,
@@ -105,14 +108,14 @@ Props) => {
     [_changeModeAfterPressList, editList],
   );
 
-  const _onLongPressList = (index: number, item: ItemClass) => {
+  const onLongPressList = (index: number, item: ItemClass) => {
     setInputValue(item.ItemName);
     setMode(modes.edit);
     inputRef?.current?.focus();
     itemToBeEdited = {index: index, item};
   };
 
-  const _onEditItemCounter = useCallback(
+  const onEditItemCounter = useCallback(
     (index: number, item: ItemClass, ItemCount = 1) => {
       const newValue = new ItemClass(item.ItemName, ItemCount, item.isMarkedIndex);
 
@@ -126,11 +129,11 @@ Props) => {
       case modes.add:
         return !!inputValue;
       case modes.delete:
-        return areSomeItemsMarked;
+        return _areSomeItemsMarked;
       case modes.edit:
         return !!inputValue;
     }
-  }, [mode, inputValue, areSomeItemsMarked]);
+  }, [mode, inputValue, _areSomeItemsMarked]);
 
   const inputHandler = useCallback(
     (text) => {
@@ -154,9 +157,9 @@ Props) => {
     onSubmitHandler,
     inputHandler,
     enableButton,
-    _onEditItemCounter,
-    _onLongPressList,
-    _onPressList,
+    onEditItemCounter,
+    onLongPressList,
+    onPressList,
     onPressDelete,
     onPressEdit,
     onPressAdd,

@@ -1,6 +1,6 @@
 import React from 'react';
 import TestRenderer from 'react-test-renderer';
-import {fireEvent} from 'react-native-testing-library';
+import {fireEvent} from '@testing-library/react-native';
 import {ShoppingList} from './ShoppingList';
 import {Input, ModifyListButton, List, Button, Item} from './Components/index';
 import {TouchableOpacity} from 'react-native';

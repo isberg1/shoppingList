@@ -6,22 +6,16 @@ import {View} from 'react-native';
 import {styles} from './styles';
 
 export const ShoppingList = () => {
-  const {
-    list,
-    addToList,
-    editList,
-    removeItem,
-    //deleteList,
-  } = usePersistentStorage();
+  const {list, addToList, editList, removeItem, deleteList} = usePersistentStorage();
 
   const {
     onClearText,
     onSubmitHandler,
     inputHandler,
     enableButton,
-    _onEditItemCounter,
-    _onLongPressList,
-    _onPressList,
+    onEditItemCounter,
+    onLongPressList,
+    onPressList,
     onPressDelete,
     onPressEdit,
     onPressAdd,
@@ -33,7 +27,7 @@ export const ShoppingList = () => {
     addToList,
     editList,
     removeItem,
-    //deleteList,
+    deleteList,
   });
 
   return (
@@ -58,9 +52,9 @@ export const ShoppingList = () => {
       <View style={styles.list}>
         <List
           list={list}
-          onPress={_onPressList}
-          onLongPress={_onLongPressList}
-          editItemCounter={_onEditItemCounter}
+          onPress={onPressList}
+          onLongPress={onLongPressList}
+          editItemCounter={onEditItemCounter}
         />
       </View>
     </View>

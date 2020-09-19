@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import {TouchableOpacity, View, Text, Slider} from 'react-native';
+import {TouchableOpacity, View, Text} from 'react-native';
+import Slider from '@react-native-community/slider';
 
 import {styles} from './styles';
 import {Icon, Overlay} from 'react-native-elements';
@@ -20,7 +21,13 @@ export const Settings = () => {
           <TouchableOpacity onPress={() => setShowSettings((val) => !val)}>
             <Text>Close</Text>
           </TouchableOpacity>
-          <Slider minimumValue={15} maximumValue={50} value={30} />
+          <Slider
+            style={styles.slider}
+            minimumValue={0}
+            maximumValue={1}
+            thumbTintColor="#000000"
+            maximumTrackTintColor="#000000"
+          />
         </View>
       </Overlay>
     </View>
