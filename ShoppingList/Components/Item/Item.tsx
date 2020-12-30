@@ -11,20 +11,10 @@ interface props {
   index: number;
   onPress: (index: number, item: ItemClass) => void;
   onLongPress: (index: number, item: ItemClass) => void;
-  editItemCounter: (
-    index: number,
-    item: ItemClass,
-    newCounterValue: number,
-  ) => void;
+  editItemCounter: (index: number, item: ItemClass, newCounterValue: number) => void;
 }
 
-export const Item = ({
-  item,
-  index,
-  onPress,
-  onLongPress,
-  editItemCounter,
-}: props) => {
+export const Item = ({item, index, onPress, onLongPress, editItemCounter}: props) => {
   return (
     <>
       <View style={[styles.itemRow, item.isMarked && styles.touchedItem]}>
@@ -37,11 +27,7 @@ export const Item = ({
           />
         </View>
         <View style={styles.ItemAmountSetterContainer}>
-          <ItemAmountSetter
-            index={index}
-            item={item}
-            editItemCounter={editItemCounter}
-          >
+          <ItemAmountSetter index={index} item={item} editItemCounter={editItemCounter}>
             <ItemAmount amount={!item.isMarked ? item.ItemCount : ''} />
           </ItemAmountSetter>
         </View>

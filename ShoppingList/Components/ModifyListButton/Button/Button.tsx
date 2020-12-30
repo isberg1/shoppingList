@@ -11,13 +11,7 @@ interface props {
   styling: ViewStyle;
 }
 
-export const Button = ({
-  text,
-  onPress,
-  onLongPress,
-  disabled,
-  styling,
-}: props) => {
+export const Button = ({text, onPress, onLongPress, disabled, styling}: props) => {
   const {
     colorChangeStyling,
     pressInAnimation,
@@ -26,15 +20,13 @@ export const Button = ({
   } = useClickAnimation();
 
   const _onPress = useCallback(() => onPress && onPress(), [onPress]);
-  const _onLongPress = useCallback(
-    () => onLongPress && longPressAnimation(onLongPress),
-    [longPressAnimation, onLongPress],
-  );
+  const _onLongPress = useCallback(() => onLongPress && longPressAnimation(onLongPress), [
+    longPressAnimation,
+    onLongPress,
+  ]);
 
   return (
-    <View
-      style={[styles.buttonContainer, disabled && styles.disabled, styling]}
-    >
+    <View style={[styles.buttonContainer, disabled && styles.disabled, styling]}>
       <Animated.View style={{backgroundColor: colorChangeStyling}}>
         <TouchableOpacity
           activeOpacity={1} // disable default clickAnimation

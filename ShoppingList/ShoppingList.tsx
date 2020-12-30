@@ -1,11 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {ModifyListButton, List, Input, Settings} from './Components/index';
 import {usePersistentStorage} from './UsePersistentStorage';
 import {UseInteractionManager} from './UseInteractionManager';
+import context from './Context';
+import {defaultFontSize} from './config';
 import {View} from 'react-native';
 import {styles} from './styles';
 
 export const ShoppingList = () => {
+  const [fontSize, setFontSize] = useState<number>(defaultFontSize);
   const {list, addToList, editList, removeItem, deleteList} = usePersistentStorage();
 
   const {
@@ -32,31 +35,33 @@ export const ShoppingList = () => {
 
   return (
     <View style={styles.shoppingList}>
-      <Settings />
-      <View style={styles.inputAndButton}>
-        <Input
-          value={inputValue}
-          onChangeText={inputHandler}
-          onSubmit={onSubmitHandler}
-          inputRef={inputRef}
-          onClearText={onClearText}
-        />
-        <ModifyListButton
-          disabled={!enableButton}
-          onPressAdd={onPressAdd}
-          onPressDelete={onPressDelete}
-          onPressEdit={onPressEdit}
-          mode={mode}
-        />
-      </View>
-      <View style={styles.list}>
-        <List
-          list={list}
-          onPress={onPressList}
-          onLongPress={onLongPressList}
-          editItemCounter={onEditItemCounter}
-        />
-      </View>
+      <context.Provider value={{fontSize, setFontSize}}>
+        <Settings />
+        <View style={styles.inputAndButton}>
+          <Input
+            value={inputValue}
+            onChangeText={inputHandler}
+            onSubmit={onSubmitHandler}
+            inputRef={inputRef}
+            onClearText={onClearText}
+          />
+          <ModifyListButton
+            disabled={!enableButton}
+            onPressAdd={onPressAdd}
+            onPressDelete={onPressDelete}
+            onPressEdit={onPressEdit}
+            mode={mode}
+          />
+        </View>
+        <View style={styles.list}>
+          <List
+            list={list}
+            onPress={onPressList}
+            onLongPress={onLongPressList}
+            editItemCounter={onEditItemCounter}
+          />
+        </View>
+      </context.Provider>
     </View>
   );
 };
