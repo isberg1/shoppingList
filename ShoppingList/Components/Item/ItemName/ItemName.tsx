@@ -1,9 +1,8 @@
-import React, {useCallback, useContext, useMemo} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {Text, TouchableOpacity} from 'react-native';
 import {Item as ItemClass} from '../../../Model/ItemClass';
 import {styles} from './styles';
-
-import context from '../../../Context';
+import useSettings from '../../../UseSettings';
 
 interface props {
   item: ItemClass;
@@ -13,7 +12,7 @@ interface props {
 }
 
 export const ItemName = ({item, index, onPress, onLongPress}: props) => {
-  const {fontSize} = useContext(context);
+  const {fontSize} = useSettings();
   const style = useMemo(() => styles(fontSize), [fontSize]);
 
   const _onPress = useCallback(() => onPress(index, item), [index, item, onPress]);

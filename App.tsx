@@ -6,7 +6,7 @@ import React from 'react';
 import {SafeAreaView, View, StatusBar} from 'react-native';
 import {ShoppingList} from './ShoppingList/ShoppingList';
 import context from './ShoppingList/Context';
-import useSettingsManager from './ShoppingList/UseSettings';
+import useSettingsManager from './ShoppingList/UseSettingsManager';
 import {styles} from './appStyles';
 import {SteamBlue} from './ShoppingList/Components/commonStyles';
 
