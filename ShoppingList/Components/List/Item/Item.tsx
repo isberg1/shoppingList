@@ -3,7 +3,7 @@ import {View} from 'react-native';
 import {ItemAmountSetter} from './ItemAmountSetter/ItemAmountSetter';
 import {ItemName} from './ItemName/ItemName';
 import {ItemAmount} from './ItemAmount/ItemAmount';
-import {Item as ItemClass} from '../../Model/ItemClass';
+import {Item as ItemClass} from '../../../Model/ItemClass';
 import {styles} from './styles';
 
 interface props {

@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {white} from '../../commonStyles';
+import {white} from '../../../commonStyles';
 
 export const styles = (fontSize: number) =>
   StyleSheet.create({

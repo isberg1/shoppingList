@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {defaultBorder} from '../../commonStyles';
+import {defaultBorder} from '../../../commonStyles';
 
 export const styles = StyleSheet.create({
   outerCounterContainer: {

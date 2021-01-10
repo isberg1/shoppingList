@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {defaultBorder, pink, lightGray} from '../commonStyles';
+import {defaultBorder, pink, lightGray} from '../../commonStyles';
 
 export const styles = StyleSheet.create({
   itemRow: {

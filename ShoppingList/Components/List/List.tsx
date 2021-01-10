@@ -1,7 +1,7 @@
 import React from 'react';
 import {ScrollView} from 'react-native';
 import {styles} from './styles';
-import {Item} from '../Item/Item';
+import {Item} from './Item/Item';
 import {Item as ItemClass} from '../../Model/ItemClass';
 
 interface props {
