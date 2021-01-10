@@ -3,20 +3,7 @@ import {modes} from './config';
 import {TextInput} from 'react-native';
 import {Item as ItemClass} from './Model/ItemClass';
 
-interface itemToBeEditedType {
-  index: number;
-  item: ItemClass;
-}
-
-let itemToBeEdited: itemToBeEditedType | null = null;
-
-interface Props {
-  list: ItemClass[];
-  addToList: (item: ItemClass) => void;
-  editList: (indexToEdit: number, newValue: ItemClass) => void;
-  removeItem: (keys: number[]) => void;
-  deleteList: () => void;
-}
+let itemToBeEdited: itemToBeEditedType = null;
 
 export const UseInteractionManager = ({
   list,
@@ -168,3 +155,16 @@ export const UseInteractionManager = ({
     inputRef,
   };
 };
+
+type itemToBeEditedType = {
+  index: number;
+  item: ItemClass;
+} | null;
+
+interface Props {
+  list: ItemClass[];
+  addToList: (item: ItemClass) => void;
+  editList: (indexToEdit: number, newValue: ItemClass) => void;
+  removeItem: (keys: number[]) => void;
+  deleteList: () => void;
+}

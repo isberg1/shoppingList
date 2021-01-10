@@ -2,13 +2,13 @@ import React, {useState} from 'react';
 import {ModifyListButton, List, Input, Settings} from './Components/index';
 import {usePersistentStorage} from './UsePersistentStorage';
 import {UseInteractionManager} from './UseInteractionManager';
+import useSettings from './UseSettings';
 import context from './Context';
-import {defaultFontSize} from './config';
 import {View} from 'react-native';
 import {styles} from './styles';
 
 export const ShoppingList = () => {
-  const [fontSize, setFontSize] = useState<number>(defaultFontSize);
+  const {fontSize, setFontSize} = useSettings();
   const {list, addToList, editList, removeItem, deleteList} = usePersistentStorage();
 
   const {

@@ -1,12 +1,15 @@
 import {useState, useEffect} from 'react';
-import AsyncStorage from '@react-native-community/async-storage';
+import {
+  setInAsyncStorage,
+  getFromAsyncStorage,
+  deleteFromAsyncStorage,
+} from './Utils/AsyncStorage';
 import {Item as ItemClass} from './Model/ItemClass';
 
 const LIST_KEY = 'LIST';
-const initialItemList: ItemClass[] = [];
 
 export const usePersistentStorage = () => {
-  const [list, setList] = useState(initialItemList);
+  const [list, setList] = useState<ItemClass[]>([]);
 
   // get data at startup
   useEffect(() => {
@@ -16,40 +19,18 @@ export const usePersistentStorage = () => {
           new ItemClass(item?.ItemName, item?.ItemCount, item?.isMarkedIndex),
       );
     };
-    const _retrieveData = async () => {
-      try {
-        const value = await AsyncStorage.getItem(LIST_KEY);
-        if (value) {
-          const newItemList = parseDataToItemList(value);
-          newItemList && setList(newItemList);
-        }
-      } catch (error) {
-        console.log('_retrieveData failed:', error);
-      }
-    };
-    _retrieveData();
+
+    getFromAsyncStorage(LIST_KEY, (value: string) => {
+      const newItemList = parseDataToItemList(value);
+      newItemList && setList(newItemList);
+    });
   }, []);
 
   useEffect(() => {
-    if (list && list.length > 0) {
-      const _storeData = async () => {
-        try {
-          await AsyncStorage.setItem(LIST_KEY, JSON.stringify(list));
-        } catch (error) {
-          console.log('store data error', error);
-        }
-      };
-      _storeData();
+    if (list?.length > 0) {
+      setInAsyncStorage(LIST_KEY, JSON.stringify(list));
     }
   }, [list]);
-
-  const _deleteData = async () => {
-    try {
-      await AsyncStorage.removeItem(LIST_KEY);
-    } catch (error) {
-      console.log('delete data error', error);
-    }
-  };
 
   /*
    -------- public API ---------
@@ -58,7 +39,7 @@ export const usePersistentStorage = () => {
 
   const deleteList = () => {
     setList([]);
-    _deleteData();
+    deleteFromAsyncStorage(LIST_KEY);
   };
 
   const removeItem = (keys: number[]) => {
