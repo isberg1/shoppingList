@@ -17,6 +17,20 @@ export const blue = 'blue';
 export const SteamBlue = '#1b2838';
 export const white = 'white';
 
+export const colors = {
+  gray,
+  lightGray,
+  black,
+  greenBlue,
+  pink,
+  orange,
+  green,
+  blue,
+  SteamBlue,
+  white,
+  darkTheme,
+};
+
 // https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
 export const hexToRgb = (hex: string) => {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);

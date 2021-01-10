@@ -3,7 +3,7 @@ import {TouchableOpacity, View, Text} from 'react-native';
 import Slider from '@react-native-community/slider';
 import {Icon, Overlay} from 'react-native-elements';
 import context from '../../Context';
-import {styles} from './styles';
+import {styles, colors} from './styles';
 
 export const Settings = () => {
   const [showSettings, setShowSettings] = useState(false);
@@ -34,8 +34,8 @@ export const Settings = () => {
             maximumValue={50}
             step={1}
             value={fontSize}
-            thumbTintColor="#000000"
-            maximumTrackTintColor="#000000"
+            thumbTintColor={colors.black}
+            maximumTrackTintColor={colors.black}
           />
         </View>
       </Overlay>

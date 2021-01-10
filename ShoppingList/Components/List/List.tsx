@@ -14,10 +14,7 @@ interface props {
 export const List = ({list, onPress, onLongPress, editItemCounter}: props) => {
   return (
     <>
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={styles.scrollView}
-      >
+      <ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.scrollView}>
         {list.map((item, index) => (
           <Item
             key={index}

@@ -10,13 +10,7 @@ interface props {
   onClearText?: () => void;
 }
 
-export const Input = ({
-  value,
-  onChangeText,
-  onSubmit,
-  inputRef,
-  onClearText,
-}: props) => {
+export const Input = ({value, onChangeText, onSubmit, inputRef, onClearText}: props) => {
   const [hasFocus, setHasFocus] = useState(false);
 
   return (

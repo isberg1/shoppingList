@@ -6,7 +6,7 @@ enum Setting {
   FontSize = 'FONTSIZE',
 }
 
-export default function useSettings() {
+export default function useSettingsManager() {
   const [fontSize, setFontSize] = useState<number>(defaultFontSize);
 
   // get data at startup

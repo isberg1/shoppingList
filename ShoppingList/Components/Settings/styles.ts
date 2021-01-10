@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+export {colors} from '../commonStyles';
 
 export const styles = StyleSheet.create({
   settingsIcon: {
