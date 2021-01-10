@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useMemo} from 'react';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
+import useSettings from '../../UseSettings';
 import {styles} from './styles';
 
 interface props {
@@ -12,12 +13,14 @@ interface props {
 
 export const Input = ({value, onChangeText, onSubmit, inputRef, onClearText}: props) => {
   const [hasFocus, setHasFocus] = useState(false);
+  const {fontSize} = useSettings();
+  const style = useMemo(() => styles(fontSize), [fontSize]);
 
   return (
-    <View style={[styles.inputContainer, hasFocus && styles.onFocus]}>
+    <View style={[style.inputContainer, hasFocus && style.onFocus]}>
       <TextInput
         placeholder={hasFocus ? '' : 'Enter Text'}
-        style={styles.input}
+        style={style.input}
         onChangeText={onChangeText}
         onFocus={() => setHasFocus(true)}
         onBlur={() => setHasFocus(false)}
@@ -28,8 +31,8 @@ export const Input = ({value, onChangeText, onSubmit, inputRef, onClearText}: pr
         ref={inputRef}
       />
       <TouchableOpacity onPress={onClearText}>
-        <View style={styles.resetText}>
-          <Text style={styles.deleteText}>X</Text>
+        <View style={style.resetText}>
+          <Text style={style.deleteText}>X</Text>
         </View>
       </TouchableOpacity>
     </View>
