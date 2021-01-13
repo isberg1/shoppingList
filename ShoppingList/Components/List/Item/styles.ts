@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {defaultBorder, pink, lightGray} from '../../commonStyles';
+import {defaultBorder, colors} from '../../commonStyles';
 
 export const styles = StyleSheet.create({
   itemRow: {
@@ -7,14 +7,26 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginVertical: 4,
-    backgroundColor: lightGray,
+    backgroundColor: colors.lightGray,
     ...defaultBorder,
   },
+  imageContainer: {
+    // justifyContent: 'center',
+    // alignItems: 'center',
+  },
+  image: {
+    height: 50,
+    width: 50,
+    borderWidth: 1,
+    borderRadius: 25,
+    borderColor: colors.black,
+  },
   touchedItem: {
-    backgroundColor: pink,
+    backgroundColor: colors.pink,
   },
   ItemNameContainer: {
     flex: 7,
+    alignItems: 'center',
   },
   ItemAmountSetterContainer: {
     flex: 2,
