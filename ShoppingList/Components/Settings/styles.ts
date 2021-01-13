@@ -1,27 +1,35 @@
 import {StyleSheet} from 'react-native';
-export {colors} from '../commonStyles';
 
 export const styles = StyleSheet.create({
   settingsIcon: {
     alignSelf: 'flex-end',
   },
   modal: {
-    display: 'flex',
-    width: 250,
+    justifyContent: 'center',
+    width: 300,
   },
   button: {
-    display: 'flex',
     alignSelf: 'flex-end',
-    justifyContent: 'center',
-    width: 80,
+    justifyContent: 'flex-start',
+    width: 50,
     height: 50,
   },
   text: {
     textAlign: 'center',
   },
+  settingsEntriesContainer: {
+    marginTop: 10,
+    paddingHorizontal: 30,
+  },
+  settingsTextRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   slider: {
     alignSelf: 'center',
-    width: 200,
     height: 40,
+    width: '110%',
   },
 });
+
+export {colors} from '../commonStyles';

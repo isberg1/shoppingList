@@ -26,17 +26,24 @@ export const Settings = () => {
           >
             <Text style={styles.text}>Close</Text>
           </TouchableOpacity>
-          <Text style={styles.text}>{fontSize.toString()}</Text>
-          <Slider
-            onValueChange={(val) => setFontSize(val)}
-            style={styles.slider}
-            minimumValue={15}
-            maximumValue={50}
-            step={1}
-            value={fontSize}
-            thumbTintColor={colors.black}
-            maximumTrackTintColor={colors.black}
-          />
+
+          <View style={styles.settingsEntriesContainer}>
+            <View style={styles.settingsTextRow}>
+              <Text>Text Size:</Text>
+              <Text>{fontSize.toString()}</Text>
+            </View>
+
+            <Slider
+              onValueChange={(val) => setFontSize(val)}
+              style={styles.slider}
+              minimumValue={15}
+              maximumValue={50}
+              step={1}
+              value={fontSize}
+              thumbTintColor={colors.black}
+              maximumTrackTintColor={colors.black}
+            />
+          </View>
         </View>
       </Overlay>
     </View>
