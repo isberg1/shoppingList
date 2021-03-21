@@ -4,10 +4,16 @@ import Slider from '@react-native-community/slider';
 import {Icon, Overlay} from 'react-native-elements';
 import context from '../../Context';
 import {styles, colors} from './styles';
+import {SortOptions} from '../../config';
+
+const displayNames = {
+  [SortOptions.Fifo]: 'elste øverst',
+  [SortOptions.Lifo]: 'nyeste øverst',
+};
 
 export const Settings = () => {
   const [showSettings, setShowSettings] = useState(false);
-  const {fontSize, setFontSize} = useContext(context);
+  const {fontSize, setFontSize, sortOrder, setSortOrder} = useContext(context);
 
   return (
     <View>
@@ -24,12 +30,12 @@ export const Settings = () => {
             style={styles.button}
             onPress={() => setShowSettings((val) => !val)}
           >
-            <Text style={styles.text}>Close</Text>
+            <Text style={styles.buttonText}>Close</Text>
           </TouchableOpacity>
 
           <View style={styles.settingsEntriesContainer}>
             <View style={styles.settingsTextRow}>
-              <Text>Text Size:</Text>
+              <Text style={styles.header}>Text Size:</Text>
               <Text>{fontSize.toString()}</Text>
             </View>
 
@@ -43,6 +49,20 @@ export const Settings = () => {
               thumbTintColor={colors.black}
               maximumTrackTintColor={colors.black}
             />
+
+            <View>
+              <Text style={styles.header}>Sort order:</Text>
+
+              {[SortOptions.Fifo, SortOptions.Lifo].map((option) => (
+                <TouchableOpacity
+                  key={option}
+                  onPress={() => setSortOrder(option)}
+                  style={option === sortOrder && styles.currentSort}
+                >
+                  <Text style={styles.text}>{displayNames[option]}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
           </View>
         </View>
       </Overlay>

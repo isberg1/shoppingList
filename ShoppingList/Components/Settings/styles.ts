@@ -14,8 +14,13 @@ export const styles = StyleSheet.create({
     width: 50,
     height: 50,
   },
+  buttonText: {
+    textAlign: 'center',
+  },
   text: {
     textAlign: 'center',
+    fontSize: 25,
+    marginHorizontal: 5,
   },
   settingsEntriesContainer: {
     marginTop: 10,
@@ -29,6 +34,17 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     height: 40,
     width: '110%',
+  },
+
+  currentSort: {
+    backgroundColor: 'gray',
+  },
+
+  header: {
+    fontStyle: 'italic',
+    textDecorationLine: 'underline',
+    marginBottom: 5,
+    fontSize: 20,
   },
 });
 

@@ -10,10 +10,6 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.lightGray,
     ...defaultBorder,
   },
-  imageContainer: {
-    // justifyContent: 'center',
-    // alignItems: 'center',
-  },
   image: {
     height: 50,
     width: 50,
