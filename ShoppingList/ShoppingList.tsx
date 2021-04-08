@@ -6,7 +6,14 @@ import {View} from 'react-native';
 import {styles} from './styles';
 
 export const ShoppingList = () => {
-  const {list, addToList, editList, removeItem, deleteList} = usePersistentStorage();
+  const {
+    list,
+    addToList,
+    editList,
+    removeItem,
+    deleteList,
+    editEntireList,
+  } = usePersistentStorage();
 
   const {
     inputHandler,
@@ -19,6 +26,7 @@ export const ShoppingList = () => {
     onPressDelete,
     onPressEdit,
     onPressAdd,
+    onSortList,
     inputValue,
     mode,
     inputRef,
@@ -28,11 +36,12 @@ export const ShoppingList = () => {
     editList,
     removeItem,
     deleteList,
+    editEntireList,
   });
 
   return (
     <View style={styles.shoppingList}>
-      <Settings />
+      <Settings onSortList={onSortList} />
       <View style={styles.inputAndButton}>
         <Input
           value={inputValue}

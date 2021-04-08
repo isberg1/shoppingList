@@ -5,6 +5,7 @@ import {
   deleteFromAsyncStorage,
 } from './Utils/AsyncStorage';
 import {Item as ItemClass} from './Model/ItemClass';
+import {SortOptions} from './config';
 
 const LIST_KEY = 'LIST';
 
@@ -35,7 +36,18 @@ export const usePersistentStorage = () => {
   /*
    -------- public API ---------
   */
-  const addToList = (item: ItemClass) => setList((items) => [...items, item]);
+  const addToList = (item: ItemClass, sortOrder: SortOptions) => {
+    setList((items) => {
+      if (sortOrder === SortOptions.Normal) {
+        return [...items, item];
+      }
+
+      if (sortOrder === SortOptions.Reverse) {
+        return [item, ...items];
+      }
+      return items;
+    });
+  };
 
   const deleteList = () => {
     setList([]);
@@ -67,5 +79,9 @@ export const usePersistentStorage = () => {
     );
   };
 
-  return {list, addToList, deleteList, removeItem, editList};
+  const editEntireList = (newList: ItemClass[]) => {
+    setList(newList.filter((val) => val instanceof ItemClass));
+  };
+
+  return {list, addToList, deleteList, removeItem, editList, editEntireList};
 };

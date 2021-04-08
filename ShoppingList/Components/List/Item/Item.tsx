@@ -10,7 +10,7 @@ export function Item({item, index, onPress, onLongPress, editItemCounter}: props
   return (
     <>
       <View style={[styles.itemRow, item.isMarked && styles.touchedItem]}>
-        {/*        <Image
+        {/*         <Image
           style={styles.image}
           source={require('../../../Resources/1607152404595.jpg')}
         /> */}

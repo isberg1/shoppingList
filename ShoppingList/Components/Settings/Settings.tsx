@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useCallback} from 'react';
 import {TouchableOpacity, View, Text} from 'react-native';
 import Slider from '@react-native-community/slider';
 import {Icon, Overlay} from 'react-native-elements';
@@ -7,13 +7,25 @@ import {styles, colors} from './styles';
 import {SortOptions} from '../../config';
 
 const displayNames = {
-  [SortOptions.Fifo]: 'elste øverst',
-  [SortOptions.Lifo]: 'nyeste øverst',
+  [SortOptions.Reverse]: 'Reverser',
+  [SortOptions.Normal]: 'Normal',
 };
 
-export const Settings = () => {
+type Props = {
+  onSortList: (option: SortOptions) => void;
+};
+
+export const Settings = ({onSortList}: Props) => {
   const [showSettings, setShowSettings] = useState(false);
   const {fontSize, setFontSize, sortOrder, setSortOrder} = useContext(context);
+
+  const onClickSort = useCallback(
+    (option: SortOptions) => {
+      onSortList(option);
+      setSortOrder(option);
+    },
+    [onSortList, setSortOrder],
+  );
 
   return (
     <View>
@@ -53,10 +65,10 @@ export const Settings = () => {
             <View>
               <Text style={styles.header}>Sort order:</Text>
 
-              {[SortOptions.Fifo, SortOptions.Lifo].map((option) => (
+              {[SortOptions.Normal, SortOptions.Reverse].map((option) => (
                 <TouchableOpacity
                   key={option}
-                  onPress={() => setSortOrder(option)}
+                  onPress={() => onClickSort(option)}
                   style={option === sortOrder && styles.currentSort}
                 >
                   <Text style={styles.text}>{displayNames[option]}</Text>

@@ -24,7 +24,11 @@ export const ItemName = ({item, index, onPress, onLongPress}: props) => {
   ]);
 
   return (
-    <TouchableOpacity onPress={_onPress} onLongPress={_onLongPress}>
+    <TouchableOpacity
+      style={[style.touchable]}
+      onPress={_onPress}
+      onLongPress={_onLongPress}
+    >
       <Text style={[style.text]}>{item.ItemName}</Text>
     </TouchableOpacity>
   );

@@ -1,10 +1,9 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import {ScrollView} from 'react-native';
-import useSettings from '../../UseSettings';
+
 import {styles} from './styles';
 import {Item} from './Item/Item';
 import {Item as ItemClass} from '../../Model/ItemClass';
-import {SortOptions} from '../../config';
 
 interface props {
   list: ItemClass[];
@@ -14,16 +13,10 @@ interface props {
 }
 
 export const List = ({list, onPress, onLongPress, editItemCounter}: props) => {
-  const {sortOrder} = useSettings();
-
-  const displayList = useMemo(() => {
-    const tmpArray = [...list];
-    return sortOrder === SortOptions.Lifo ? [...tmpArray.reverse()] : list;
-  }, [list, sortOrder]);
   return (
     <>
       <ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.scrollView}>
-        {displayList.map((item, index) => (
+        {list.map((item, index) => (
           <Item
             key={index}
             item={item}

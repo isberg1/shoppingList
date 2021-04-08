@@ -1,7 +1,8 @@
 import {useState, useCallback, useMemo, useRef} from 'react';
-import {modes} from './config';
+import {modes, SortOptions} from './config';
 import {TextInput} from 'react-native';
 import {Item as ItemClass} from './Model/ItemClass';
+import useSettings from './UseSettings';
 
 let itemToBeEdited: itemToBeEditedType = null;
 
@@ -10,11 +11,13 @@ export const UseInteractionManager = ({
   addToList,
   editList,
   removeItem,
+  editEntireList,
   deleteList: _deleteList,
 }: Props) => {
   const [inputValue, setInputValue] = useState('');
   const [mode, setMode] = useState(modes.add);
   const inputRef = useRef<TextInput>(null);
+  const {sortOrder} = useSettings();
 
   const _nrOfMarkedItems = useMemo(
     () => (list || []).filter((item) => item.isMarked).length,
@@ -50,11 +53,11 @@ export const UseInteractionManager = ({
 
   const onPressAdd = useCallback(() => {
     if (inputValue) {
-      addToList(new ItemClass(inputValue));
+      addToList(new ItemClass(inputValue), sortOrder);
       setInputValue('');
       _areSomeItemsMarked && setMode(modes.delete);
     }
-  }, [addToList, inputValue, _areSomeItemsMarked]);
+  }, [inputValue, addToList, sortOrder, _areSomeItemsMarked]);
 
   const onPressEdit = useCallback(() => {
     if (inputValue && mode === modes.edit && itemToBeEdited) {
@@ -139,6 +142,25 @@ export const UseInteractionManager = ({
 
   const onClearText = useCallback(() => inputHandler(''), [inputHandler]);
 
+  const onSortList = (sortOption: SortOptions) => {
+    const newList = [];
+
+    if (sortOption === SortOptions.Reverse && sortOrder === SortOptions.Normal) {
+      for (let index = list.length - 1; index >= 0; index--) {
+        newList.push(list[index]);
+      }
+      editEntireList(newList);
+    }
+
+    if (sortOption === SortOptions.Normal && sortOrder === SortOptions.Reverse) {
+      for (let index = list.length - 1; index >= 0; index--) {
+        newList.push(list[index]);
+      }
+
+      editEntireList(newList);
+    }
+  };
+
   return {
     onClearText,
     onSubmitHandler,
@@ -150,6 +172,7 @@ export const UseInteractionManager = ({
     onPressDelete,
     onPressEdit,
     onPressAdd,
+    onSortList,
     inputValue,
     mode,
     inputRef,
@@ -163,8 +186,9 @@ type itemToBeEditedType = {
 
 interface Props {
   list: ItemClass[];
-  addToList: (item: ItemClass) => void;
+  addToList: (item: ItemClass, sortOption: SortOptions) => void;
   editList: (indexToEdit: number, newValue: ItemClass) => void;
+  editEntireList: (newList: ItemClass[]) => void;
   removeItem: (keys: number[]) => void;
   deleteList: () => void;
 }
