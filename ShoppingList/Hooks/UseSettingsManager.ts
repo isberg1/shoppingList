@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import {getFromAsyncStorage, setInAsyncStorage} from './Utils/AsyncStorage';
-import {defaultFontSize, defaultSortOrder, SortOptions} from './config';
+import {defaultFontSize, defaultSortOrder, SortOptions} from '../config';
 
 enum Setting {
   FontSize = 'FONTSIZE',

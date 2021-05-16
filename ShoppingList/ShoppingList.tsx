@@ -1,7 +1,7 @@
 import React from 'react';
 import {ModifyListButton, List, Input, Settings} from './Components/index';
-import {usePersistentStorage} from './UsePersistentStorage';
-import {UseInteractionManager} from './UseInteractionManager';
+import {usePersistentStorage} from './Hooks/UsePersistentStorage';
+import {UseInteractionManager} from './Hooks/UseInteractionManager';
 import {View} from 'react-native';
 import {styles} from './styles';
 

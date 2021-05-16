@@ -4,8 +4,8 @@ import {
   getFromAsyncStorage,
   deleteFromAsyncStorage,
 } from './Utils/AsyncStorage';
-import {Item as ItemClass} from './Model/ItemClass';
-import {SortOptions} from './config';
+import {Item as ItemClass} from '../Model/ItemClass';
+import {SortOptions} from '../config';
 
 const LIST_KEY = 'LIST';
 
@@ -38,11 +38,11 @@ export const usePersistentStorage = () => {
   */
   const addToList = (item: ItemClass, sortOrder: SortOptions) => {
     setList((items) => {
-      if (sortOrder === SortOptions.Normal) {
+      if (sortOrder === SortOptions.FIFO) {
         return [...items, item];
       }
 
-      if (sortOrder === SortOptions.Reverse) {
+      if (sortOrder === SortOptions.LIFO) {
         return [item, ...items];
       }
       return items;

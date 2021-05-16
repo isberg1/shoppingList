@@ -2,7 +2,7 @@ import React, {useCallback, useMemo} from 'react';
 import {Text, TouchableOpacity} from 'react-native';
 import {Item as ItemClass} from '../../../../Model/ItemClass';
 import {styles} from './styles';
-import useSettings from '../../../../UseSettings';
+import useSettings from '../../../../Hooks/UseSettings';
 
 interface props {
   item: ItemClass;

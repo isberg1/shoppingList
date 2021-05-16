@@ -1,7 +1,7 @@
 import {useState, useCallback, useMemo, useRef} from 'react';
-import {modes, SortOptions} from './config';
+import {modes, SortOptions} from '../config';
 import {TextInput} from 'react-native';
-import {Item as ItemClass} from './Model/ItemClass';
+import {Item as ItemClass} from '../Model/ItemClass';
 import useSettings from './UseSettings';
 
 let itemToBeEdited: itemToBeEditedType = null;
@@ -145,14 +145,14 @@ export const UseInteractionManager = ({
   const onSortList = (sortOption: SortOptions) => {
     const newList = [];
 
-    if (sortOption === SortOptions.Reverse && sortOrder === SortOptions.Normal) {
+    if (sortOption === SortOptions.LIFO && sortOrder === SortOptions.FIFO) {
       for (let index = list.length - 1; index >= 0; index--) {
         newList.push(list[index]);
       }
       editEntireList(newList);
     }
 
-    if (sortOption === SortOptions.Normal && sortOrder === SortOptions.Reverse) {
+    if (sortOption === SortOptions.FIFO && sortOrder === SortOptions.LIFO) {
       for (let index = list.length - 1; index >= 0; index--) {
         newList.push(list[index]);
       }

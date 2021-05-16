@@ -1,6 +1,6 @@
 import React, {useState, useMemo} from 'react';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
-import useSettings from '../../UseSettings';
+import useSettings from '../../Hooks/UseSettings';
 import {styles} from './styles';
 
 interface props {
