@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {minimumTouchableSize} from '../commonStyles';
 
 export const styles = StyleSheet.create({
   settingsIcon: {
@@ -16,14 +17,16 @@ export const styles = StyleSheet.create({
   },
   buttonText: {
     textAlign: 'center',
+    textAlignVertical: 'center',
   },
   text: {
     textAlign: 'center',
     fontSize: 25,
-    marginHorizontal: 5,
   },
   settingsEntriesContainer: {
-    marginTop: 10,
+    minHeight: minimumTouchableSize,
+    justifyContent: 'center',
+    marginVertical: 2,
     paddingHorizontal: 30,
   },
   settingsTextRow: {
@@ -35,11 +38,9 @@ export const styles = StyleSheet.create({
     height: 40,
     width: '110%',
   },
-
   currentSort: {
     backgroundColor: 'gray',
   },
-
   header: {
     fontStyle: 'italic',
     textDecorationLine: 'underline',

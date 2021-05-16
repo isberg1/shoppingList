@@ -8,7 +8,8 @@
     "start": "react-native start",
     "ios": "react-native run-ios",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "lint-fix": "eslint --fix ./**/*.ts"
+    "lint-fix": "eslint --fix ./**/*.ts",
+    "cleanCache": "npm cache clean --force"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.10.0",

@@ -1,8 +1,9 @@
 import {StyleSheet} from 'react-native';
-import {defaultBorder, colors} from '../../commonStyles';
+import {defaultBorder, colors, minimumTouchableSize} from '../../commonStyles';
 
 export const styles = StyleSheet.create({
   itemRow: {
+    minHeight: minimumTouchableSize,
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',

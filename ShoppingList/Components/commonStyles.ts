@@ -31,6 +31,8 @@ export const colors = {
   darkTheme,
 };
 
+export const minimumTouchableSize = 55;
+
 // https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
 export const hexToRgb = (hex: string) => {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);

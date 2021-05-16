@@ -5,9 +5,11 @@ export const modes = {
 };
 
 export enum SortOptions {
-  Normal = 'Normal',
-  Reverse = 'Reverse',
+  FIFO = 'FIFO',
+  LIFO = 'LIFO',
 }
 
+export const defaultSortOrder = SortOptions.FIFO;
+export const minimumFontSize = 15;
+export const maximumFontSize = 40;
 export const defaultFontSize = 25;
-export const defaultSortOrder = SortOptions.Normal;

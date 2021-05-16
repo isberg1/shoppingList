@@ -17,6 +17,7 @@ export const styles = (fontSize: number) =>
       padding: 5,
       textAlign: 'center',
       fontSize: fontSize,
+      minHeight: 50,
     },
     resetText: {
       flex: 1,
