@@ -1,7 +1,6 @@
-import React, {useMemo} from 'react';
-import {View, Text} from 'react-native';
-import useSettings from '../../../../Hooks/UseSettings';
-
+import React from 'react';
+import {View} from 'react-native';
+import {Text} from '../../../Text/Text';
 import {styles} from './styles';
 
 interface props {
@@ -9,12 +8,10 @@ interface props {
 }
 
 export const ItemAmount = ({amount}: props) => {
-  const {fontSize} = useSettings();
-  const style = useMemo(() => styles(fontSize), [fontSize]);
   return (
-    <View style={[style.outerCounterContainer]}>
-      <View style={style.innerCounterContainer}>
-        <Text style={[style.counter]}>{amount}</Text>
+    <View style={[styles.outerCounterContainer]}>
+      <View style={styles.innerCounterContainer}>
+        <Text style={styles.counter}>{amount}</Text>
       </View>
     </View>
   );

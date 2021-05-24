@@ -5,12 +5,10 @@ export const styles = StyleSheet.create({
   text: {
     textAlign: 'center',
     textAlignVertical: 'center',
-    fontSize: 20,
     color: 'white',
     height: 60,
   },
   buttonContainer: {
-    fontSize: 50,
     ...defaultBorder,
   },
   disabled: {

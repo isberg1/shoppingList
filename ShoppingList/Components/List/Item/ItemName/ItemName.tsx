@@ -1,8 +1,8 @@
-import React, {useCallback, useMemo} from 'react';
-import {Text, TouchableOpacity} from 'react-native';
+import React, {useCallback} from 'react';
+import {TouchableOpacity, View} from 'react-native';
 import {Item as ItemClass} from '../../../../Model/ItemClass';
 import {styles} from './styles';
-import useSettings from '../../../../Hooks/UseSettings';
+import {Text} from '../../../Text/Text';
 
 interface props {
   item: ItemClass;
@@ -12,9 +12,6 @@ interface props {
 }
 
 export const ItemName = ({item, index, onPress, onLongPress}: props) => {
-  const {fontSize} = useSettings();
-  const style = useMemo(() => styles(fontSize), [fontSize]);
-
   const _onPress = useCallback(() => onPress(index, item), [index, item, onPress]);
 
   const _onLongPress = useCallback(() => onLongPress(index, item), [
@@ -25,11 +22,13 @@ export const ItemName = ({item, index, onPress, onLongPress}: props) => {
 
   return (
     <TouchableOpacity
-      style={[style.touchable]}
+      style={styles.touchable}
       onPress={_onPress}
       onLongPress={_onLongPress}
     >
-      <Text style={[style.text]}>{item.ItemName}</Text>
+      <View style={styles.textContainer}>
+        <Text style={styles.text}>{item.ItemName}</Text>
+      </View>
     </TouchableOpacity>
   );
 };

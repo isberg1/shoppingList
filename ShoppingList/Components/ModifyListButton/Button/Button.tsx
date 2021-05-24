@@ -1,6 +1,7 @@
 import React, {useCallback} from 'react';
-import {View, Text, TouchableOpacity, Animated, ViewStyle} from 'react-native';
+import {View, TouchableOpacity, Animated, ViewStyle} from 'react-native';
 import {useClickAnimation} from './useClickAnimations';
+import {Text} from '../../Text/Text';
 import {styles} from './styles';
 
 interface props {

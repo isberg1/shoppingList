@@ -19,13 +19,10 @@ export const styles = (fontSize: number) =>
       fontSize: fontSize,
       minHeight: 50,
     },
-    resetText: {
+    clearTextButton: {
       flex: 1,
       paddingHorizontal: 10,
       justifyContent: 'center',
-    },
-    deleteText: {
-      fontSize: fontSize,
     },
     onFocus: {
       opacity: 1,

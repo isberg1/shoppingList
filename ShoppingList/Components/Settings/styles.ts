@@ -12,16 +12,11 @@ export const styles = StyleSheet.create({
   button: {
     alignSelf: 'flex-end',
     justifyContent: 'flex-start',
-    width: 50,
-    height: 50,
-  },
-  buttonText: {
-    textAlign: 'center',
-    textAlignVertical: 'center',
+    minWidth: 60,
+    minHeight: 50,
   },
   text: {
     textAlign: 'center',
-    fontSize: 25,
   },
   settingsEntriesContainer: {
     minHeight: minimumTouchableSize,
@@ -45,7 +40,6 @@ export const styles = StyleSheet.create({
     fontStyle: 'italic',
     textDecorationLine: 'underline',
     marginBottom: 5,
-    fontSize: 20,
   },
 });
 

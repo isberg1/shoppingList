@@ -1,7 +1,8 @@
 import React, {useState, useMemo} from 'react';
-import {View, Text, TextInput, TouchableOpacity} from 'react-native';
+import {View, TextInput, TouchableOpacity} from 'react-native';
 import useSettings from '../../Hooks/UseSettings';
 import {styles} from './styles';
+import {Text} from '../Text/Text';
 
 interface props {
   value: string;
@@ -31,8 +32,8 @@ export const Input = ({value, onChangeText, onSubmit, inputRef, onClearText}: pr
         ref={inputRef}
       />
       <TouchableOpacity onPress={onClearText}>
-        <View style={style.resetText}>
-          <Text style={style.deleteText}>X</Text>
+        <View style={style.clearTextButton}>
+          <Text>X</Text>
         </View>
       </TouchableOpacity>
     </View>

@@ -1,10 +1,11 @@
 import React, {useState, useContext, useCallback} from 'react';
-import {TouchableOpacity, View, Text} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import Slider from '@react-native-community/slider';
 import {Icon, Overlay} from 'react-native-elements';
 import context from '../../Context';
 import {styles, colors} from './styles';
 import {SortOptions, maximumFontSize, minimumFontSize} from '../../config';
+import {Text} from '../Text/Text';
 
 const sort = {
   [SortOptions.FIFO]: 'Oldest first',
@@ -42,7 +43,7 @@ export const Settings = ({onSortList}: Props) => {
             style={styles.button}
             onPress={() => setShowSettings((val) => !val)}
           >
-            <Text style={styles.buttonText}>Close</Text>
+            <Text>Close</Text>
           </TouchableOpacity>
 
           <View style={styles.settingsEntriesContainer}>
