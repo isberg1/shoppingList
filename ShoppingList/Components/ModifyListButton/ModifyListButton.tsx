@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {styles} from './styles';
 import {modes} from '../../config';
+import UseSettings from '../../Hooks/UseSettings';
 import {Button as EditItemButton} from './Button/Button';
 import {Button as AddItemButton} from './Button/Button';
 import {Button as DeleteItemButton} from './Button/Button';
@@ -20,6 +21,9 @@ export const ModifyListButton = ({
   disabled,
   mode,
 }: props) => {
+  const {theme} = UseSettings();
+  const _styles = useMemo(() => styles(theme), [theme]);
+
   return (
     <>
       {mode === modes.add && (
@@ -27,7 +31,7 @@ export const ModifyListButton = ({
           text={'Add Item'}
           onPress={onPressAdd}
           disabled={disabled}
-          styling={styles.buttonAdd}
+          styling={_styles.buttonAdd}
         />
       )}
       {mode === modes.edit && (
@@ -35,7 +39,7 @@ export const ModifyListButton = ({
           text={'Edit Item'}
           onPress={onPressEdit}
           disabled={disabled}
-          styling={styles.buttonEdit}
+          styling={_styles.buttonEdit}
         />
       )}
       {mode === modes.delete && (
@@ -43,7 +47,7 @@ export const ModifyListButton = ({
           text={'Delete Item'}
           onLongPress={onPressDelete}
           disabled={disabled}
-          styling={styles.buttonDelete}
+          styling={_styles.buttonDelete}
         />
       )}
     </>

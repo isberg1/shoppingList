@@ -1,22 +1,22 @@
 import {StyleSheet} from 'react-native';
-import {defaultBorder, orange, lightGray, green} from '../../../commonStyles';
+import {Theme} from '../../../../config';
+import {defaultBorder} from '../../../commonStyles';
 
-export const styles = StyleSheet.create({
-  text: {
-    padding: 5,
-    fontSize: 30,
-  },
-  swipeView: {
-    width: '100%',
-    backgroundColor: lightGray,
-    alignItems: 'center',
-    justifyContent: 'center',
-    ...defaultBorder,
-  },
-  minus1: {
-    backgroundColor: orange,
-  },
-  plus1: {
-    backgroundColor: green,
-  },
-});
+export const styles = (theme: Theme) =>
+  StyleSheet.create({
+    swipeView: {
+      width: '100%',
+      alignItems: 'center',
+      justifyContent: 'center',
+      ...defaultBorder,
+    },
+    minus1: {
+      backgroundColor: theme.swipeMinus,
+    },
+    plus1: {
+      backgroundColor: theme.swipePlus,
+    },
+    text: {
+      color: theme.text,
+    },
+  });

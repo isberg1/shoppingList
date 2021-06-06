@@ -1,19 +1,20 @@
 import {StyleSheet} from 'react-native';
-import {defaultBorder, gray, lightGray, white} from '../commonStyles';
+import {defaultBorder} from '../commonStyles';
+import {Theme} from '../../config';
 
-export const styles = (fontSize: number) =>
+export const styles = (fontSize: number, theme: Theme) =>
   StyleSheet.create({
     inputContainer: {
       flexDirection: 'row',
       marginVertical: 10,
-      backgroundColor: gray,
+      backgroundColor: theme.input,
       opacity: 0.7,
       ...defaultBorder,
     },
     input: {
       flex: 8,
       textDecorationLine: 'underline',
-      color: white,
+      color: theme.text,
       padding: 5,
       textAlign: 'center',
       fontSize: fontSize,
@@ -26,7 +27,7 @@ export const styles = (fontSize: number) =>
     },
     onFocus: {
       opacity: 1,
-      backgroundColor: lightGray,
+      backgroundColor: theme.inputOnFocus,
     },
     noFocus: {},
   });

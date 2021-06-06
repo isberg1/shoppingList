@@ -14,14 +14,14 @@ interface props {
 
 export const Input = ({value, onChangeText, onSubmit, inputRef, onClearText}: props) => {
   const [hasFocus, setHasFocus] = useState(false);
-  const {fontSize} = useSettings();
-  const style = useMemo(() => styles(fontSize), [fontSize]);
+  const {fontSize, theme} = useSettings();
+  const _styles = useMemo(() => styles(fontSize, theme), [fontSize, theme]);
 
   return (
-    <View style={[style.inputContainer, hasFocus && style.onFocus]}>
+    <View style={[_styles.inputContainer, hasFocus && _styles.onFocus]}>
       <TextInput
         placeholder={hasFocus ? '' : 'Enter Text'}
-        style={style.input}
+        style={_styles.input}
         onChangeText={onChangeText}
         onFocus={() => setHasFocus(true)}
         onBlur={() => setHasFocus(false)}
@@ -32,7 +32,7 @@ export const Input = ({value, onChangeText, onSubmit, inputRef, onClearText}: pr
         ref={inputRef}
       />
       <TouchableOpacity onPress={onClearText}>
-        <View style={style.clearTextButton}>
+        <View style={_styles.clearTextButton}>
           <Text>X</Text>
         </View>
       </TouchableOpacity>

@@ -1,14 +1,15 @@
 import {StyleSheet} from 'react-native';
-import {orange, green, blue} from '../commonStyles';
+import {Theme} from '../../config';
 
-export const styles = StyleSheet.create({
-  buttonAdd: {
-    backgroundColor: green,
-  },
-  buttonDelete: {
-    backgroundColor: orange,
-  },
-  buttonEdit: {
-    backgroundColor: blue,
-  },
-});
+export const styles = (theme: Theme) =>
+  StyleSheet.create({
+    buttonAdd: {
+      backgroundColor: theme.addButton,
+    },
+    buttonDelete: {
+      backgroundColor: theme.deleteButton,
+    },
+    buttonEdit: {
+      backgroundColor: theme.editButton,
+    },
+  });

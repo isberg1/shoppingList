@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import {getFromAsyncStorage, setInAsyncStorage} from './Utils/AsyncStorage';
-import {defaultFontSize, defaultSortOrder, SortOptions} from '../config';
+import {defaultFontSize, defaultSortOrder, SortOptions, themes, Theme} from '../config';
 
 enum Setting {
   FontSize = 'FONTSIZE',
@@ -8,8 +8,9 @@ enum Setting {
 }
 
 export default function useSettingsManager() {
-  const [fontSize, setFontSize] = useState<number>(defaultFontSize);
+  const [fontSize, setFontSize] = useState(defaultFontSize);
   const [sortOrder, setSortOrder] = useState(defaultSortOrder);
+  const [theme, setTheme] = useState<Theme>(themes.default);
 
   // get data at startup
   useEffect(() => {
@@ -44,5 +45,7 @@ export default function useSettingsManager() {
     setFontSize,
     sortOrder,
     setSortOrder,
+    theme,
+    setTheme,
   };
 }

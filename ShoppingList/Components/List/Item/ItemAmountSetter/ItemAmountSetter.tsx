@@ -1,39 +1,44 @@
-import React, {useRef, useCallback} from 'react';
+import React, {useRef, useCallback, useMemo} from 'react';
+import {View} from 'react-native';
 // @ts-ignore
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import {SwipeToSide} from './SwipeToSide/SwipeToSide';
-import {Item as ItemClass} from '../../../Model/ItemClass';
+import {Item as ItemClass} from '../../../../Model/ItemClass';
 import {styles} from './styles';
+import UseSettings from '../../../../Hooks/UseSettings';
+import {Text} from '../../../Text/Text';
 
 interface props {
   item: ItemClass;
   index: number;
-  editItemCounter: (
-    index: number,
-    item: ItemClass,
-    newCounterValue: number,
-  ) => void;
-  children: JSX.Element | React.ReactNode | React.ReactNodeArray; // maybe wrong type
+  editItemCounter: (index: number, item: ItemClass, newCounterValue: number) => void;
+  children: React.ReactNode;
 }
 
 // DOCUMENTATION: https://docs.swmansion.com/react-native-gesture-handler/docs
-export const ItemAmountSetter = ({
-  item,
-  index,
-  editItemCounter,
-  children,
-}: props) => {
+export const ItemAmountSetter = ({item, index, editItemCounter, children}: props) => {
   const ref = useRef<Swipeable>(null);
+
+  const {theme} = UseSettings();
+  const _styles = useMemo(() => styles(theme), [theme]);
 
   const _closeSwipeable = useCallback(() => ref?.current?.close(), []);
 
   const _renderMinus1 = useCallback(
-    () => <SwipeToSide text="-1" style={styles.minus1} />,
-    [],
+    () => (
+      <View style={[_styles.swipeView, _styles.minus1]}>
+        <Text style={_styles.text}>-1</Text>
+      </View>
+    ),
+    [_styles.minus1, _styles.swipeView, _styles.text],
   );
+
   const _renderPlus1 = useCallback(
-    () => <SwipeToSide text="+1" style={styles.plus1} />,
-    [],
+    () => (
+      <View style={[_styles.swipeView, _styles.plus1]}>
+        <Text style={_styles.text}>+1</Text>
+      </View>
+    ),
+    [_styles.plus1, _styles.swipeView, _styles.text],
   );
 
   const _subtract1FromCounter = useCallback(() => {

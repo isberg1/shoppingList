@@ -8,8 +8,8 @@ interface Props extends TextProps {
 }
 
 export function Text({children, style, ...restProps}: Props) {
-  const {fontSize} = useSettings();
-  const _styles = useMemo(() => styles(fontSize), [fontSize]);
+  const {fontSize, theme} = useSettings();
+  const _styles = useMemo(() => styles(fontSize, theme), [fontSize, theme]);
 
   return (
     <NativeText style={[_styles.text, style]} {...restProps}>
