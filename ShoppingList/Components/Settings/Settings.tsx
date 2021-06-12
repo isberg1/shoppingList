@@ -3,7 +3,7 @@ import {TouchableOpacity, View} from 'react-native';
 import Slider from '@react-native-community/slider';
 import {Icon, Overlay} from 'react-native-elements';
 import {styles, colors} from './styles';
-import {SortOptions, maximumFontSize, minimumFontSize} from '../../config';
+import {SortOptions, maximumFontSize, minimumFontSize, themes} from '../../config';
 import {Text} from '../Text/Text';
 import UseSettings from '../../Hooks/UseSettings';
 
@@ -18,7 +18,7 @@ type Props = {
 
 export const Settings = ({onSortList}: Props) => {
   const [showSettings, setShowSettings] = useState(false);
-  const {fontSize, setFontSize, sortOrder, setSortOrder, theme} = UseSettings();
+  const {fontSize, setFontSize, sortOrder, setSortOrder, theme, setTheme} = UseSettings();
   const _styles = useMemo(() => styles(theme), [theme]);
 
   const onClickSort = useCallback(
@@ -73,10 +73,26 @@ export const Settings = ({onSortList}: Props) => {
                   onPress={() => onClickSort(option)}
                   style={[
                     _styles.settingsEntriesContainer,
-                    option === sortOrder && _styles.currentSort,
+                    option === sortOrder && _styles.currentSelected,
                   ]}
                 >
                   <Text style={_styles.text}>{sort[option]}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+            <View>
+              <Text style={_styles.header}>Themes:</Text>
+
+              {Object.entries(themes).map(([key, value]) => (
+                <TouchableOpacity
+                  key={key}
+                  onPress={() => setTheme(value)}
+                  style={[
+                    _styles.settingsEntriesContainer,
+                    value.id === theme.id && _styles.currentSelected,
+                  ]}
+                >
+                  <Text style={_styles.text}>{key}</Text>
                 </TouchableOpacity>
               ))}
             </View>

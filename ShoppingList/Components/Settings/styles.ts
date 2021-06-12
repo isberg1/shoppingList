@@ -36,8 +36,8 @@ export const styles = (theme: Theme) =>
       height: 40,
       width: '110%',
     },
-    currentSort: {
-      backgroundColor: theme.currentSort,
+    currentSelected: {
+      backgroundColor: theme.currentSelected,
     },
     header: {
       fontStyle: 'italic',

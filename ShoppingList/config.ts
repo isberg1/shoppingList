@@ -16,6 +16,7 @@ export const maximumFontSize = 40;
 export const defaultFontSize = 25;
 
 export interface Theme {
+  id: string;
   backgroundMain: Colors;
   input: Colors;
   inputOnFocus: Colors;
@@ -28,11 +29,12 @@ export interface Theme {
   deleteButton: Colors;
   swipeMinus: Colors;
   swipePlus: Colors;
-  currentSort: Colors;
+  currentSelected: Colors;
 }
 
-export const themes: Record<string, Theme> = {
+export const themes = {
   default: {
+    id: 'default',
     backgroundMain: colors.SteamBlue,
     input: colors.gray,
     inputOnFocus: colors.lightGray,
@@ -45,6 +47,22 @@ export const themes: Record<string, Theme> = {
     deleteButton: colors.pink,
     swipeMinus: colors.orange,
     swipePlus: colors.green,
-    currentSort: colors.lightGray,
+    currentSelected: colors.lightGray,
+  },
+  odysee: {
+    id: 'odysee',
+    backgroundMain: colors.darkPurple,
+    input: colors.mediumPurple,
+    inputOnFocus: colors.lightPurple,
+    listItem: colors.darkMediumPurple,
+    listItemDelete: colors.neonPink,
+    text: colors.white,
+    settingText: colors.black,
+    addButton: colors.green,
+    editButton: colors.blue,
+    deleteButton: colors.neonPink,
+    swipeMinus: colors.fireOrange,
+    swipePlus: colors.blue,
+    currentSelected: colors.lightGray,
   },
 };

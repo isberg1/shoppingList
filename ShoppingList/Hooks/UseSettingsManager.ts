@@ -5,6 +5,7 @@ import {defaultFontSize, defaultSortOrder, SortOptions, themes, Theme} from '../
 enum Setting {
   FontSize = 'FONTSIZE',
   SortOrder = 'SORTORDER',
+  Theme = 'THEME',
 }
 
 export default function useSettingsManager() {
@@ -30,6 +31,13 @@ export default function useSettingsManager() {
         setSortOrder(x);
       }
     });
+    getFromAsyncStorage(Setting.Theme, (x: string) => {
+      try {
+        setTheme(JSON.parse(x));
+      } catch (error) {
+        console.log(error);
+      }
+    });
   }, []);
 
   useEffect(() => {
@@ -39,6 +47,10 @@ export default function useSettingsManager() {
   useEffect(() => {
     setInAsyncStorage(Setting.SortOrder, sortOrder);
   }, [sortOrder]);
+
+  useEffect(() => {
+    setInAsyncStorage(Setting.Theme, JSON.stringify(theme));
+  }, [theme]);
 
   return {
     fontSize,
