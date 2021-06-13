@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import {SafeAreaView, View, StatusBar} from 'react-native';
 import {ShoppingList} from './ShoppingList/ShoppingList';
-import {SettingsProvider} from './ShoppingList/Context';
+import {SettingsProvider} from './ShoppingList/SettingsContext/SettingsProvider';
 import useSettings from './ShoppingList/Hooks/UseSettings';
 import {styles} from './appStyles';
 

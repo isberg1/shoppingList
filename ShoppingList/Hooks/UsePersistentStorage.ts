@@ -3,7 +3,7 @@ import {
   setInAsyncStorage,
   getFromAsyncStorage,
   deleteFromAsyncStorage,
-} from './Utils/AsyncStorage';
+} from '../Utils/AsyncStorage';
 import {Item as ItemClass} from '../Model/ItemClass';
 import {SortOptions} from '../config';
 

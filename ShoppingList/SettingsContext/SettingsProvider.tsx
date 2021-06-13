@@ -1,37 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import {defaultFontSize, defaultSortOrder, SortOptions, themes, Theme} from './config';
+import {defaultFontSize, defaultSortOrder, SortOptions, themes, Theme} from '../config';
+import settingsContext from './SettingsContext';
 
-import {getFromAsyncStorage, setInAsyncStorage} from './Hooks/Utils/AsyncStorage';
-
-type DefaultContext = {
-  fontSize: number;
-  setFontSize: React.Dispatch<React.SetStateAction<number>> | (() => void);
-  sortOrder: SortOptions;
-  setSortOrder: React.Dispatch<React.SetStateAction<SortOptions>> | (() => void);
-  theme: Theme;
-  setTheme: React.Dispatch<React.SetStateAction<Theme>> | (() => void);
-};
-
-enum Setting {
-  FontSize = 'FONTSIZE',
-  SortOrder = 'SORTORDER',
-  Theme = 'THEME',
-}
-
-interface Props {
-  children: React.ReactNode;
-}
-
-const context = React.createContext<DefaultContext>({
-  fontSize: defaultFontSize,
-  setFontSize: () => {},
-  sortOrder: defaultSortOrder,
-  setSortOrder: () => {},
-  theme: themes.default,
-  setTheme: () => {},
-});
-
-export default context;
+import {getFromAsyncStorage, setInAsyncStorage} from '../Utils/AsyncStorage';
 
 export function SettingsProvider({children}: Props) {
   const [fontSize, setFontSize] = useState(defaultFontSize);
@@ -79,7 +50,7 @@ export function SettingsProvider({children}: Props) {
   }, [theme]);
 
   return (
-    <context.Provider
+    <settingsContext.Provider
       value={{
         fontSize,
         setFontSize,
@@ -90,6 +61,16 @@ export function SettingsProvider({children}: Props) {
       }}
     >
       {children}
-    </context.Provider>
+    </settingsContext.Provider>
   );
+}
+
+enum Setting {
+  FontSize = 'FONTSIZE',
+  SortOrder = 'SORTORDER',
+  Theme = 'THEME',
+}
+
+interface Props {
+  children: React.ReactNode;
 }
