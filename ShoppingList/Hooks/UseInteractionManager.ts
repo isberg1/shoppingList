@@ -6,7 +6,7 @@ import useSettings from './UseSettings';
 
 let itemToBeEdited: itemToBeEditedType = null;
 
-export const UseInteractionManager = ({
+export const useInteractionManager = ({
   list,
   addToList,
   editList,

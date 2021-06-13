@@ -21,6 +21,7 @@ export const Input = ({value, onChangeText, onSubmit, inputRef, onClearText}: pr
     <View style={[_styles.inputContainer, hasFocus && _styles.onFocus]}>
       <TextInput
         placeholder={hasFocus ? '' : 'Enter Text'}
+        placeholderTextColor={theme.inputPlaceholderTextColor}
         style={_styles.input}
         onChangeText={onChangeText}
         onFocus={() => setHasFocus(true)}

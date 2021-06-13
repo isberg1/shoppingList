@@ -19,6 +19,7 @@ export interface Theme {
   id: string;
   backgroundMain: Colors;
   input: Colors;
+  inputPlaceholderTextColor: Colors;
   inputOnFocus: Colors;
   listItem: Colors;
   listItemDelete: Colors;
@@ -37,6 +38,7 @@ export const themes = {
     id: 'default',
     backgroundMain: colors.SteamBlue,
     input: colors.gray,
+    inputPlaceholderColor: colors.black,
     inputOnFocus: colors.lightGray,
     listItem: colors.gray,
     listItemDelete: colors.pink,
@@ -53,6 +55,7 @@ export const themes = {
     id: 'odysee',
     backgroundMain: colors.darkPurple,
     input: colors.mediumPurple,
+    inputPlaceHolderColor: colors.white,
     inputOnFocus: colors.lightPurple,
     listItem: colors.darkMediumPurple,
     listItemDelete: colors.neonPink,
