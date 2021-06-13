@@ -1,22 +1,22 @@
 import React, {useMemo} from 'react';
 import {SafeAreaView, View, StatusBar} from 'react-native';
 import {ShoppingList} from './ShoppingList/ShoppingList';
-import context from './ShoppingList/Context';
-import useSettingsManager from './ShoppingList/Hooks/UseSettingsManager';
+import {SettingsProvider} from './ShoppingList/Context';
+import useSettings from './ShoppingList/Hooks/UseSettings';
 import {styles} from './appStyles';
 
 const App = () => {
-  const settings = useSettingsManager();
+  const settings = useSettings();
   const _styles = useMemo(() => styles(settings.theme), [settings.theme]);
 
   return (
-    <context.Provider value={settings}>
+    <SettingsProvider>
       <View style={_styles.root}>
         <StatusBar backgroundColor={settings.theme.backgroundMain} />
         <SafeAreaView style={_styles.safeAreaView} />
         <ShoppingList />
       </View>
-    </context.Provider>
+    </SettingsProvider>
   );
 };
 
