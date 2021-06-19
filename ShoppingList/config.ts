@@ -33,12 +33,12 @@ export interface Theme {
   currentSelected: Colors;
 }
 
-export const themes = {
+export const themes: Record<'default' | 'odysee', Theme> = {
   default: {
     id: 'default',
     backgroundMain: colors.SteamBlue,
     input: colors.gray,
-    inputPlaceholderColor: colors.black,
+    inputPlaceholderTextColor: colors.black,
     inputOnFocus: colors.lightGray,
     listItem: colors.gray,
     listItemDelete: colors.pink,
@@ -51,11 +51,12 @@ export const themes = {
     swipePlus: colors.green,
     currentSelected: colors.lightGray,
   },
+
   odysee: {
     id: 'odysee',
     backgroundMain: colors.darkPurple,
     input: colors.mediumPurple,
-    inputPlaceHolderColor: colors.white,
+    inputPlaceholderTextColor: colors.white,
     inputOnFocus: colors.lightPurple,
     listItem: colors.darkMediumPurple,
     listItemDelete: colors.neonPink,

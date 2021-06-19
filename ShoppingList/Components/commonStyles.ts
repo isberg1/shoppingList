@@ -16,14 +16,15 @@ export const green = 'green' as const;
 export const blue = 'blue' as const;
 export const SteamBlue = '#1b2838' as const;
 export const white = 'white' as const;
-export const darkPurple = '#140E1B' as const;
 export const darkMediumPurple = '#261a35' as const;
+export const darkPurple = '#140E1B' as const;
 export const mediumPurple = '#38274C' as const;
 export const lightPurple = '#3d2d4e' as const;
 export const neonPink = '#e50054' as const;
 export const fireOrange = '#ff6635' as const;
 
 export const colors = {
+  darkTheme,
   gray,
   lightGray,
   black,
@@ -34,7 +35,6 @@ export const colors = {
   blue,
   SteamBlue,
   white,
-  darkTheme,
   darkPurple,
   darkMediumPurple,
   mediumPurple,
